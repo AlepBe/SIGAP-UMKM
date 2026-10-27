@@ -74,6 +74,9 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  h1, h2, h3 {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  }
 }
 
 /* Custom Utilities for SIGAP Aesthetics */
@@ -86,5 +89,21 @@
   }
   .bg-navy-gradient {
     @apply bg-gradient-to-br from-sigap-darkest to-sigap-dark;
+  }
+  .text-gradient-brand {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-sigap-dark via-sigap-primary to-sigap-secondary;
+  }
+  .text-gradient-brand-light {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-sigap-soft via-sigap-light to-white;
+  }
+  .bg-dot-grid {
+    background-image: radial-gradient(rgb(27 53 84 / 0.14) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .bg-line-grid {
+    background-image:
+      linear-gradient(to right, rgb(192 230 253 / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(192 230 253 / 0.08) 1px, transparent 1px);
+    background-size: 48px 48px;
   }
 }

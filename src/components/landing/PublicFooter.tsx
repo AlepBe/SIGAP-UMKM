@@ -2,48 +2,71 @@ import React from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
 
+const linkGroups = [
+  {
+    title: 'Produk',
+    links: [
+      { href: '/fitur', label: 'Fitur' },
+      { href: '/cara-kerja', label: 'Cara Kerja' },
+      { href: '/pembiayaan', label: 'Pembiayaan' },
+      { href: '/literasi', label: 'Literasi' },
+      { href: '/premium', label: 'Premium' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { href: '/privasi', label: 'Privasi' },
+      { href: '/keamanan', label: 'Keamanan' },
+      { href: '/syarat-ketentuan', label: 'Syarat Ketentuan' },
+    ],
+  },
+  {
+    title: 'Akses',
+    links: [
+      { href: '/login', label: 'Sign In' },
+      { href: '/register', label: 'Sign Up' },
+    ],
+  },
+];
+
 export function PublicFooter() {
   return (
-    <footer className="bg-sigap-darkest text-sigap-light/70 py-16 border-t border-white/10 mt-auto">
-      <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
-        <div className="md:col-span-2">
-          <div className="mb-6">
-            <Logo variant="white" />
-          </div>
-          <p className="max-w-sm text-sm leading-relaxed mb-6">
+    <footer className="mt-auto overflow-hidden bg-sigap-darkest text-sigap-light/70">
+      <div className="container grid gap-12 pt-16 md:grid-cols-[1.4fr_2fr]">
+        <div>
+          <Logo variant="white" />
+          <p className="mt-6 max-w-sm text-sm leading-relaxed">
             Sistem Integrasi Gerbang Akses Pembiayaan UMKM. Membangun resiliensi finansial untuk ekonomi Indonesia.
           </p>
         </div>
-        <div>
-          <h4 className="text-white font-bold mb-5 tracking-wide">Produk</h4>
-          <ul className="space-y-3 text-sm">
-            <li><Link href="/fitur" className="hover:text-white transition-colors">Fitur</Link></li>
-            <li><Link href="/cara-kerja" className="hover:text-white transition-colors">Cara Kerja</Link></li>
-            <li><Link href="/pembiayaan" className="hover:text-white transition-colors">Pembiayaan</Link></li>
-            <li><Link href="/literasi" className="hover:text-white transition-colors">Literasi</Link></li>
-            <li><Link href="/premium" className="hover:text-white transition-colors text-amber-500 font-medium">Premium</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="text-white font-bold mb-5 tracking-wide">Legal</h4>
-          <ul className="space-y-3 text-sm">
-            <li><Link href="/privasi" className="hover:text-white transition-colors">Privasi</Link></li>
-            <li><Link href="/keamanan" className="hover:text-white transition-colors">Keamanan</Link></li>
-            <li><Link href="/syarat-ketentuan" className="hover:text-white transition-colors">Syarat Ketentuan</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="text-white font-bold mb-5 tracking-wide">Akses</h4>
-          <ul className="space-y-3 text-sm">
-            <li><Link href="/login" className="hover:text-white transition-colors font-medium">Sign In</Link></li>
-            <li><Link href="/register" className="hover:text-white transition-colors font-medium">Sign Up</Link></li>
-          </ul>
-        </div>
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+          {linkGroups.map((group) => (
+            <div key={group.title}>
+              <p className="mb-5 font-semibold text-white">{group.title}</p>
+              <ul className="space-y-3 text-sm">
+                {group.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="transition-colors hover:text-white">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
       </div>
-      <div className="container mt-16 pt-8 border-t border-white/10 text-sm text-center flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="container mt-16 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 text-sm sm:flex-row">
         <span>&copy; {new Date().getFullYear()} SIGAP UMKM. Hak Cipta Dilindungi.</span>
-        <span className="text-xs bg-white/5 px-3 py-1 rounded-full border border-white/10">Read-Only Demo Available</span>
+        <span>Demo hanya-baca tersedia</span>
       </div>
+      <p
+        aria-hidden="true"
+        className="select-none text-center font-display text-[24vw] leading-[0.8] text-sigap-dark md:text-[20vw]"
+      >
+        SIGAP
+      </p>
     </footer>
   );
 }

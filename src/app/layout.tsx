@@ -1,13 +1,24 @@
 import React from 'react';
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import { DemoProvider } from "@/lib/context/DemoContext";
 import { AuthProvider } from "@/lib/context/AuthContext";
 import { LenderProvider } from "@/lib/context/LenderContext";
 import { SubscriptionProvider } from "@/lib/context/SubscriptionContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const sans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const display = Poppins({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "SIGAP UMKM - Sistem Integrasi Gerbang Akses Pembiayaan UMKM",
@@ -20,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className="scroll-smooth">
-      <body className={`${inter.className} min-h-screen antialiased bg-background text-foreground`}>
+    <html lang="id" className={`scroll-smooth ${sans.variable} ${display.variable}`}>
+      <body className="font-sans min-h-screen antialiased bg-background text-foreground">
         <AuthProvider>
           <LenderProvider>
             <DemoProvider>
