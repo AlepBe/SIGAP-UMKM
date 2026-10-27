@@ -1,0 +1,481 @@
+{
+  "meta": {
+    "module": "SIGAP Lender / Partner Workspace",
+    "environment": "DEMO",
+    "version": "1.0",
+    "note": "Seluruh data di bawah ini adalah data fiktif untuk pengujian UI/UX dan workflow. Bukan data lender, UMKM, OJK, atau transaksi nyata."
+  },
+  "lender_accounts": [
+    {
+      "id": "LND-001",
+      "name": "Bank Nusantara Demo",
+      "short_name": "BND",
+      "email": "lender@sigap.test",
+      "password_demo": "Demo123!",
+      "role": "lender",
+      "type": "Bank / Mitra Pembiayaan",
+      "status": "active",
+      "verified": true,
+      "api_status": "connected_demo"
+    },
+    {
+      "id": "LND-002",
+      "name": "Fintech Nusantara Demo",
+      "short_name": "FND",
+      "email": "fintech@sigap.test",
+      "password_demo": "Demo123!",
+      "role": "lender",
+      "type": "Fintech / Mitra Pembiayaan",
+      "status": "active",
+      "verified": true,
+      "api_status": "disconnected_demo"
+    }
+  ],
+  "dashboard": {
+    "period": "2026-09",
+    "metrics": {
+      "total_applications": 1248,
+      "new_applications": 87,
+      "waiting_verification": 156,
+      "under_review": 238,
+      "approved_this_month": 412,
+      "rejected_this_month": 71,
+      "disbursed_this_month": 268,
+      "total_disbursed_this_month": 8550000000
+    },
+    "monthly_trend": [
+      {
+        "month": "Apr",
+        "applications": 820,
+        "approved": 268,
+        "disbursed": 5210000000
+      },
+      {
+        "month": "May",
+        "applications": 905,
+        "approved": 301,
+        "disbursed": 6180000000
+      },
+      {
+        "month": "Jun",
+        "applications": 1024,
+        "approved": 337,
+        "disbursed": 7040000000
+      },
+      {
+        "month": "Jul",
+        "applications": 1110,
+        "approved": 361,
+        "disbursed": 7590000000
+      },
+      {
+        "month": "Aug",
+        "applications": 1161,
+        "approved": 388,
+        "disbursed": 8010000000
+      },
+      {
+        "month": "Sep",
+        "applications": 1248,
+        "approved": 412,
+        "disbursed": 8550000000
+      }
+    ],
+    "pipeline": [
+      {
+        "status": "Baru",
+        "count": 87
+      },
+      {
+        "status": "Review",
+        "count": 238
+      },
+      {
+        "status": "Verifikasi Dokumen",
+        "count": 156
+      },
+      {
+        "status": "Disetujui",
+        "count": 412
+      },
+      {
+        "status": "Ditolak",
+        "count": 71
+      },
+      {
+        "status": "Disalurkan",
+        "count": 268
+      }
+    ]
+  },
+  "applications": [
+    {
+      "id": "APP-0001",
+      "submitted_at": "2026-09-24T08:20:00+07:00",
+      "business_id": "UMKM-101",
+      "business_name": "Kedai Kopi Senja",
+      "owner_name": "Budi Santoso",
+      "business_type": "F&B",
+      "city": "Palembang",
+      "score": 782,
+      "grade": "A",
+      "requested_amount": 75000000,
+      "tenor_months": 24,
+      "product_id": "PRD-001",
+      "status": "Review",
+      "documents_complete_pct": 100,
+      "cashflow_status": "Sehat",
+      "risk_flags": [],
+      "last_action": "Review pengajuan",
+      "assigned_to": "Analyst Demo 01"
+    },
+    {
+      "id": "APP-0002",
+      "submitted_at": "2026-09-23T14:05:00+07:00",
+      "business_id": "UMKM-102",
+      "business_name": "Toko Berkah Mandiri",
+      "owner_name": "Sari Wulandari",
+      "business_type": "Retail",
+      "city": "Baturaja",
+      "score": 734,
+      "grade": "B+",
+      "requested_amount": 50000000,
+      "tenor_months": 18,
+      "product_id": "PRD-001",
+      "status": "Baru",
+      "documents_complete_pct": 80,
+      "cashflow_status": "Stabil",
+      "risk_flags": [
+        "Dokumen belum lengkap"
+      ],
+      "last_action": "Pengajuan baru",
+      "assigned_to": null
+    },
+    {
+      "id": "APP-0003",
+      "submitted_at": "2026-09-22T11:45:00+07:00",
+      "business_id": "UMKM-103",
+      "business_name": "Bengkel Maju Jaya",
+      "owner_name": "Rudi Hartono",
+      "business_type": "Otomotif",
+      "city": "Lubuklinggau",
+      "score": 688,
+      "grade": "B",
+      "requested_amount": 125000000,
+      "tenor_months": 36,
+      "product_id": "PRD-002",
+      "status": "Verifikasi Dokumen",
+      "documents_complete_pct": 65,
+      "cashflow_status": "Perlu Perhatian",
+      "risk_flags": [
+        "Arus kas 2 bulan menurun"
+      ],
+      "last_action": "Meminta dokumen tambahan",
+      "assigned_to": "Analyst Demo 02"
+    },
+    {
+      "id": "APP-0004",
+      "submitted_at": "2026-09-20T09:10:00+07:00",
+      "business_id": "UMKM-104",
+      "business_name": "Craft Rumah Kayu",
+      "owner_name": "Dewi Anggraini",
+      "business_type": "Craft",
+      "city": "Pangkalpinang",
+      "score": 810,
+      "grade": "A+",
+      "requested_amount": 200000000,
+      "tenor_months": 36,
+      "product_id": "PRD-003",
+      "status": "Disetujui",
+      "documents_complete_pct": 100,
+      "cashflow_status": "Sehat",
+      "risk_flags": [],
+      "last_action": "Disetujui (Demo)",
+      "assigned_to": "Analyst Demo 01"
+    },
+    {
+      "id": "APP-0005",
+      "submitted_at": "2026-09-18T16:20:00+07:00",
+      "business_id": "UMKM-105",
+      "business_name": "Laundry Cepat Wangi",
+      "owner_name": "Andi Pratama",
+      "business_type": "Jasa",
+      "city": "Prabumulih",
+      "score": 701,
+      "grade": "B",
+      "requested_amount": 35000000,
+      "tenor_months": 12,
+      "product_id": "PRD-001",
+      "status": "Disalurkan",
+      "documents_complete_pct": 100,
+      "cashflow_status": "Stabil",
+      "risk_flags": [],
+      "last_action": "Disalurkan (Demo)",
+      "assigned_to": "Analyst Demo 03"
+    },
+    {
+      "id": "APP-0006",
+      "submitted_at": "2026-09-17T13:00:00+07:00",
+      "business_id": "UMKM-106",
+      "business_name": "Warung Makan Pagi",
+      "owner_name": "Nina Permata",
+      "business_type": "F&B",
+      "city": "Sekayu",
+      "score": 642,
+      "grade": "C+",
+      "requested_amount": 40000000,
+      "tenor_months": 24,
+      "product_id": "PRD-001",
+      "status": "Ditolak",
+      "documents_complete_pct": 100,
+      "cashflow_status": "Perlu Perhatian",
+      "risk_flags": [
+        "Arus kas negatif berulang",
+        "Rasio pengeluaran tinggi"
+      ],
+      "last_action": "Ditolak (Demo)",
+      "assigned_to": "Analyst Demo 02"
+    }
+  ],
+  "umkm_profiles": [
+    {
+      "business_id": "UMKM-101",
+      "business_name": "Kedai Kopi Senja",
+      "business_type": "F&B",
+      "city": "Palembang",
+      "province": "Sumatera Selatan",
+      "years_operating": 4,
+      "monthly_revenue_est": 18250000,
+      "monthly_expense_est": 12100000,
+      "cash_balance_est": 24500000,
+      "score": 782,
+      "grade": "A",
+      "profile_completion_pct": 100,
+      "documents_completion_pct": 100,
+      "cashflow_status": "Sehat"
+    },
+    {
+      "business_id": "UMKM-102",
+      "business_name": "Toko Berkah Mandiri",
+      "business_type": "Retail",
+      "city": "Baturaja",
+      "province": "Sumatera Selatan",
+      "years_operating": 6,
+      "monthly_revenue_est": 32100000,
+      "monthly_expense_est": 24800000,
+      "cash_balance_est": 31500000,
+      "score": 734,
+      "grade": "B+",
+      "profile_completion_pct": 92,
+      "documents_completion_pct": 80,
+      "cashflow_status": "Stabil"
+    },
+    {
+      "business_id": "UMKM-103",
+      "business_name": "Bengkel Maju Jaya",
+      "business_type": "Otomotif",
+      "city": "Lubuklinggau",
+      "province": "Sumatera Selatan",
+      "years_operating": 7,
+      "monthly_revenue_est": 45500000,
+      "monthly_expense_est": 39100000,
+      "cash_balance_est": 18000000,
+      "score": 688,
+      "grade": "B",
+      "profile_completion_pct": 88,
+      "documents_completion_pct": 65,
+      "cashflow_status": "Perlu Perhatian"
+    },
+    {
+      "business_id": "UMKM-104",
+      "business_name": "Craft Rumah Kayu",
+      "business_type": "Craft",
+      "city": "Pangkalpinang",
+      "province": "Kepulauan Bangka Belitung",
+      "years_operating": 5,
+      "monthly_revenue_est": 67500000,
+      "monthly_expense_est": 43800000,
+      "cash_balance_est": 91000000,
+      "score": 810,
+      "grade": "A+",
+      "profile_completion_pct": 100,
+      "documents_completion_pct": 100,
+      "cashflow_status": "Sehat"
+    },
+    {
+      "business_id": "UMKM-105",
+      "business_name": "Laundry Cepat Wangi",
+      "business_type": "Jasa",
+      "city": "Prabumulih",
+      "province": "Sumatera Selatan",
+      "years_operating": 3,
+      "monthly_revenue_est": 23000000,
+      "monthly_expense_est": 16200000,
+      "cash_balance_est": 22000000,
+      "score": 701,
+      "grade": "B",
+      "profile_completion_pct": 96,
+      "documents_completion_pct": 100,
+      "cashflow_status": "Stabil"
+    }
+  ],
+  "financing_products": [
+    {
+      "id": "PRD-001",
+      "provider": "Bank Nusantara Demo",
+      "name": "Kredit Modal Usaha Demo",
+      "status": "active",
+      "min_amount": 10000000,
+      "max_amount": 100000000,
+      "tenor_options_months": [
+        12,
+        18,
+        24
+      ],
+      "estimated_fee_pct_month": 0.5,
+      "collateral": "Tanpa agunan tambahan",
+      "target_segment": "UMKM",
+      "applications_count": 548,
+      "approved_count": 184
+    },
+    {
+      "id": "PRD-002",
+      "provider": "Bank Nusantara Demo",
+      "name": "Kredit Pengembangan Usaha Demo",
+      "status": "active",
+      "min_amount": 50000000,
+      "max_amount": 500000000,
+      "tenor_options_months": [
+        24,
+        36,
+        48
+      ],
+      "estimated_fee_pct_month": 0.55,
+      "collateral": "Sesuai kebijakan demo",
+      "target_segment": "UMKM Growth",
+      "applications_count": 324,
+      "approved_count": 98
+    },
+    {
+      "id": "PRD-003",
+      "provider": "Fintech Nusantara Demo",
+      "name": "Invoice Financing Demo",
+      "status": "active",
+      "min_amount": 50000000,
+      "max_amount": 2000000000,
+      "tenor_options_months": [
+        1,
+        3,
+        6
+      ],
+      "estimated_fee_pct_month": 1.0,
+      "collateral": "Berbasis invoice",
+      "target_segment": "B2B",
+      "applications_count": 376,
+      "approved_count": 130
+    },
+    {
+      "id": "PRD-004",
+      "provider": "Bank Nusantara Demo",
+      "name": "Modal Kerja Seasonal Demo",
+      "status": "inactive",
+      "min_amount": 25000000,
+      "max_amount": 150000000,
+      "tenor_options_months": [
+        6,
+        12
+      ],
+      "estimated_fee_pct_month": 0.85,
+      "collateral": "Sesuai kebijakan demo",
+      "target_segment": "Seasonal",
+      "applications_count": 94,
+      "approved_count": 24
+    }
+  ],
+  "lead_quality": {
+    "total_leads": 1248,
+    "categories": [
+      {
+        "label": "A / Sangat Layak",
+        "count": 811,
+        "pct": 65
+      },
+      {
+        "label": "B / Perlu Review",
+        "count": 312,
+        "pct": 25
+      },
+      {
+        "label": "C / Perlu Perhatian",
+        "count": 125,
+        "pct": 10
+      }
+    ]
+  },
+  "reports": {
+    "approval_rate_pct": 33.0,
+    "disbursement_rate_pct": 21.5,
+    "average_requested_amount": 112500000,
+    "average_score": 742,
+    "monthly_disbursement": [
+      {
+        "month": "Apr",
+        "amount": 5210000000
+      },
+      {
+        "month": "May",
+        "amount": 6180000000
+      },
+      {
+        "month": "Jun",
+        "amount": 7040000000
+      },
+      {
+        "month": "Jul",
+        "amount": 7590000000
+      },
+      {
+        "month": "Aug",
+        "amount": 8010000000
+      },
+      {
+        "month": "Sep",
+        "amount": 8550000000
+      }
+    ]
+  },
+  "api_settings": {
+    "environment": "demo",
+    "base_url": "https://api-demo.sigap.test",
+    "connection": "connected_demo",
+    "last_tested_at": "2026-09-24T07:30:00+07:00",
+    "last_test_result": "success_demo",
+    "webhook": {
+      "enabled": true,
+      "status": "active_demo"
+    }
+  },
+  "audit_log": [
+    {
+      "id": "AUD-001",
+      "actor": "Bank Nusantara Demo",
+      "action": "Review Pengajuan",
+      "target": "APP-0001",
+      "timestamp": "2026-09-24T08:45:00+07:00"
+    },
+    {
+      "id": "AUD-002",
+      "actor": "Analyst Demo 01",
+      "action": "Approve Demo",
+      "target": "APP-0004",
+      "timestamp": "2026-09-20T11:20:00+07:00"
+    },
+    {
+      "id": "AUD-003",
+      "actor": "Analyst Demo 03",
+      "action": "Disburse Demo",
+      "target": "APP-0005",
+      "timestamp": "2026-09-19T10:00:00+07:00"
+    }
+  ]
+}

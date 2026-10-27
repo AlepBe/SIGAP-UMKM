@@ -1,0 +1,235 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// 1. AUTHENTICATION & RBAC
+// ==========================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String?
+  name          String?
+  phone         String?   @unique
+  role          Role      @default(UMKM_USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  business      Business?
+  lenderProfile LenderUser?
+  auditLogs     AuditLog[]
+}
+
+enum Role {
+  UMKM_USER
+  LENDER_USER
+  LENDER_ADMIN
+  PLATFORM_ADMIN
+  PLATFORM_OPERATOR
+}
+
+// ==========================================
+// 2. UMKM BUSINESS PROFILE
+// ==========================================
+
+model Business {
+  id             String    @id @default(cuid())
+  userId         String    @unique
+  user           User      @relation(fields: [userId], references: [id])
+  
+  businessName   String
+  nib            String?   @unique
+  businessType   String?   // e.g., "Perorangan", "PT", "CV"
+  sector         String?   // e.g., "F&B", "Retail"
+  establishmentYear Int?
+  address        String?
+  employeeCount  Int?      @default(1)
+  
+  // Relations
+  transactions   Transaction[]
+  creditScores   CreditScore[]
+  applications   FinancingApplication[]
+  documents      BusinessDocument[]
+  progress       LearningProgress[]
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model BusinessDocument {
+  id           String    @id @default(cuid())
+  businessId   String
+  business     Business  @relation(fields: [businessId], references: [id])
+  
+  documentType String    // e.g., "KTP", "NIB", "NPWP", "BANK_STATEMENT"
+  fileUrl      String
+  status       DocStatus @default(PENDING)
+  expiryDate   DateTime?
+
+  createdAt    DateTime  @default(now())
+}
+
+enum DocStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+// ==========================================
+// 3. MODUL A: PEMBUKUAN DIGITAL (TRANSACTIONS)
+// ==========================================
+
+model Transaction {
+  id            String    @id @default(cuid())
+  businessId    String
+  business      Business  @relation(fields: [businessId], references: [id])
+  
+  amount        Float
+  type          TxType    // INCOME or EXPENSE
+  category      String    // e.g., "Sales", "Raw Materials", "Rent"
+  date          DateTime  @default(now())
+  source        String    // e.g., "QRIS", "CASH", "BANK_TRANSFER"
+  notes         String?
+  
+  createdAt     DateTime  @default(now())
+}
+
+enum TxType {
+  INCOME
+  EXPENSE
+}
+
+// ==========================================
+// 4. MODUL B: SKOR KREDIT ALTERNATIF
+// ==========================================
+
+model CreditScore {
+  id            String    @id @default(cuid())
+  businessId    String
+  business      Business  @relation(fields: [businessId], references: [id])
+  
+  score         Int       // Range: 300 - 850
+  category      String    // e.g., "Excellent", "Good", "Fair"
+  calculatedAt  DateTime  @default(now())
+  factorsJson   String    // JSON storing positive/negative factors
+}
+
+// ==========================================
+// 5. MODUL C & E: LENDER & MARKETPLACE PEMBIAYAAN
+// ==========================================
+
+model Lender {
+  id             String    @id @default(cuid())
+  name           String
+  logoUrl        String?
+  legalStatus    String    // e.g., "Terverifikasi OJK"
+  licenseNumber  String?
+  type           String    // e.g., "Bank", "Fintech Lending", "Multifinance"
+  
+  users          LenderUser[]
+  products       FinancingProduct[]
+  
+  createdAt      DateTime  @default(now())
+}
+
+model LenderUser {
+  id         String @id @default(cuid())
+  userId     String @unique
+  user       User   @relation(fields: [userId], references: [id])
+  lenderId   String
+  lender     Lender @relation(fields: [lenderId], references: [id])
+}
+
+model FinancingProduct {
+  id               String    @id @default(cuid())
+  lenderId         String
+  lender           Lender    @relation(fields: [lenderId], references: [id])
+  
+  name             String
+  minAmount        Float
+  maxAmount        Float
+  minTenorMonths   Int
+  maxTenorMonths   Int
+  indicativeInterestRate Float // Annual percentage
+  collateralRequired Boolean @default(false)
+  requirementsJson String    // JSON list of required docs/criteria
+  status           ProductStatus @default(ACTIVE)
+  
+  applications     FinancingApplication[]
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  INACTIVE
+}
+
+model FinancingApplication {
+  id               String    @id @default(cuid())
+  businessId       String
+  business         Business  @relation(fields: [businessId], references: [id])
+  productId        String
+  product          FinancingProduct @relation(fields: [productId], references: [id])
+  
+  requestedAmount  Float
+  requestedTenor   Int
+  status           AppStatus @default(DRAFT)
+  
+  submittedAt      DateTime?
+  updatedAt        DateTime  @updatedAt
+}
+
+enum AppStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  NEED_DOCS
+  APPROVED
+  REJECTED
+  DISBURSED
+}
+
+// ==========================================
+// 6. MODUL D: LITERASI FINANSIAL
+// ==========================================
+
+model LearningModule {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  category    String
+  points      Int    @default(10)
+  
+  progress    LearningProgress[]
+}
+
+model LearningProgress {
+  id          String   @id @default(cuid())
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id])
+  moduleId    String
+  module      LearningModule @relation(fields: [moduleId], references: [id])
+  
+  completed   Boolean  @default(false)
+  score       Int?
+  completedAt DateTime?
+}
+
+// ==========================================
+// 7. SYSTEM & AUDIT
+// ==========================================
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  action      String
+  detailsJson String
+  createdAt   DateTime @default(now())
+}

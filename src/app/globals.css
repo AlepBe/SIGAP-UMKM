@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 216 100% 98%; /* Light blueish white for background */
+    --foreground: 213 100% 7%;  /* Deepest navy for text */
+
+    --card: 0 0% 100%;
+    --card-foreground: 213 100% 7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 213 100% 7%;
+
+    --primary: 213 40% 41%; /* #3F6593 */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 212 38% 54%; /* #5B86B6 */
+    --secondary-foreground: 213 100% 7%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 204 94% 87%; /* #C0E6FD */
+    --accent-foreground: 213 100% 7%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 213 40% 41%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 213 100% 7%; /* #000F22 */
+    --foreground: 210 40% 98%;
+
+    --card: 213 51% 15%; /* #1B3554 */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 213 51% 15%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 213 40% 41%; /* #3F6593 */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 212 38% 54%; /* #5B86B6 */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 213 51% 25%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 213 51% 25%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 213 51% 25%;
+    --input: 213 51% 25%;
+    --ring: 213 40% 41%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom Utilities for SIGAP Aesthetics */
+@layer utilities {
+  .glassmorphism {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-sigap-primary to-sigap-light;
+  }
+  .bg-navy-gradient {
+    @apply bg-gradient-to-br from-sigap-darkest to-sigap-dark;
+  }
+}
