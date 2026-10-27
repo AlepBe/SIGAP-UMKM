@@ -2,385 +2,389 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   ArrowRight, 
-  ShieldCheck, 
-  TrendingUp, 
-  Check, 
-  CheckCircle2, 
-  CreditCard, 
-  Building2, 
-  ArrowUpRight,
-  Activity,
-  Zap,
-  ChevronRight
+  ChevronRight, 
+  ChevronLeft,
+  Sparkles,
+  Layers,
+  Image as ImageIcon
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { publicDemoData } from "@/lib/public-demo-data";
-import { formatJuta, formatIDR } from "@/lib/format";
 
+const avatars = [
+  { src: "/images/avatar-1.jpg", alt: "Mitra UMKM 1", name: "Siti Rahma - Kuliner" },
+  { src: "/images/avatar-2.jpg", alt: "Mitra UMKM 2", name: "Budi Santoso - Retail" },
+  { src: "/images/avatar-3.jpg", alt: "Mitra UMKM 3", name: "Rina Wijaya - Fashion" },
+  { src: "/images/avatar-4.jpg", alt: "Mitra UMKM 4", name: "Ahmad Fauzi - Kopi" },
+];
+
+const pillars = [
+  {
+    id: "pembukuan",
+    title: "Pembukuan Digital",
+    highlight: "Digitalisasi Finansial",
+    subtitle: "Tarik otomatis data transaksi QRIS & merchant e-wallet menjadi laporan laba-rugi terstandar tanpa pencatatan manual yang melelahkan.",
+    badge: "Otomatis & Real-Time",
+  },
+  {
+    id: "skor",
+    title: "Skor Kredit SIGAP",
+    highlight: "Kelayakan Modal",
+    subtitle: "Ubah rekam jejak kas harian menjadi indikator skor kredit alternatif yang diakui mitra perbankan untuk membuka plafon pinjaman usaha.",
+    badge: "Grade A • Siap Bank",
+  },
+  {
+    id: "pembiayaan",
+    title: "Akses Modal Legal",
+    highlight: "Pertumbuhan Usaha",
+    subtitle: "Akses permodalan formal (KUR, modal kerja, invoice financing) yang terverifikasi legal OJK dengan simulasi transparan tanpa jebakan pinjol.",
+    badge: "Terproteksi Resmi OJK",
+  },
+];
+
+// All images requested by the user for the hero section
+const heroSlides = [
+  {
+    id: 1,
+    src: "/images/hero-umkm.jpg",
+    label: "Digitalisasi Penjualan",
+    tag: "GETI UMKM",
+  },
+  {
+    id: 2,
+    src: "/images/hero-umkm-workspace.png",
+    label: "Ruang Tumbuh Usaha",
+    tag: "Workspace",
+  },
+  {
+    id: 3,
+    src: "/images/hero-umkm-kompas.jpg",
+    label: "Sentra Transaksi Pasar",
+    tag: "Wirausaha",
+  },
+  {
+    id: 4,
+    src: "https://cdn-linkumkm.bri.co.id/uploads/library/1/8/2/0/6/5/182065.jpeg",
+    fallbackSrc: "/images/hero-umkm.jpg",
+    label: "Kemitraan Modal BRI",
+    tag: "LinkUMKM",
+  },
+];
+
+// Live transactions without the deleted 'Warung Bu Joko' item
 const liveTransactions = [
-  { id: 1, text: "QRIS Masuk", amount: "+Rp 125.000", time: "Baru saja", type: "income" },
-  { id: 2, text: "Pencairan E-Wallet", amount: "+Rp 850.000", time: "2 mnt lalu", type: "income" },
-  { id: 3, text: "Penjualan Kasir", amount: "+Rp 320.000", time: "5 mnt lalu", type: "income" },
-  { id: 4, text: "Bahan Baku Biji Kopi", amount: "-Rp 450.000", time: "12 mnt lalu", type: "expense" },
+  { text: "QRIS Masuk", merchant: "Kopi Nusantara", amount: "+Rp 185.000", time: "Baru saja" },
+  { text: "Pencairan E-Wallet", merchant: "Toko Sembako Barokah", amount: "+Rp 1.450.000", time: "1 mnt lalu" },
+  { text: "Pemasukan Kasir", merchant: "Batik Canting Solo", amount: "+Rp 420.000", time: "3 mnt lalu" },
+];
+
+const statsData = [
+  { value: "30k+", label: "Pelaku UMKM terhubung dan berkembang bersama di seluruh Indonesia." },
+  { value: "Rp 5.2 M", label: "Plafon pembiayaan resmi tersimulasikan secara transparan." },
+  { value: "98.6%", label: "Tingkat akurasi kelayakan laporan keuangan pembukuan digital." },
 ];
 
 export function HeroInteractive() {
-  const [activeTxIndex, setActiveTxIndex] = useState(0);
-  const [activeScoreTab, setActiveScoreTab] = useState<"cashflow" | "growth" | "matching">("cashflow");
+  const [activePillar, setActivePillar] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [txIndex, setTxIndex] = useState(0);
+  const [statIndex, setStatIndex] = useState(0);
+  const [imageError, setImageError] = useState<Record<number, boolean>>({});
 
+  // Auto cycle hero background image slide
+  useEffect(() => {
+    const slideTimer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 7000);
+    return () => clearInterval(slideTimer);
+  }, []);
+
+  // Auto cycle live ticker
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveTxIndex((prev) => (prev + 1) % liveTransactions.length);
-    }, 3500);
+      setTxIndex((prev) => (prev + 1) % liveTransactions.length);
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
-  const currentTx = liveTransactions[activeTxIndex];
-  const { score, metrics, business } = publicDemoData;
+  // Auto cycle stats
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setStatIndex((prev) => (prev + 1) % statsData.length);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, []);
+
+  const currentPillar = pillars[activePillar];
+  const currentSlide = heroSlides[activeSlide];
+  const currentTx = liveTransactions[txIndex];
+  const currentStat = statsData[statIndex];
 
   return (
-    <section className="relative overflow-hidden pt-8 pb-16 md:pt-14 md:pb-24">
-      {/* Background Decorative Mesh & Glows using exact sigap palette */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        {/* Top subtle blue glow */}
-        <div className="absolute -top-32 left-1/2 h-[480px] w-[750px] -translate-x-1/2 rounded-full bg-gradient-to-b from-sigap-light/40 via-sigap-soft/20 to-transparent blur-3xl" />
-        {/* Side ambient blob */}
-        <div className="absolute top-1/3 -right-40 h-96 w-96 rounded-full bg-sigap-secondary/15 blur-3xl animate-blob" />
-        <div className="absolute top-1/2 -left-40 h-96 w-96 rounded-full bg-sigap-primary/10 blur-3xl animate-blob [animation-delay:4s]" />
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-dot-grid opacity-60 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]" />
-      </div>
-
-      <div className="container relative z-10">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+    <section className="relative w-full pt-1 pb-8 sm:pb-12 bg-white">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* === FRAMED HERO CARD (Execora Style) === */}
+        <div className="relative min-h-[600px] sm:min-h-[640px] lg:min-h-[680px] xl:min-h-[720px] w-full rounded-[28px] sm:rounded-[36px] lg:rounded-[44px] overflow-hidden shadow-2xl shadow-slate-900/10 border border-slate-200/50 bg-sigap-darkest">
           
-          {/* Left Column: Core Value Proposition */}
-          <div className="lg:col-span-7 space-y-6 text-left">
-            {/* Live Status Indicator - Clean & Authentic */}
-            <motion.div 
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2.5 rounded-full border border-slate-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-semibold text-sigap-darkest shadow-xs"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
-              <span className="text-sigap-dark font-bold">Platform Terintegrasi</span>
-              <span className="h-3 w-px bg-slate-200" />
-              <span className="text-slate-600">Akses Finansial Formal UMKM</span>
-            </motion.div>
-
-            {/* Main Headline */}
-            <motion.h1 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-balance font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-bold tracking-tight text-sigap-darkest leading-[1.08]"
-            >
-              Ubah Data Transaksi Jadi{" "}
-              <span className="bg-gradient-to-r from-sigap-darkest via-sigap-primary to-sigap-secondary bg-clip-text text-transparent underline decoration-sigap-light decoration-4 underline-offset-8">
-                Kekuatan Usaha
-              </span>
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="max-w-xl text-base sm:text-lg text-slate-600 leading-relaxed font-normal"
-            >
-              Hubungkan QRIS & e-wallet otomatis, monitor skor kelayakan kredit real-time, 
-              dan buka pintu ke pembiayaan legal institusional terpercaya tanpa birokrasi rumit.
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap items-center gap-4 pt-2"
-            >
-              <Link href="/register">
-                <Button 
-                  size="lg" 
-                  className="rounded-full bg-sigap-darkest text-white hover:bg-sigap-dark h-13 px-8 text-base font-semibold shadow-lg shadow-sigap-darkest/15 transition-all hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 group"
-                >
-                  Mulai Sekarang Gratis
-                  <span className="ml-2.5 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/20 transition-transform group-hover:translate-x-1">
-                    <ArrowRight className="h-4 w-4 text-white" />
-                  </span>
-                </Button>
-              </Link>
-
-              <Link href="#demo">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="rounded-full border-slate-300 bg-white/90 text-sigap-darkest hover:bg-slate-50 hover:border-sigap-primary h-13 px-7 text-base font-semibold shadow-xs"
-                >
-                  <ArrowUpRight className="mr-2 h-4 w-4 text-sigap-primary" />
-                  Coba Demo Interaktif
-                </Button>
-              </Link>
-            </motion.div>
-
-            {/* Trust and Social Proof Badges */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="pt-4 flex flex-wrap items-center gap-6 text-xs text-slate-600 border-t border-slate-200/80"
-            >
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-emerald-600" />
-                <span className="font-medium text-slate-700">Terproteksi Sesuai Standar OJK</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-amber-500" />
-                <span className="font-medium text-slate-700">Analisis Otomatis 10 Detik</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-sigap-primary" />
-                <span className="font-medium text-slate-700">100% Produk Legal</span>
-              </div>
-            </motion.div>
+          {/* 1. BACKGROUND PHOTO WITH DYNAMIC CROSSFADE SLIDER */}
+          <div className="absolute inset-0 z-0">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide.id}
+                initial={{ opacity: 0, scale: 1.04 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={
+                    imageError[currentSlide.id] && currentSlide.fallbackSrc
+                      ? currentSlide.fallbackSrc
+                      : currentSlide.src
+                  }
+                  alt={currentSlide.label}
+                  fill
+                  priority
+                  sizes="(max-width: 1400px) 100vw, 1400px"
+                  className="object-cover object-right md:object-center select-none"
+                  onError={() => setImageError((prev) => ({ ...prev, [currentSlide.id]: true }))}
+                  unoptimized
+                />
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Right Column: Interactive Animated Bento Financial Hub */}
-          <div className="lg:col-span-5 relative">
-            
-            {/* Main Interactive Showcase Card */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative mx-auto max-w-lg rounded-3xl border border-white/60 bg-white/80 p-5 shadow-2xl shadow-sigap-primary/10 backdrop-blur-xl"
-            >
-              {/* Card Header with Business Identity & Simulated Status */}
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sigap-darkest text-white shadow-sm font-display font-bold text-sm">
-                    KS
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-sm text-sigap-darkest leading-tight">{business.name}</h4>
-                    <p className="text-xs text-slate-500">{business.business_type} • {business.city}</p>
-                  </div>
-                </div>
+          {/* 2. CREATIVE OVERLAY (Thinner & Main Color Palette: SIGAP Navy & Slate Blue) */}
+          <div className="absolute inset-0 z-10 hidden md:block bg-gradient-to-r from-sigap-darkest/75 via-sigap-dark/55 via-[42%] via-sigap-primary/20 via-[60%] to-transparent pointer-events-none" />
+          
+          {/* Soft Dynamic Organic Glows in Main Brand Colors */}
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.06, 1],
+              opacity: [0.65, 0.8, 0.65]
+            }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -left-20 -top-24 w-[720px] h-[720px] rounded-full bg-gradient-to-br from-sigap-dark/60 via-sigap-primary/30 to-transparent blur-3xl pointer-events-none z-10 hidden md:block" 
+          />
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.08, 1],
+              opacity: [0.55, 0.7, 0.55]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute -left-10 -bottom-20 w-[550px] h-[450px] rounded-full bg-gradient-to-tr from-sigap-darkest/70 via-sigap-dark/40 to-transparent blur-2xl pointer-events-none z-10 hidden md:block" 
+          />
+          
+          {/* Mobile Overlay: Gentle vertical gradient */}
+          <div className="absolute inset-0 z-10 md:hidden bg-gradient-to-t from-sigap-darkest/85 via-sigap-dark/55 via-[55%] to-transparent pointer-events-none" />
 
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 border border-emerald-200/60">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Profil Aktif
-                </div>
+          {/* Subtle vignette in bottom-right corner for stats card contrast */}
+          <div className="absolute inset-y-0 right-0 w-full sm:w-[45%] bg-gradient-to-l from-sigap-darkest/30 via-transparent to-transparent pointer-events-none z-10" />
+
+          {/* 3. HERO CONTENT CONTAINER */}
+          <div className="relative z-20 flex flex-col justify-between h-full min-h-[600px] sm:min-h-[640px] lg:min-h-[680px] xl:min-h-[720px] p-6 sm:p-10 md:p-14 lg:p-18">
+            
+            {/* Top row: Interactive Pillar Selector + Live Ticker */}
+            <div className="flex flex-wrap items-center justify-between gap-3 w-full">
+              
+              {/* Interactive Pillar Selector (Clickable Tabs) */}
+              <div className="inline-flex items-center gap-1.5 p-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 shadow-xs">
+                {pillars.map((pillar, idx) => {
+                  const isActive = activePillar === idx;
+                  return (
+                    <button
+                      key={pillar.id}
+                      onClick={() => setActivePillar(idx)}
+                      className={`relative rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all duration-300 ${
+                        isActive
+                          ? "text-slate-900 shadow-md"
+                          : "text-white/80 hover:text-white hover:bg-white/10"
+                      }`}
+                    >
+                      {isActive && (
+                        <motion.div
+                          layoutId="activePillarTab"
+                          className="absolute inset-0 rounded-full bg-white"
+                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        />
+                      )}
+                      <span className="relative z-10">{pillar.title}</span>
+                    </button>
+                  );
+                })}
               </div>
 
-              {/* Dynamic Interactive Metrics & Score Display */}
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                
-                {/* Score Card Component */}
-                <div className="rounded-2xl bg-gradient-to-br from-sigap-darkest to-sigap-dark p-4 text-white shadow-md relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 -mr-6 -mt-6 h-24 w-24 rounded-full bg-sigap-primary/30 blur-xl group-hover:bg-sigap-primary/50 transition-colors" />
-                  <p className="text-[11px] font-medium text-sigap-light/80 uppercase tracking-wider">Skor SIGAP</p>
-                  <div className="mt-1 flex items-baseline gap-1.5">
-                    <span className="font-display text-4xl font-extrabold tracking-tight text-white">{score.value}</span>
-                    <span className="text-xs text-sigap-light/70 font-medium">/{score.max}</span>
-                  </div>
-                  <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-sigap-yellow/20 px-2.5 py-0.5 text-[11px] font-bold text-amber-300 border border-sigap-yellow/35">
-                    <span className="h-1.5 w-1.5 rounded-full bg-sigap-yellow animate-pulse" />
-                    Grade {score.grade} • {score.label}
-                  </div>
-                  {/* Progress Bar with Yellow Accent */}
-                  <div className="mt-3 h-1.5 w-full rounded-full bg-white/20 overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${(score.value / score.max) * 100}%` }}
-                      transition={{ duration: 1.2, delay: 0.5 }}
-                      className="h-full rounded-full bg-gradient-to-r from-sigap-soft via-sigap-light to-sigap-yellow shadow-xs" 
+              {/* Floating Live Transaction Chip (Animative Ticker - without deleted item) */}
+              <div className="hidden sm:inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 px-3.5 py-1.5 text-xs text-white shadow-xs">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                </span>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentTx.merchant}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex items-center gap-2"
+                  >
+                    <span className="font-medium text-white/90">{currentTx.text}:</span>
+                    <span className="font-bold text-white">{currentTx.amount}</span>
+                    <span className="text-[11px] text-white/60">({currentTx.merchant})</span>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+            </div>
+
+            {/* Middle: Headline, Subtitle, CTA Button (Execora Style with Dynamic Motion) */}
+            <div className="my-auto py-6 sm:py-8 max-w-2xl">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentPillar.id}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.45 }}
+                >
+                  <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-bold text-white tracking-tight leading-[1.08] drop-shadow-[0_2px_12px_rgba(0,15,34,0.7)]">
+                    {currentPillar.highlight}<br />
+                    <span className="text-white">Pertumbuhan Nyata.</span>
+                  </h1>
+
+                  <p className="mt-5 sm:mt-6 text-base sm:text-lg text-white/95 font-normal leading-relaxed max-w-xl drop-shadow-[0_1px_6px_rgba(0,15,34,0.6)]">
+                    {currentPillar.subtitle}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* CTAs */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.65, delay: 0.2 }}
+                className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4"
+              >
+                {/* White Pill Button (Execora "Book a Call ->") */}
+                <Link href="/register">
+                  <button className="group relative inline-flex items-center gap-3 rounded-full bg-white px-7 py-3.5 sm:px-8 sm:py-4 text-base font-semibold text-slate-900 shadow-xl shadow-black/15 transition-all duration-300 hover:bg-slate-100 hover:shadow-2xl hover:scale-[1.03] active:scale-[0.98]">
+                    <span>Mulai Sekarang</span>
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 text-slate-900" />
+                  </button>
+                </Link>
+
+                <Link
+                  href="#demo"
+                  className="group inline-flex items-center gap-1.5 rounded-full px-5 py-3 text-sm font-semibold text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+                >
+                  <span>Lihat Demo Interaktif</span>
+                  <ChevronRight className="h-4 w-4 text-white/70 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </motion.div>
+            </div>
+
+            {/* Bottom Row: Interactive Image Slide Switcher Pills */}
+            <div className="flex items-center gap-2 pt-2">
+              <span className="text-[11px] font-medium text-white/60 mr-1 hidden sm:inline-block">
+                Galeri Visual UMKM:
+              </span>
+              <div className="flex items-center gap-1.5 p-1 rounded-full bg-black/40 backdrop-blur-md border border-white/15">
+                {heroSlides.map((slide, idx) => {
+                  const isCurrent = activeSlide === idx;
+                  return (
+                    <button
+                      key={slide.id}
+                      onClick={() => setActiveSlide(idx)}
+                      className={`group relative flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium transition-all duration-300 ${
+                        isCurrent
+                          ? "bg-white text-slate-950 font-semibold shadow-xs"
+                          : "text-white/70 hover:text-white hover:bg-white/10"
+                      }`}
+                      title={slide.label}
+                    >
+                      <span className={`h-1.5 w-1.5 rounded-full ${isCurrent ? "bg-sigap-primary" : "bg-white/40"}`} />
+                      <span className="hidden xs:inline">{slide.tag}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+          </div>
+
+          {/* 4. FLOATING STATS CARD (Execora Bottom-Right Card - Clickable & Animated) */}
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            onClick={() => setStatIndex((prev) => (prev + 1) % statsData.length)}
+            className="cursor-pointer group absolute bottom-6 right-6 sm:bottom-10 sm:right-10 z-20 max-w-[270px] sm:max-w-[310px] rounded-2xl sm:rounded-3xl bg-sigap-darkest/60 backdrop-blur-xl border border-white/20 p-4 sm:p-5 text-white shadow-2xl transition-all duration-300 hover:bg-sigap-darkest/75 hover:scale-[1.02] hover:border-white/30"
+            title="Klik untuk melihat statistik lainnya"
+          >
+            {/* Overlapping Avatars + Interactive Badge */}
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center -space-x-2.5">
+                {avatars.map((avatar, index) => (
+                  <div
+                    key={index}
+                    className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-full ring-2 ring-white/60 overflow-hidden bg-slate-200 transition-transform duration-200 group-hover:-translate-y-0.5"
+                    title={avatar.name}
+                  >
+                    <Image
+                      src={avatar.src}
+                      alt={avatar.alt}
+                      fill
+                      sizes="40px"
+                      className="object-cover"
+                      unoptimized
                     />
                   </div>
-                </div>
-
-                {/* Net Profit & Cashflow Pulse */}
-                <div className="rounded-2xl border border-sigap-primary/15 bg-sigap-light/30 p-4 flex flex-col justify-between">
-                  <div>
-                    <p className="text-[11px] font-semibold text-sigap-dark/80 uppercase tracking-wider">Laba Bersih</p>
-                    <p className="mt-1 font-display text-2xl font-bold text-sigap-darkest leading-none">
-                      Rp {formatJuta(metrics.netProfit)} jt
-                    </p>
-                    <div className="mt-1.5 flex items-center text-xs font-semibold text-emerald-600">
-                      <TrendingUp className="mr-1 h-3.5 w-3.5" />
-                      +28.4% bulan ini
-                    </div>
-                  </div>
-                  
-                  {/* Mini Visual Sparkline Wave */}
-                  <div className="mt-2 pt-2 border-t border-sigap-dark/10">
-                    <div className="flex items-center justify-between text-[10px] text-slate-500 font-medium">
-                      <span>Saldo Total</span>
-                      <span className="font-semibold text-sigap-darkest">Rp {formatJuta(metrics.totalBalance)} jt</span>
-                    </div>
-                  </div>
+                ))}
+                <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-sigap-primary ring-2 ring-white/60 text-white font-bold text-sm shadow-md transition-transform duration-200 group-hover:-translate-y-0.5">
+                  +
                 </div>
               </div>
 
-              {/* Interactive Tabs: Explore Score Breakdown */}
-              <div className="mt-4 rounded-2xl border border-slate-100 bg-slate-50/80 p-3">
-                <div className="flex gap-1 rounded-xl bg-slate-200/60 p-1 text-xs">
-                  <button
-                    onClick={() => setActiveScoreTab("cashflow")}
-                    className={`flex-1 rounded-lg py-1.5 text-center font-semibold transition-all ${
-                      activeScoreTab === "cashflow" 
-                        ? "bg-white text-sigap-darkest shadow-sm" 
-                        : "text-slate-600 hover:text-sigap-darkest"
+              {/* Indicator dots for stats */}
+              <div className="flex items-center gap-1 pl-2">
+                {statsData.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === statIndex ? "w-4 bg-sigap-light" : "w-1.5 bg-white/30"
                     }`}
-                  >
-                    Arus Kas
-                  </button>
-                  <button
-                    onClick={() => setActiveScoreTab("growth")}
-                    className={`flex-1 rounded-lg py-1.5 text-center font-semibold transition-all ${
-                      activeScoreTab === "growth" 
-                        ? "bg-white text-sigap-darkest shadow-sm" 
-                        : "text-slate-600 hover:text-sigap-darkest"
-                    }`}
-                  >
-                    Kredensial
-                  </button>
-                  <button
-                    onClick={() => setActiveScoreTab("matching")}
-                    className={`flex-1 rounded-lg py-1.5 text-center font-semibold transition-all ${
-                      activeScoreTab === "matching" 
-                        ? "bg-white text-sigap-darkest shadow-sm" 
-                        : "text-slate-600 hover:text-sigap-darkest"
-                    }`}
-                  >
-                    Peluang Modal
-                  </button>
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Bold Stats & Label with smooth animation */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStat.value}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center justify-between">
+                  <span>{currentStat.value}</span>
+                  <span className="text-[10px] font-medium text-white/50 uppercase tracking-wider group-hover:text-white/80 transition-colors">
+                    Klik Ganti ↻
+                  </span>
                 </div>
+                <p className="mt-1 text-xs text-white/85 leading-snug">
+                  {currentStat.label}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
 
-                {/* Tab Content Display with Animation */}
-                <div className="mt-3 text-xs">
-                  {activeScoreTab === "cashflow" && (
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="space-y-2"
-                    >
-                      <div className="flex justify-between items-center text-slate-700">
-                        <span className="flex items-center gap-1.5">
-                          <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                          Pemasukan Bulan Ini
-                        </span>
-                        <span className="font-bold text-emerald-700">{formatIDR(metrics.incomeThisMonth)}</span>
-                      </div>
-                      <div className="flex justify-between items-center text-slate-700">
-                        <span className="flex items-center gap-1.5">
-                          <span className="h-2 w-2 rounded-full bg-rose-400" />
-                          Pengeluaran Terkontrol
-                        </span>
-                        <span className="font-bold text-slate-800">{formatIDR(metrics.expenseThisMonth)}</span>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {activeScoreTab === "growth" && (
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="space-y-1.5"
-                    >
-                      <p className="font-medium text-slate-700">Faktor penentu skor saat ini:</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/60 px-2 py-0.5 font-medium text-[10px]">
-                          <Check className="h-3 w-3 text-emerald-600 stroke-[2.5]" /> Arus Kas Stabil
-                        </span>
-                        <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/60 px-2 py-0.5 font-medium text-[10px]">
-                          <Check className="h-3 w-3 text-emerald-600 stroke-[2.5]" /> Rasio Beban 66%
-                        </span>
-                        <span className="inline-flex items-center gap-1 rounded-md bg-blue-50 text-blue-800 border border-blue-200/60 px-2 py-0.5 font-medium text-[10px]">
-                          <Check className="h-3 w-3 text-blue-600 stroke-[2.5]" /> Modul Literasi Selesai
-                        </span>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {activeScoreTab === "matching" && (
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="flex items-center justify-between"
-                    >
-                      <div>
-                        <p className="font-bold text-sigap-darkest">Kredit Modal Usaha</p>
-                        <p className="text-[10px] text-slate-500">Plafon s/d Rp 500 Jt • Bunga 0.5%/bln</p>
-                      </div>
-                      <span className="rounded-full bg-sigap-yellow text-sigap-darkest px-3 py-1 font-bold text-[10px] shadow-xs">
-                        Sangat Cocok
-                      </span>
-                    </motion.div>
-                  )}
-                </div>
-              </div>
-
-              {/* Real-time Ticker Notification */}
-              <div className="mt-4 flex items-center justify-between rounded-xl border border-slate-200/70 bg-white p-2.5 shadow-sm">
-                <div className="flex items-center gap-2 overflow-hidden">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
-                    <Activity className="h-3.5 w-3.5" />
-                  </div>
-                  <AnimatePresence mode="wait">
-                    <motion.div 
-                      key={currentTx.id}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.3 }}
-                      className="flex items-center gap-2 truncate"
-                    >
-                      <span className="font-medium text-xs text-sigap-darkest truncate">{currentTx.text}</span>
-                      <span className={`text-xs font-bold ${currentTx.type === 'income' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                        {currentTx.amount}
-                      </span>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-                <span className="shrink-0 text-[10px] text-slate-400 pl-2">{currentTx.time}</span>
-              </div>
-            </motion.div>
-
-            {/* Floating Floating Accent Pill 1: Match Alert */}
-            <motion.div 
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="hidden sm:flex absolute -top-5 -left-6 items-center gap-3 rounded-2xl border border-white bg-white/95 p-3.5 shadow-xl shadow-sigap-darkest/10 backdrop-blur-md"
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sigap-primary text-white">
-                <Building2 className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-sigap-darkest">3 Mitra Pembiayaan Siap</p>
-                <p className="text-[11px] text-slate-500">Plafon hingga Rp 2 Miliar</p>
-              </div>
-              <ArrowUpRight className="h-4 w-4 text-sigap-primary ml-1" />
-            </motion.div>
-
-            {/* Floating Floating Accent Pill 2: Security Badge */}
-            <motion.div 
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="hidden sm:flex absolute -bottom-4 -right-4 items-center gap-2.5 rounded-full border border-white bg-sigap-darkest text-white px-4 py-2.5 shadow-xl shadow-sigap-darkest/20"
-            >
-              <ShieldCheck className="h-4 w-4 text-sigap-light" />
-              <span className="text-xs font-semibold">Anti-Pinjol Ilegal Verified</span>
-            </motion.div>
-
-          </div>
         </div>
       </div>
     </section>

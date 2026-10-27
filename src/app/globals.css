@@ -73,9 +73,16 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 }
 
@@ -100,7 +107,7 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200;
   }
   .bg-dot-grid {
-    background-image: radial-gradient(rgb(27 53 84 / 0.14) 1px, transparent 1px);
+    background-image: radial-gradient(rgb(27 53 84 / 0.12) 1px, transparent 1px);
     background-size: 24px 24px;
   }
   .bg-line-grid {
@@ -108,5 +115,36 @@
       linear-gradient(to right, rgb(192 230 253 / 0.08) 1px, transparent 1px),
       linear-gradient(to bottom, rgb(192 230 253 / 0.08) 1px, transparent 1px);
     background-size: 48px 48px;
+  }
+
+  /* Hostinger-style section transitions */
+  .section-fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section-fade-up.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* details/summary accordion smooth animation */
+details summary {
+  transition: color 0.2s ease;
+}
+
+details[open] summary ~ * {
+  animation: accordion-reveal 0.3s ease;
+}
+
+@keyframes accordion-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
