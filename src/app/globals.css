@@ -96,6 +96,9 @@
   .text-gradient-brand-light {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-sigap-soft via-sigap-light to-white;
   }
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200;
+  }
   .bg-dot-grid {
     background-image: radial-gradient(rgb(27 53 84 / 0.14) 1px, transparent 1px);
     background-size: 24px 24px;

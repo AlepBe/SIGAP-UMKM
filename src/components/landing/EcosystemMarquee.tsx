@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, ShieldCheck } from "lucide-react";
+import { Check, ShieldCheck } from "lucide-react";
 
 const channels = [
   { name: "QRIS Nasional", desc: "Standar Pembayaran BI" },
@@ -20,7 +20,7 @@ export function EcosystemMarquee() {
     <section className="relative border-y border-slate-200/80 bg-white/70 py-6 backdrop-blur-md overflow-hidden">
       <div className="container mb-3 flex flex-wrap items-center justify-between gap-4 text-xs">
         <div className="flex items-center gap-2">
-          <span className="flex h-2 w-2 rounded-full bg-sigap-primary" />
+          <span className="flex h-2 w-2 rounded-full bg-sigap-yellow" />
           <span className="font-bold uppercase tracking-wider text-sigap-darkest">
             Integrasi Multi-Saluran Transaksi
           </span>
@@ -37,8 +37,8 @@ export function EcosystemMarquee() {
               key={idx}
               className="flex shrink-0 items-center gap-3 rounded-2xl border border-slate-200/90 bg-white px-4 py-2.5 shadow-xs hover:border-sigap-primary/50 transition-colors"
             >
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sigap-light/40 text-sigap-primary font-display font-bold text-xs">
-                ✓
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sigap-light/50 text-sigap-darkest">
+                <Check className="h-3.5 w-3.5 text-sigap-primary stroke-[2.5]" />
               </div>
               <div>
                 <p className="text-xs font-bold text-sigap-darkest">{item.name}</p>

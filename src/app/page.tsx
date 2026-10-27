@@ -1,5 +1,8 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
+import { motion } from "motion/react";
 import { 
   Activity, 
   ArrowRight, 
@@ -13,7 +16,6 @@ import {
   TrendingUp, 
   Zap, 
   CheckCircle2, 
-  Sparkles,
   ArrowUpRight,
   Target
 } from "lucide-react";
@@ -23,6 +25,7 @@ import { InteractiveDemo } from "@/components/landing/InteractiveDemo";
 import { HeroInteractive } from "@/components/landing/HeroInteractive";
 import { EcosystemMarquee } from "@/components/landing/EcosystemMarquee";
 import { BentoShowcase } from "@/components/landing/BentoShowcase";
+import { WelcomeScreen } from "@/components/landing/WelcomeScreen";
 import { publicDemoData } from "@/lib/public-demo-data";
 import { PublicHeader } from "@/components/landing/PublicHeader";
 import { PublicFooter } from "@/components/landing/PublicFooter";
@@ -33,21 +36,21 @@ const modules = [
   {
     icon: BarChart3,
     title: "Pembukuan Otomatis",
-    badge: "Otomasi",
+    badge: "Otomasi Transaksi",
     desc: "Tarik data transaksi dari QRIS dan e-wallet secara instan menjadi laporan laba-rugi terstandar.",
     href: "/fitur#pembukuan",
   },
   {
     icon: Activity,
     title: "Skor Kredit Alternatif",
-    badge: "Algoritma AI",
+    badge: "Analisis Kas Cerdas",
     desc: "Evaluasi kesehatan kas berkala yang menghasilkan indikator kelayakan kredit terpercaya bagi bank.",
     href: "/fitur#skor",
   },
   {
     icon: Layers,
     title: "Marketplace Pembiayaan",
-    badge: "Terverifikasi",
+    badge: "Peluang Modal Terbaik",
     desc: "Bandingkan produk kredit mikro, modal kerja, dan invoice financing resmi yang sesuai kemampuan usaha.",
     href: "/pembiayaan",
     featured: true,
@@ -55,21 +58,21 @@ const modules = [
   {
     icon: BookOpen,
     title: "Literasi Finansial",
-    badge: "Edukasi",
+    badge: "Modul Edukasi",
     desc: "Tingkatkan kecakapan finansial praktis lewat modul microlearning yang langsung menambah poin skor Anda.",
     href: "/literasi",
   },
   {
     icon: ShieldCheck,
     title: "Legalitas & Proteksi",
-    badge: "Anti-Ilegal",
+    badge: "Verifikasi Izin",
     desc: "Verifikasi legalitas penawaran pinjaman dalam hitungan detik untuk mencegah jeratan pinjaman ilegal.",
     href: "/fitur#proteksi",
   },
   {
     icon: PieChart,
     title: "Ketahanan Usaha",
-    badge: "Simulasi",
+    badge: "Simulasi Runway",
     desc: "Simulasikan proyeksi runway dan skenario risiko ekonomi agar bisnis Anda selalu siap menghadapi krisis.",
     href: "/fitur#ketahanan",
   },
@@ -124,6 +127,9 @@ const faqs = [
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
+      {/* 0. Modern Minimalist Welcome Screen on First Load */}
+      <WelcomeScreen />
+
       {/* Navigation Header */}
       <PublicHeader />
 
@@ -137,12 +143,18 @@ export default function Home() {
         {/* 3. Interactive Bento Showcase (Cashflow, Loan Matcher, Security) */}
         <BentoShowcase />
 
-        {/* 4. Core Modules Grid with Visual Depth */}
+        {/* 4. Core Modules Grid with Staggered Motion */}
         <section className="container py-20 md:py-28">
-          <div className="mx-auto mb-16 max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-sigap-primary/20 bg-sigap-light/40 px-3 py-1 text-xs font-bold uppercase tracking-wider text-sigap-darkest mb-4">
-              <Sparkles className="h-3.5 w-3.5 text-sigap-primary" />
-              Arsitektur Solusi
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.55 }}
+            className="mx-auto mb-16 max-w-3xl text-center"
+          >
+            <div className="flex items-center justify-center gap-2 mb-3 text-xs font-bold uppercase tracking-[0.25em] text-sigap-primary">
+              <span className="h-1.5 w-1.5 rounded-full bg-sigap-yellow" />
+              <span>Solusi Skalabilitas Usaha</span>
             </div>
             <h2 className="text-balance font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-sigap-darkest leading-tight">
               Enam Solusi Terintegrasi Untuk{" "}
@@ -153,52 +165,65 @@ export default function Home() {
             <p className="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
               Setiap modul bekerja secara sinkron demi menyederhanakan operasional harian dan membangun profil kelayakan finansial bisnis Anda.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {modules.map((module) => {
+            {modules.map((module, index) => {
               const Icon = module.icon;
               return (
-                <Link
+                <motion.div
                   key={module.title}
-                  href={module.href}
-                  className={cn(
-                    "group relative flex flex-col justify-between rounded-3xl border p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl",
-                    module.featured
-                      ? "border-sigap-primary/40 bg-gradient-to-br from-white via-sigap-light/25 to-sigap-light/50 shadow-md shadow-sigap-primary/10"
-                      : "border-slate-200/90 bg-white hover:border-sigap-primary/40"
-                  )}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
+                  whileHover={{ y: -4 }}
                 >
-                  <div>
-                    <div className="flex items-center justify-between mb-6">
-                      <span className={cn(
-                        "grid h-13 w-13 place-items-center rounded-2xl shadow-sm transition-transform duration-300 group-hover:scale-110",
-                        module.featured 
-                          ? "bg-sigap-darkest text-white" 
-                          : "bg-sigap-light/60 text-sigap-darkest border border-sigap-primary/20"
-                      )}>
-                        <Icon className="h-6 w-6" aria-hidden="true" />
-                      </span>
-                      <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700 border border-slate-200">
-                        {module.badge}
-                      </span>
+                  <Link
+                    href={module.href}
+                    className={cn(
+                      "group relative flex flex-col justify-between h-full rounded-3xl border p-8 transition-all duration-300 hover:shadow-xl",
+                      module.featured
+                        ? "border-sigap-yellow/40 bg-gradient-to-br from-white via-amber-50/25 to-sigap-light/30 shadow-lg shadow-amber-500/5 hover:border-sigap-yellow"
+                        : "border-slate-200/90 bg-white hover:border-sigap-primary/40"
+                    )}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-6">
+                        <span className={cn(
+                          "grid h-13 w-13 place-items-center rounded-2xl shadow-sm transition-transform duration-300 group-hover:scale-110",
+                          module.featured 
+                            ? "bg-sigap-darkest text-white ring-2 ring-sigap-yellow/30" 
+                            : "bg-sigap-light/60 text-sigap-darkest border border-sigap-primary/20"
+                        )}>
+                          <Icon className="h-6 w-6" aria-hidden="true" />
+                        </span>
+                        <span className={cn(
+                          "rounded-full px-3 py-1 text-xs font-bold border",
+                          module.featured
+                            ? "bg-sigap-yellow-light text-sigap-yellow-dark border-sigap-yellow/40"
+                            : "bg-slate-100 text-slate-700 border-slate-200"
+                        )}>
+                          {module.badge}
+                        </span>
+                      </div>
+
+                      <h3 className="font-display text-xl font-bold text-sigap-darkest group-hover:text-sigap-primary transition-colors">
+                        {module.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-slate-600 font-normal">
+                        {module.desc}
+                      </p>
                     </div>
 
-                    <h3 className="font-display text-xl font-bold text-sigap-darkest group-hover:text-sigap-primary transition-colors">
-                      {module.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600 font-normal">
-                      {module.desc}
-                    </p>
-                  </div>
-
-                  <div className="mt-8 flex items-center justify-between pt-4 border-t border-slate-100 text-xs font-bold text-sigap-primary">
-                    <span>Pelajari Selengkapnya</span>
-                    <span className="grid h-8 w-8 place-items-center rounded-full bg-sigap-light/50 text-sigap-darkest transition-transform group-hover:translate-x-1 group-hover:bg-sigap-darkest group-hover:text-white">
-                      <ArrowRight className="h-4 w-4" />
-                    </span>
-                  </div>
-                </Link>
+                    <div className="mt-8 flex items-center justify-between pt-4 border-t border-slate-100 text-xs font-bold text-sigap-primary">
+                      <span>Pelajari Selengkapnya</span>
+                      <span className="grid h-8 w-8 place-items-center rounded-full bg-sigap-light/50 text-sigap-darkest transition-transform group-hover:translate-x-1 group-hover:bg-sigap-darkest group-hover:text-white">
+                        <ArrowRight className="h-4 w-4" />
+                      </span>
+                    </div>
+                  </Link>
+                </motion.div>
               );
             })}
           </div>
@@ -206,16 +231,22 @@ export default function Home() {
 
         {/* 5. Trust Metrics Banner with Rich Texture */}
         <section className="container pb-20 md:pb-28">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-sigap-darkest via-sigap-dark to-sigap-darkest p-8 text-white md:p-14 shadow-2xl border border-white/10">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-sigap-darkest via-sigap-dark to-sigap-darkest p-8 text-white md:p-14 shadow-2xl border border-white/10"
+          >
             {/* Visual ambient mesh */}
             <div className="absolute top-0 right-0 -mr-20 -mt-20 h-96 w-96 rounded-full bg-sigap-primary/25 blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 -ml-20 -mb-20 h-96 w-96 rounded-full bg-sigap-secondary/20 blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 -ml-20 -mb-20 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
 
             <div className="relative z-10 grid gap-10 md:grid-cols-12 md:items-center">
               <div className="md:col-span-6 space-y-4">
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-sigap-light border border-white/15">
-                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                  Dampak Nyata Ekosistem
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-sigap-yellow mb-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-sigap-yellow" />
+                  <span>Dampak Nyata Ekosistem</span>
                 </div>
                 <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-white">
                   Menjembatani Akses Finansial yang Adil & Transparan
@@ -231,7 +262,7 @@ export default function Home() {
                   <p className="mt-2 text-xs font-medium text-sigap-light/80">UMKM Simulasi</p>
                 </div>
                 <div className="rounded-2xl bg-white/10 p-5 backdrop-blur-md border border-white/10">
-                  <p className="font-display text-4xl sm:text-5xl font-bold text-white">{trustMetrics.transactions}</p>
+                  <p className="font-display text-4xl sm:text-5xl font-bold text-amber-300">{trustMetrics.transactions}</p>
                   <p className="mt-2 text-xs font-medium text-sigap-light/80">Transaksi Simulasi</p>
                 </div>
                 <div className="rounded-2xl bg-white/10 p-5 backdrop-blur-md border border-white/10">
@@ -240,16 +271,22 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* 6. Step-by-Step Workflow (How It Works) */}
         <section className="container pb-20 md:pb-28">
           <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
-            <div className="lg:col-span-5 space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-sigap-primary/20 bg-sigap-light/40 px-3 py-1 text-xs font-bold uppercase tracking-wider text-sigap-darkest">
-                <Target className="h-3.5 w-3.5 text-sigap-primary" />
-                Alur Kerja Mudah
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.55 }}
+              className="lg:col-span-5 space-y-6"
+            >
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-sigap-primary mb-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-sigap-yellow" />
+                <span>Alur Kerja Praktis</span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-sigap-darkest leading-tight">
                 Empat Langkah Menuju Kesiapan Finansial
@@ -265,15 +302,20 @@ export default function Home() {
                   </Button>
                 </Link>
               </div>
-            </div>
+            </motion.div>
 
             <div className="lg:col-span-7 space-y-4">
-              {steps.map((step) => (
-                <div 
+              {steps.map((step, idx) => (
+                <motion.div 
                   key={step.number}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.45, delay: idx * 0.1 }}
+                  whileHover={{ x: 4 }}
                   className="group flex gap-6 rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm hover:border-sigap-primary/50 hover:shadow-md transition-all"
                 >
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sigap-light/60 font-display text-lg font-bold text-sigap-darkest group-hover:bg-sigap-primary group-hover:text-white transition-colors">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sigap-light/60 font-display text-lg font-bold text-sigap-darkest group-hover:bg-sigap-darkest group-hover:text-white transition-colors">
                     {step.number}
                   </span>
                   <div>
@@ -284,7 +326,7 @@ export default function Home() {
                       {step.desc}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -292,14 +334,20 @@ export default function Home() {
 
         {/* 7. Full Interactive Demo Preview Section */}
         <section id="demo" className="container scroll-mt-24 pb-20 md:pb-28">
-          <div className="relative overflow-hidden rounded-3xl bg-sigap-darkest p-6 md:p-12 shadow-2xl border border-white/10">
+          <motion.div 
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="relative overflow-hidden rounded-3xl bg-sigap-darkest p-6 md:p-12 shadow-2xl border border-white/10"
+          >
             {/* Visual Accent */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 h-80 w-[600px] rounded-full bg-sigap-primary/20 blur-3xl pointer-events-none" />
 
             <div className="relative z-10 mx-auto mb-10 max-w-3xl text-center text-white">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-sigap-light border border-white/15 mb-4">
-                <Sparkles className="h-3.5 w-3.5 text-sigap-light" />
-                Live Demo Dashboard
+              <div className="flex items-center justify-center gap-2 mb-3 text-xs font-bold uppercase tracking-[0.25em] text-sigap-yellow">
+                <span className="h-1.5 w-1.5 rounded-full bg-sigap-yellow" />
+                <span>Eksplorasi Dashboard</span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
                 Uji Coba Langsung Dashboard SIGAP
@@ -312,23 +360,29 @@ export default function Home() {
             <div className="relative z-10 mx-auto max-w-6xl">
               <InteractiveDemo />
             </div>
-          </div>
+          </motion.div>
         </section>
 
-        {/* 8. Premium Upgrade Teaser */}
+        {/* 8. Premium Upgrade Teaser with Rich Gold/Amber Tone */}
         <section className="container pb-20 md:pb-28">
-          <div className="rounded-3xl border border-slate-200/90 bg-gradient-to-br from-white via-slate-50 to-sigap-light/20 p-8 md:p-14 shadow-xl">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="rounded-3xl border border-slate-200/90 bg-gradient-to-br from-white via-slate-50 to-sigap-light/20 p-8 md:p-14 shadow-xl"
+          >
             <div className="grid items-center gap-10 lg:grid-cols-12">
               <div className="lg:col-span-7 space-y-5">
-                <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-800 px-3.5 py-1 text-xs font-bold border border-amber-200">
-                  <Crown className="h-4 w-4 text-amber-600" />
+                <div className="inline-flex items-center gap-2 rounded-lg bg-sigap-yellow-light text-sigap-yellow-dark px-3.5 py-1 text-xs font-bold uppercase tracking-wider border border-sigap-yellow/30">
+                  <Crown className="h-4 w-4 text-sigap-yellow-dark" />
                   SIGAP Premium Edition
                 </div>
                 <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-sigap-darkest leading-tight">
                   Tingkatkan Visibilitas Bisnis ke Tingkat Maksimal
                 </h2>
                 <p className="text-base text-slate-600 leading-relaxed font-normal">
-                  Akses analitik mendalam, proyeksi cashflow berbasis kecerdasan buatan, dan simulasi daya tahan bisnis terhadap krisis likuiditas.
+                  Akses analitik mendalam, proyeksi cashflow terotomasi, dan simulasi daya tahan bisnis terhadap krisis likuiditas.
                 </p>
                 <div className="pt-2">
                   <Link href="/premium">
@@ -352,14 +406,14 @@ export default function Home() {
                   </ul>
                 </div>
 
-                <div className="rounded-2xl border-2 border-amber-400 bg-gradient-to-b from-amber-50/50 to-white p-6 shadow-md relative overflow-hidden">
-                  <div className="absolute top-0 right-0 bg-amber-400 text-amber-950 font-bold text-[9px] uppercase tracking-wider px-3 py-0.5 rounded-bl-lg">
+                <div className="rounded-2xl border-2 border-sigap-yellow bg-gradient-to-b from-amber-500/10 via-amber-50/20 to-white p-6 shadow-xl shadow-amber-500/10 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-sigap-yellow text-sigap-darkest font-extrabold text-[9px] uppercase tracking-wider px-3 py-0.5 rounded-bl-lg shadow-xs">
                     Populer
                   </div>
-                  <p className="font-bold text-xs uppercase tracking-wider text-amber-700">Premium</p>
+                  <p className="font-bold text-xs uppercase tracking-wider text-sigap-yellow-dark">Premium</p>
                   <p className="font-display text-2xl font-bold text-sigap-darkest mt-1">Full Akses</p>
                   <ul className="mt-4 space-y-2.5 text-xs font-semibold text-sigap-darkest">
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-amber-600" /> Prediksi Arus Kas AI</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-amber-600" /> Prediksi Arus Kas Otomatis</li>
                     <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-amber-600" /> Simulator Ketahanan</li>
                     <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-amber-600" /> Laporan Finansial Bank</li>
                     <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-amber-600" /> Prioritas Pembiayaan</li>
@@ -367,15 +421,16 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* 9. Interactive FAQ Accordion */}
         <section className="container pb-20 md:pb-28">
           <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
             <div className="lg:col-span-5 space-y-4">
-              <div className="inline-flex items-center gap-2 rounded-full border border-sigap-primary/20 bg-sigap-light/40 px-3 py-1 text-xs font-bold uppercase tracking-wider text-sigap-darkest">
-                Tanya Jawab
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-sigap-primary mb-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-sigap-yellow" />
+                <span>Informasi & Bantuan</span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-sigap-darkest leading-tight">
                 Pertanyaan yang Sering Diajukan
@@ -407,16 +462,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 10. High-Impact Call to Action Banner */}
+        {/* 10. High-Impact Call to Action Banner with Warm Gold Button */}
         <section className="container pb-20 md:pb-28">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-sigap-darkest via-sigap-dark to-sigap-primary px-8 py-16 text-white md:px-16 md:py-20 shadow-2xl border border-white/15 text-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-sigap-darkest via-sigap-dark to-sigap-primary px-8 py-16 text-white md:px-16 md:py-20 shadow-2xl border border-white/15 text-center"
+          >
             {/* Visual shine accents */}
-            <div className="absolute top-0 right-1/4 h-80 w-80 rounded-full bg-sigap-light/15 blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-1/4 h-80 w-80 rounded-full bg-amber-400/10 blur-3xl pointer-events-none" />
 
             <div className="relative z-10 mx-auto max-w-3xl space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-bold text-sigap-light border border-white/20">
-                <Sparkles className="h-3.5 w-3.5 text-sigap-light" />
-                Mulai Kelola Usaha Anda Hari Ini
+              <div className="flex items-center justify-center gap-2 mb-4 text-xs font-bold uppercase tracking-[0.25em] text-sigap-yellow">
+                <span className="h-1.5 w-1.5 rounded-full bg-sigap-yellow" />
+                <span>Mulai Langkah Pertama</span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
                 Siap Melangkah Menuju Pembiayaan Usaha Formal?
@@ -427,7 +488,7 @@ export default function Home() {
               
               <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
                 <Link href="/register">
-                  <Button size="lg" className="rounded-full bg-white text-sigap-darkest hover:bg-slate-100 font-bold px-9 h-13 shadow-xl transition-transform hover:scale-105 active:scale-95">
+                  <Button size="lg" className="rounded-full bg-sigap-yellow text-sigap-darkest hover:bg-amber-400 font-bold px-9 h-13 shadow-xl transition-transform hover:scale-105 active:scale-95">
                     Daftar Sekarang — Gratis
                     <ArrowRight className="ml-2 h-4 w-4 text-sigap-darkest" />
                   </Button>
@@ -443,7 +504,7 @@ export default function Home() {
                 Tanpa biaya pendaftaran • Pembukuan instan • Terproteksi keamanan berlapis
               </p>
             </div>
-          </div>
+          </motion.div>
         </section>
       </main>
 

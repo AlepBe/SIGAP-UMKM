@@ -20,7 +20,7 @@ const config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -35,6 +35,11 @@ const config = {
           secondary: "#5B86B6",
           soft: "#80AAD3",
           light: "#C0E6FD",
+          // Harmonious warm fintech amber-gold yellow
+          yellow: "#F59E0B",
+          "yellow-light": "#FEF3C7",
+          "yellow-dark": "#B45309",
+          "yellow-accent": "#FBBF24",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",

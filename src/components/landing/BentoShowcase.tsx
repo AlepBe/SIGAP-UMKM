@@ -8,7 +8,6 @@ import {
   ArrowRight, 
   ShieldCheck, 
   Layers, 
-  Sparkles, 
   DollarSign, 
   Award,
   CheckCircle2,
@@ -41,11 +40,11 @@ export function BentoShowcase() {
       </div>
 
       <div className="container relative z-10">
-        {/* Section Header */}
+        {/* Section Header - Clean & Editorial without AI slop badge */}
         <div className="mx-auto mb-14 max-w-3xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-sigap-primary/20 bg-sigap-light/40 px-3 py-1 text-xs font-bold uppercase tracking-wider text-sigap-darkest mb-4">
-            <Sparkles className="h-3.5 w-3.5 text-sigap-primary" />
-            Fitur Unggulan Terintegrasi
+          <div className="flex items-center justify-center gap-2 mb-3 text-xs font-bold uppercase tracking-[0.25em] text-sigap-primary">
+            <span className="h-1.5 w-1.5 rounded-full bg-sigap-yellow" />
+            <span>Kapabilitas Finansial Utama</span>
           </div>
           <h2 className="text-balance font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-sigap-darkest leading-tight">
             Satu Ekosistem Cerdas Untuk Seluruh{" "}
@@ -167,7 +166,7 @@ export function BentoShowcase() {
                     onClick={() => setSelectedAmount(amt)}
                     className={`rounded-xl py-2 px-1 text-center font-display font-bold text-xs transition-all border ${
                       selectedAmount === amt
-                        ? "bg-sigap-darkest text-white border-sigap-darkest shadow-md"
+                        ? "bg-sigap-darkest text-white border-sigap-yellow ring-2 ring-sigap-yellow/40 shadow-md"
                         : "bg-slate-50 text-slate-700 border-slate-200 hover:border-sigap-primary"
                     }`}
                   >
@@ -187,7 +186,7 @@ export function BentoShowcase() {
                       {matchedProduct.name}
                     </h4>
                   </div>
-                  <span className="rounded-full bg-emerald-600 text-white text-[11px] font-bold px-2.5 py-0.5">
+                  <span className="rounded-full bg-sigap-yellow text-sigap-darkest text-[11px] font-extrabold px-3 py-0.5 shadow-xs">
                     {matchedProduct.profileMatching}
                   </span>
                 </div>
@@ -264,7 +263,11 @@ export function BentoShowcase() {
             <div className="mt-6 rounded-2xl bg-sigap-light/30 p-4 border border-sigap-primary/15 flex items-center justify-between text-xs">
               <div>
                 <span className="font-semibold text-sigap-darkest">Level Literasi: Menengah</span>
-                <p className="text-[11px] text-slate-500 mt-0.5">+50 Poin Skor Ditambahkan</p>
+                <div className="mt-1">
+                  <span className="inline-block rounded-md bg-sigap-yellow/20 text-sigap-yellow-dark px-2 py-0.5 font-bold text-[10px] border border-sigap-yellow/30">
+                    +50 Poin Skor Ditambahkan
+                  </span>
+                </div>
               </div>
               <Link href="/literasi">
                 <Button variant="outline" size="sm" className="rounded-full border-sigap-primary text-sigap-primary hover:bg-sigap-primary hover:text-white font-semibold text-xs">

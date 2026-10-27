@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { PublicHeader } from '@/components/landing/PublicHeader';
 import { PublicFooter } from '@/components/landing/PublicFooter';
 import { Button } from '@/components/ui/button';
-import { Crown, CheckCircle2, TrendingUp, LineChart, ShieldAlert, Sparkles, FileText, BellRing, History, Loader2, ArrowRight, PauseCircle, XCircle } from 'lucide-react';
+import { Crown, CheckCircle2, TrendingUp, LineChart, ShieldAlert, Activity, FileText, BellRing, History, Loader2, ArrowRight, PauseCircle, XCircle } from 'lucide-react';
 import { subscriptionDemoData } from '@/lib/subscription-demo-data';
 import { useSubscription } from '@/lib/context/SubscriptionContext';
 import { useRouter } from 'next/navigation';
@@ -187,7 +187,7 @@ export default function PremiumPage() {
                 { icon: <TrendingUp />, title: "Advanced Financial Analytics", desc: "Analisis tren omzet, profit margin, dan expense breakdown." },
                 { icon: <LineChart />, title: "Cashflow Forecast", desc: "Proyeksi 3, 6, hingga 12 bulan ke depan." },
                 { icon: <ShieldAlert />, title: "Business Resilience Simulator", desc: "Simulasi skenario normal, krisis, dan custom." },
-                { icon: <Sparkles />, title: "Smart Financial Insights", desc: "Insight otomatis dari pola pengeluaran dan pemasukan." },
+                { icon: <Activity />, title: "Smart Financial Insights", desc: "Insight otomatis dari pola pengeluaran dan pemasukan." },
                 { icon: <Crown />, title: "Advanced Financing Matching", desc: "Perbandingan dan kecocokan profil pembiayaan yang lebih detail." },
                 { icon: <FileText />, title: "Advanced Reports", desc: "Laporan kesehatan finansial dan kesiapan pembiayaan." },
                 { icon: <History />, title: "Extended History", desc: "Akses riwayat transaksi dan data hingga lebih dari 12 bulan." },

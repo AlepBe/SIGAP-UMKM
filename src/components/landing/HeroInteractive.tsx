@@ -7,7 +7,7 @@ import {
   ArrowRight, 
   ShieldCheck, 
   TrendingUp, 
-  Sparkles, 
+  Check, 
   CheckCircle2, 
   CreditCard, 
   Building2, 
@@ -59,20 +59,20 @@ export function HeroInteractive() {
           
           {/* Left Column: Core Value Proposition */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            {/* Live Status Badge */}
+            {/* Live Status Indicator - Clean & Authentic */}
             <motion.div 
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2.5 rounded-full border border-sigap-primary/25 bg-white/90 px-3.5 py-1.5 text-xs font-semibold text-sigap-darkest shadow-sm backdrop-blur-md"
+              className="inline-flex items-center gap-2.5 rounded-full border border-slate-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-semibold text-sigap-darkest shadow-xs"
             >
-              <span className="relative flex h-2.5 w-2.5">
+              <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="text-sigap-primary font-bold">SIGAP Gateway 2.0</span>
-              <span className="h-3 w-px bg-slate-300" />
-              <span className="text-slate-600">Simulasi Ekosistem Finansial UMKM</span>
+              <span className="text-sigap-dark font-bold">Platform Terintegrasi</span>
+              <span className="h-3 w-px bg-slate-200" />
+              <span className="text-slate-600">Akses Finansial Formal UMKM</span>
             </motion.div>
 
             {/* Main Headline */}
@@ -122,9 +122,9 @@ export function HeroInteractive() {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="rounded-full border-sigap-primary/30 bg-white/80 text-sigap-darkest hover:bg-sigap-light/30 hover:border-sigap-primary h-13 px-7 text-base font-semibold shadow-sm backdrop-blur-sm"
+                  className="rounded-full border-slate-300 bg-white/90 text-sigap-darkest hover:bg-slate-50 hover:border-sigap-primary h-13 px-7 text-base font-semibold shadow-xs"
                 >
-                  <Sparkles className="mr-2 h-4 w-4 text-sigap-primary" />
+                  <ArrowUpRight className="mr-2 h-4 w-4 text-sigap-primary" />
                   Coba Demo Interaktif
                 </Button>
               </Link>
@@ -191,16 +191,17 @@ export function HeroInteractive() {
                     <span className="font-display text-4xl font-extrabold tracking-tight text-white">{score.value}</span>
                     <span className="text-xs text-sigap-light/70 font-medium">/{score.max}</span>
                   </div>
-                  <div className="mt-2 inline-flex items-center gap-1 rounded-md bg-white/10 px-2 py-0.5 text-[11px] font-medium text-emerald-300">
+                  <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-sigap-yellow/20 px-2.5 py-0.5 text-[11px] font-bold text-amber-300 border border-sigap-yellow/35">
+                    <span className="h-1.5 w-1.5 rounded-full bg-sigap-yellow animate-pulse" />
                     Grade {score.grade} • {score.label}
                   </div>
-                  {/* Progress Bar */}
+                  {/* Progress Bar with Yellow Accent */}
                   <div className="mt-3 h-1.5 w-full rounded-full bg-white/20 overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${(score.value / score.max) * 100}%` }}
                       transition={{ duration: 1.2, delay: 0.5 }}
-                      className="h-full rounded-full bg-gradient-to-r from-sigap-soft to-sigap-light" 
+                      className="h-full rounded-full bg-gradient-to-r from-sigap-soft via-sigap-light to-sigap-yellow shadow-xs" 
                     />
                   </div>
                 </div>
@@ -296,14 +297,14 @@ export function HeroInteractive() {
                     >
                       <p className="font-medium text-slate-700">Faktor penentu skor saat ini:</p>
                       <div className="flex flex-wrap gap-1.5">
-                        <span className="rounded-md bg-emerald-100 text-emerald-800 px-2 py-0.5 font-medium text-[10px]">
-                          ✓ Arus Kas Stabil
+                        <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/60 px-2 py-0.5 font-medium text-[10px]">
+                          <Check className="h-3 w-3 text-emerald-600 stroke-[2.5]" /> Arus Kas Stabil
                         </span>
-                        <span className="rounded-md bg-emerald-100 text-emerald-800 px-2 py-0.5 font-medium text-[10px]">
-                          ✓ Rasio Beban 66%
+                        <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/60 px-2 py-0.5 font-medium text-[10px]">
+                          <Check className="h-3 w-3 text-emerald-600 stroke-[2.5]" /> Rasio Beban 66%
                         </span>
-                        <span className="rounded-md bg-blue-100 text-blue-800 px-2 py-0.5 font-medium text-[10px]">
-                          ✓ Modul Literasi Selesai
+                        <span className="inline-flex items-center gap-1 rounded-md bg-blue-50 text-blue-800 border border-blue-200/60 px-2 py-0.5 font-medium text-[10px]">
+                          <Check className="h-3 w-3 text-blue-600 stroke-[2.5]" /> Modul Literasi Selesai
                         </span>
                       </div>
                     </motion.div>
@@ -319,7 +320,7 @@ export function HeroInteractive() {
                         <p className="font-bold text-sigap-darkest">Kredit Modal Usaha</p>
                         <p className="text-[10px] text-slate-500">Plafon s/d Rp 500 Jt • Bunga 0.5%/bln</p>
                       </div>
-                      <span className="rounded-full bg-sigap-primary text-white px-2.5 py-1 font-semibold text-[10px]">
+                      <span className="rounded-full bg-sigap-yellow text-sigap-darkest px-3 py-1 font-bold text-[10px] shadow-xs">
                         Sangat Cocok
                       </span>
                     </motion.div>
