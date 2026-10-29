@@ -1,16 +1,20 @@
 "use client";
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   RefreshCw, Activity, CheckCircle2, 
   Copy, Eye, EyeOff, ShieldCheck, Key, Server, 
-  AlertTriangle, Check
+  AlertTriangle, Check, LogOut
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLenderDemo } from '@/lib/context/LenderContext';
+import { useAuth } from '@/lib/context/AuthContext';
 
 export default function SettingsPage() {
+  const { logout } = useAuth();
+  const router = useRouter();
   const { resetData } = useLenderDemo();
   const [isTesting, setIsTesting] = useState(false);
   const [testResult, setTestResult] = useState<string | null>(null);
@@ -48,6 +52,11 @@ export default function SettingsPage() {
     setIsResetModalOpen(false);
     setResetSuccessToast(true);
     setTimeout(() => setResetSuccessToast(false), 3500);
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.replace('/login');
   };
 
   return (
@@ -246,6 +255,25 @@ export default function SettingsPage() {
             <RefreshCw className="w-3.5 h-3.5 mr-2" /> Reset Data Demo
           </Button>
         </div>
+      </motion.div>
+
+      {/* Logout Card */}
+      <motion.div 
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="bg-rose-50/70 border border-rose-200/80 rounded-3xl p-6 md:p-8 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm"
+      >
+        <div>
+          <h3 className="font-display font-extrabold text-rose-950 text-base">Keluar dari Workspace Partner</h3>
+          <p className="text-xs text-rose-800/80 mt-0.5">Sesi lender Anda akan diakhiri dan dialihkan kembali ke halaman masuk.</p>
+        </div>
+        <Button 
+          onClick={handleLogout} 
+          className="bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-2xl text-xs px-6 py-2.5 w-full sm:w-auto shadow-sm cursor-pointer"
+        >
+          <LogOut className="w-4 h-4 mr-2" /> Keluar dari Sistem
+        </Button>
       </motion.div>
 
       {/* Confirmation Modal for Reset */}

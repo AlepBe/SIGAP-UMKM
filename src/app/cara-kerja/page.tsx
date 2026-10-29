@@ -153,18 +153,18 @@ export default function CaraKerjaPage() {
         </section>
 
         {/* Dedicated CTA Section */}
-        <section className="py-20 bg-white border-t border-slate-100 text-center relative z-10">
+        <section className="py-16 sm:py-20 bg-white border-t border-slate-100 text-center relative z-10 px-4">
           <div className="container max-w-2xl mx-auto space-y-6">
-            <h2 className="text-3xl font-display font-extrabold text-sigap-darkest">
+            <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-sigap-darkest">
               Siap Memulai Transformasi Finansial Usaha Anda?
             </h2>
-            <p className="text-slate-500 text-sm">
+            <p className="text-slate-500 text-xs sm:text-sm">
               Tingkatkan kelayakan kredit dan kelola pembukuan usaha Anda tanpa ribet mulai hari ini.
             </p>
             <div className="pt-2">
               <Link href="/register">
-                <Button size="lg" className="h-14 px-10 text-base font-bold shadow-xl bg-sigap-primary text-white hover:bg-sigap-primary/90 rounded-2xl">
-                  Mulai Gunakan SIGAP <ArrowRight className="ml-2 w-5 h-5" />
+                <Button size="lg" className="w-full sm:w-auto h-12 sm:h-14 px-6 sm:px-10 text-sm sm:text-base font-bold shadow-xl bg-sigap-primary text-white hover:bg-sigap-primary/90 rounded-2xl">
+                  Mulai Gunakan SIGAP <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </Link>
             </div>

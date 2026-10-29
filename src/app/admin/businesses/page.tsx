@@ -64,7 +64,8 @@ export default function AdminBusinessesPage() {
       </div>
 
       <div className="bg-white border rounded-2xl shadow-sm overflow-hidden">
-        <table className="w-full text-left text-sm">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm min-w-[700px]">
           <thead className="bg-gray-50 text-gray-500 text-xs uppercase font-bold border-b">
             <tr>
               <th className="px-6 py-4">Nama Usaha / Pemilik</th>
@@ -115,6 +116,7 @@ export default function AdminBusinessesPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

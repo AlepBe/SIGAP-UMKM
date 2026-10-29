@@ -157,7 +157,7 @@ export default function ResiliencePage() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="rounded-3xl bg-gradient-to-br from-sigap-darkest via-sigap-dark to-sigap-darkest p-8 text-white shadow-2xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8"
+            className="rounded-3xl bg-gradient-to-br from-sigap-darkest via-sigap-dark to-sigap-darkest p-5 sm:p-8 text-white shadow-2xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8"
           >
             {/* Background Glow */}
             <div className="absolute top-0 right-0 h-80 w-80 rounded-full bg-sigap-primary/20 blur-3xl pointer-events-none" />
@@ -173,7 +173,7 @@ export default function ResiliencePage() {
                 </span>
               </div>
 
-              <h3 className="font-display text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+              <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight">
                 Estimasi Runway:{" "}
                 <span className="text-sigap-yellow">
                   {runwayMonths >= 24 ? '> 24 Bulan (Arus Kas Positif)' : `${runwayMonths.toFixed(1)} Bulan`}

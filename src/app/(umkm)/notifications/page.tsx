@@ -70,27 +70,27 @@ export default function NotificationsPage() {
       )}
 
       {/* Header Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
+      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-5 sm:p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
         <div className="absolute top-0 right-0 w-80 h-80 bg-sigap-yellow/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
-        <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+        <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-sigap-yellow text-xs font-semibold uppercase tracking-wider">
               <Bell className="w-3.5 h-3.5" /> Pusat Peringatan Sistem
             </div>
-            <h1 className="text-3xl md:text-4xl font-display font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold tracking-tight">
               Pemberitahuan & Update
             </h1>
-            <p className="text-white/70 text-sm max-w-xl leading-relaxed">
+            <p className="text-white/70 text-xs sm:text-sm max-w-xl leading-relaxed">
               Pantau peringatan mutasi, pembaruan skor kredit, serta rekomendasi produk pembiayaan terbaru.
             </p>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-full sm:w-auto">
             {unreadCount > 0 && (
               <Button 
                 onClick={handleMarkAllRead} 
-                className="bg-sigap-yellow text-sigap-darkest hover:bg-sigap-yellow/90 font-bold px-5 py-2.5 rounded-2xl text-xs shadow-md shadow-sigap-yellow/20 flex items-center gap-1.5"
+                className="w-full sm:w-auto bg-sigap-yellow text-sigap-darkest hover:bg-sigap-yellow/90 font-bold px-5 py-2.5 rounded-2xl text-xs shadow-md shadow-sigap-yellow/20 flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <CheckCheck className="w-4 h-4" /> Tandai Semua Dibaca
               </Button>

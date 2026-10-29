@@ -40,7 +40,7 @@ export default function AdminLegalVerificationPage() {
       </div>
 
       <div className="bg-white border rounded-2xl shadow-sm overflow-hidden">
-        <table className="w-full text-left text-sm">
+        <div className="overflow-x-auto"><table className="w-full text-left text-sm min-w-[650px]">
           <thead className="bg-gray-50 text-gray-500 text-xs uppercase font-bold border-b">
             <tr>
               <th className="px-6 py-4">ID & Entitas Terlapor</th>
@@ -89,7 +89,7 @@ export default function AdminLegalVerificationPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></div>
       </div>
     </div>
   );

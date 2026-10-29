@@ -46,7 +46,7 @@ export function BentoShowcase() {
           transition={{ duration: 0.55 }}
           className="mx-auto mb-14 max-w-2xl text-center"
         >
-          <h2 className="text-balance font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-sigap-darkest leading-tight">
+          <h2 className="text-balance font-display text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-sigap-darkest leading-tight">
             Satu Ekosistem untuk{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-sigap-primary">Seluruh Kebutuhan</span>
@@ -68,7 +68,7 @@ export function BentoShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.55 }}
-            className="lg:col-span-7 flex flex-col justify-between rounded-3xl bg-gradient-to-br from-sigap-darkest via-sigap-dark to-sigap-darkest p-7 md:p-10 text-white shadow-2xl shadow-sigap-darkest/20 relative overflow-hidden"
+            className="lg:col-span-7 flex flex-col justify-between rounded-3xl bg-gradient-to-br from-sigap-darkest via-sigap-dark to-sigap-darkest p-5 sm:p-7 md:p-10 text-white shadow-2xl shadow-sigap-darkest/20 relative overflow-hidden"
           >
             <div className="absolute -right-20 -bottom-20 h-80 w-80 rounded-full bg-sigap-primary/20 blur-3xl pointer-events-none" />
 
@@ -148,7 +148,7 @@ export function BentoShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.55, delay: 0.1 }}
-            className="lg:col-span-5 flex flex-col justify-between rounded-3xl border border-slate-200/80 bg-white p-7 md:p-8 shadow-xl shadow-slate-200/40"
+            className="lg:col-span-5 flex flex-col justify-between rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-7 md:p-8 shadow-xl shadow-slate-200/40"
           >
             <div>
               <div className="inline-flex items-center gap-1.5 rounded-full bg-sigap-light/60 px-3 py-1 text-xs font-bold text-sigap-darkest mb-3">

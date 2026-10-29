@@ -124,7 +124,7 @@ export default function CreditScorePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="lg:col-span-7 rounded-3xl bg-gradient-to-br from-sigap-darkest via-sigap-dark to-sigap-darkest p-8 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between"
+          className="lg:col-span-7 rounded-3xl bg-gradient-to-br from-sigap-darkest via-sigap-dark to-sigap-darkest p-5 sm:p-8 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between"
         >
           {/* Radial Ambient Glow */}
           <div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-sigap-primary/25 blur-3xl pointer-events-none" />
@@ -138,8 +138,8 @@ export default function CreditScorePage() {
             </div>
 
             {/* High-end SVG Semi-radial Gauge */}
-            <div className="my-8 flex flex-col items-center justify-center">
-              <div className="relative h-56 w-72 flex items-center justify-center">
+            <div className="my-6 sm:my-8 flex flex-col items-center justify-center">
+              <div className="relative h-44 sm:h-56 w-56 sm:w-72 flex items-center justify-center">
                 <svg className="h-full w-full" viewBox="0 0 200 120">
                   <defs>
                     <linearGradient id="scoreGaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">

@@ -262,7 +262,7 @@ export default function TransactionsLedgerPage() {
       {/* Transactions Table */}
       <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-sm min-w-[680px]">
             <thead className="bg-slate-50/80 text-slate-500 text-xs uppercase font-bold tracking-wider border-b border-slate-100">
               <tr>
                 <th className="px-6 py-4">Tanggal & Waktu</th>

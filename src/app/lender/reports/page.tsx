@@ -71,7 +71,7 @@ export default function ReportsPage() {
       <motion.div 
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-8 md:p-10 rounded-3xl shadow-xl border border-white/10"
+        className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-5 sm:p-8 md:p-10 rounded-3xl shadow-xl border border-white/10"
       >
         <div className="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-sigap-primary/25 blur-3xl pointer-events-none" />
         <div className="absolute right-40 -bottom-24 w-60 h-60 rounded-full bg-sigap-yellow/15 blur-3xl pointer-events-none" />

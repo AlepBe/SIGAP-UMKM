@@ -272,7 +272,8 @@ export default function LenderDashboardPage() {
                   />
                   <YAxis 
                     stroke="#94A3B8" 
-                    fontSize={11} 
+                    fontSize={10} 
+                    width={48}
                     tickLine={false} 
                     axisLine={false}
                     tickFormatter={(val) => `Rp ${(val / 1e9).toFixed(1)}M`}

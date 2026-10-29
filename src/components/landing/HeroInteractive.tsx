@@ -239,7 +239,7 @@ export function HeroInteractive() {
             </div>
 
             {/* Middle: Headline, Subtitle, CTA Button (Execora Style with Dynamic Motion) */}
-            <div className="my-auto py-6 sm:py-8 max-w-2xl">
+            <div className="my-auto py-4 sm:py-8 max-w-2xl">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentPillar.id}
@@ -248,12 +248,12 @@ export function HeroInteractive() {
                   exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.45 }}
                 >
-                  <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-bold text-white tracking-tight leading-[1.08] drop-shadow-[0_2px_12px_rgba(0,15,34,0.7)]">
+                  <h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-bold text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_12px_rgba(0,15,34,0.7)]">
                     {currentPillar.highlight}<br />
                     <span className="text-white">Pertumbuhan Nyata.</span>
                   </h1>
 
-                  <p className="mt-5 sm:mt-6 text-base sm:text-lg text-white/95 font-normal leading-relaxed max-w-xl drop-shadow-[0_1px_6px_rgba(0,15,34,0.6)]">
+                  <p className="mt-3 sm:mt-6 text-sm sm:text-lg text-white/95 font-normal leading-relaxed max-w-xl drop-shadow-[0_1px_6px_rgba(0,15,34,0.6)]">
                     {currentPillar.subtitle}
                   </p>
                 </motion.div>
@@ -264,7 +264,7 @@ export function HeroInteractive() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, delay: 0.2 }}
-                className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4"
+                className="mt-6 sm:mt-10 flex flex-wrap items-center gap-3 sm:gap-4"
               >
                 {/* White Pill Button (Execora "Book a Call ->") */}
                 <Link href="/register">
@@ -319,7 +319,7 @@ export function HeroInteractive() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => setStatIndex((prev) => (prev + 1) % statsData.length)}
-            className="cursor-pointer group absolute bottom-6 right-6 sm:bottom-10 sm:right-10 z-20 max-w-[270px] sm:max-w-[310px] rounded-2xl sm:rounded-3xl bg-sigap-darkest/60 backdrop-blur-xl border border-white/20 p-4 sm:p-5 text-white shadow-2xl transition-all duration-300 hover:bg-sigap-darkest/75 hover:scale-[1.02] hover:border-white/30"
+            className="cursor-pointer group absolute bottom-4 right-4 sm:bottom-10 sm:right-10 z-20 max-w-[260px] sm:max-w-[310px] hidden sm:block rounded-2xl sm:rounded-3xl bg-sigap-darkest/75 backdrop-blur-xl border border-white/20 p-3 sm:p-5 text-white shadow-2xl transition-all duration-300 hover:bg-sigap-darkest/85 hover:scale-[1.02] hover:border-white/30"
             title="Klik untuk melihat statistik lainnya"
           >
             {/* Overlapping Avatars + Interactive Badge */}

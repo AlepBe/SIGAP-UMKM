@@ -76,16 +76,16 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-slate-50">
-      <div className="w-full md:w-1/2 bg-sigap-darkest text-white p-12 flex flex-col justify-between">
+      <div className="w-full md:w-1/2 bg-sigap-darkest text-white p-6 sm:p-8 md:p-12 flex flex-col justify-between">
         <div>
-          <Link href="/" className="inline-flex items-center text-white/70 hover:text-white mb-12 transition-colors">
+          <Link href="/" className="inline-flex items-center text-white/70 hover:text-white mb-6 sm:mb-12 transition-colors text-sm font-semibold">
             <ArrowLeft className="w-4 h-4 mr-2" /> Kembali ke Beranda
           </Link>
-          <div className="mb-12">
-            <Logo variant="white" />
+          <div className="mb-6 sm:mb-12">
+            <Logo variant="white" height={36} />
           </div>
-          <h1 className="text-4xl font-bold mb-6 leading-tight">Selamat Datang Kembali di Ekosistem Pembiayaan Cerdas.</h1>
-          <p className="text-lg text-white/70 max-w-md">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold mb-4 sm:mb-6 leading-tight">Selamat Datang Kembali di Ekosistem Pembiayaan Cerdas.</h1>
+          <p className="text-sm sm:text-base text-white/70 max-w-md leading-relaxed">
             {activeTab === 'umkm' 
               ? "Masuk untuk melihat perkembangan bisnis Anda, cek skor kredit terbaru, dan akses peluang pembiayaan."
               : "Masuk ke Workspace Partner untuk mengelola pipeline pengajuan dan portofolio pembiayaan."
@@ -93,9 +93,9 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
-      <div className="w-full md:w-1/2 flex items-center justify-center p-8 md:p-12">
-        <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Masuk ke Akun</h2>
+      <div className="w-full md:w-1/2 flex items-center justify-center p-4 sm:p-8 md:p-12">
+        <div className="w-full max-w-md bg-white p-5 sm:p-8 rounded-3xl shadow-sm border border-slate-100">
+          <h2 className="text-xl sm:text-2xl font-display font-extrabold text-sigap-darkest mb-6">Masuk ke Akun</h2>
           
           <div className="flex bg-gray-100 p-1 rounded-lg mb-8">
             <button

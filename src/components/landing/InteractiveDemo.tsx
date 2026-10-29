@@ -63,17 +63,17 @@ export function InteractiveDemo() {
       </div>
 
       {/* Demo App Header */}
-      <div className="px-6 py-4 border-b flex justify-between items-center bg-white">
+      <div className="px-4 sm:px-6 py-4 border-b flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 bg-white">
         <div>
-          <h2 className="text-xl font-bold text-sigap-darkest">Dashboard Demo</h2>
-          <p className="text-sm text-muted-foreground">{publicDemoData.business.name} • Simulasi data usaha</p>
+          <h2 className="text-lg sm:text-xl font-bold text-sigap-darkest">Dashboard Demo</h2>
+          <p className="text-xs sm:text-sm text-muted-foreground">{publicDemoData.business.name} • Simulasi data usaha</p>
         </div>
-        <div className="bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1 rounded-full border border-amber-200">
+        <div className="bg-amber-100 text-amber-800 text-[10px] sm:text-xs font-semibold px-2.5 py-1 rounded-full border border-amber-200">
           DATA DEMO
         </div>
       </div>
 
-      <div className="p-6 bg-slate-50">
+      <div className="p-3 sm:p-6 bg-slate-50">
         {/* Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-white p-4 rounded-xl border shadow-sm">

@@ -23,7 +23,7 @@ export default function LenderReferralsPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8 pb-12">
       {/* Header */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
+      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-5 sm:p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
         <div className="relative z-10 space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-sigap-yellow text-xs font-semibold uppercase tracking-wider">
             <Users className="w-3.5 h-3.5" /> Program Afiliasi & Referral Perbankan
@@ -38,7 +38,7 @@ export default function LenderReferralsPage() {
       </div>
 
       {/* Referral Link Box */}
-      <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+      <div className="bg-white p-4 sm:p-6 md:p-8 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
         <h3 className="font-display font-bold text-lg text-sigap-darkest">Tautan Referral Mitra Khusus Anda</h3>
         <p className="text-xs text-slate-500">Bagikan tautan ini kepada nasabah binaan untuk langsung mendapatkan scoring otomatis terhubung.</p>
 

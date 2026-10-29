@@ -55,26 +55,26 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-slate-50">
-      <div className="w-full md:w-1/2 bg-sigap-darkest text-white p-12 flex flex-col justify-between">
+      <div className="w-full md:w-1/2 bg-sigap-darkest text-white p-6 sm:p-8 md:p-12 flex flex-col justify-between">
         <div>
-          <Link href="/" className="inline-flex items-center text-white/70 hover:text-white mb-12 transition-colors">
+          <Link href="/" className="inline-flex items-center text-white/70 hover:text-white mb-6 sm:mb-12 transition-colors text-sm font-semibold">
             <ArrowLeft className="w-4 h-4 mr-2" /> Kembali ke Beranda
           </Link>
-          <div className="mb-12">
-            <Logo variant="white" />
+          <div className="mb-6 sm:mb-12">
+            <Logo variant="white" height={36} />
           </div>
-          <h1 className="text-4xl font-bold mb-6 leading-tight">Mulai Perjalanan Pertumbuhan UMKM Anda.</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold mb-4 sm:mb-6 leading-tight">Mulai Perjalanan Pertumbuhan UMKM Anda.</h1>
           
-          <ul className="space-y-4 mt-8">
-            <li className="flex items-center"><CheckCircle2 className="text-sigap-primary w-5 h-5 mr-3" /> Pencatatan keuangan otomatis</li>
-            <li className="flex items-center"><CheckCircle2 className="text-sigap-primary w-5 h-5 mr-3" /> Penilaian skor kredit berbasis pola transaksi</li>
-            <li className="flex items-center"><CheckCircle2 className="text-sigap-primary w-5 h-5 mr-3" /> Akses marketplace pembiayaan OJK</li>
+          <ul className="space-y-3 sm:space-y-4 mt-4 sm:mt-8 text-sm sm:text-base">
+            <li className="flex items-center"><CheckCircle2 className="text-sigap-yellow w-5 h-5 mr-3 shrink-0" /> Pencatatan keuangan otomatis</li>
+            <li className="flex items-center"><CheckCircle2 className="text-sigap-yellow w-5 h-5 mr-3 shrink-0" /> Penilaian skor kredit berbasis pola transaksi</li>
+            <li className="flex items-center"><CheckCircle2 className="text-sigap-yellow w-5 h-5 mr-3 shrink-0" /> Akses marketplace pembiayaan OJK</li>
           </ul>
         </div>
       </div>
-      <div className="w-full md:w-1/2 flex items-center justify-center p-8 md:py-12">
-        <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">Buat Akun Demo</h2>
+      <div className="w-full md:w-1/2 flex items-center justify-center p-4 sm:p-8 md:py-12">
+        <div className="w-full max-w-xl bg-white p-5 sm:p-8 rounded-3xl shadow-sm border border-slate-100">
+          <h2 className="text-xl sm:text-2xl font-display font-extrabold text-sigap-darkest mb-6">Buat Akun Demo</h2>
           
           {error && (
             <div className="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm">

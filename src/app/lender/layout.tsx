@@ -237,11 +237,8 @@ export default function LenderLayout({ children }: { children: React.ReactNode }
           </button>
 
           <button
-            onClick={() => {
-              logout();
-              router.push('/login');
-            }}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-2xl text-xs font-semibold text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 transition-all"
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-2xl text-xs font-semibold text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 transition-all cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" />
             Keluar dari Sistem
@@ -252,27 +249,27 @@ export default function LenderLayout({ children }: { children: React.ReactNode }
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Header */}
-        <header className="h-20 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-6 flex items-center justify-between z-10">
-          <div className="flex items-center gap-3">
+        <header className="h-16 sm:h-20 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-3 sm:px-6 flex items-center justify-between z-10">
+          <div className="flex items-center gap-2 sm:gap-3 overflow-hidden">
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-slate-700 hover:bg-slate-100 rounded-2xl"
+              className="md:hidden text-slate-700 hover:bg-slate-100 rounded-2xl shrink-0"
               onClick={() => setIsMobileMenuOpen(true)}
             >
-              <Menu className="h-6 w-6" />
+              <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
             </Button>
-            <div>
+            <div className="overflow-hidden">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-sigap-primary font-display">
-                  Partner Institutional Workspace
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-sigap-primary font-display truncate">
+                  Partner Workspace
                 </span>
                 <span className="hidden sm:inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                   Live Demo Engine
                 </span>
               </div>
-              <h1 className="text-lg md:text-xl font-display font-extrabold text-sigap-darkest capitalize">
+              <h1 className="text-sm sm:text-lg md:text-xl font-display font-extrabold text-sigap-darkest capitalize truncate">
                 {pathname === '/lender/dashboard' ? 'Overview & Kinerja Portofolio' :
                  pathname === '/lender/applications' ? 'Pipeline & Verifikasi Pengajuan' :
                  pathname === '/lender/applicants' ? 'Database & Direktori UMKM' :
@@ -336,7 +333,7 @@ export default function LenderLayout({ children }: { children: React.ReactNode }
               </AnimatePresence>
             </div>
 
-            {/* Partner Header Badge */}
+            {/* Partner Header Badge & Quick Logout */}
             <div className="hidden sm:flex items-center gap-2.5 pl-3 border-l border-slate-200">
               <div className="w-9 h-9 rounded-2xl bg-sigap-darkest text-white flex items-center justify-center font-extrabold text-xs">
                 {partner.short_name || 'BND'}
@@ -345,6 +342,15 @@ export default function LenderLayout({ children }: { children: React.ReactNode }
                 <p className="text-xs font-bold text-sigap-darkest truncate max-w-[140px]">{partner.name}</p>
                 <p className="text-[10px] text-slate-500">Partner Institutional</p>
               </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleLogout}
+                title="Keluar dari Sistem"
+                className="ml-1 h-8 w-8 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl cursor-pointer"
+              >
+                <LogOut className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </header>

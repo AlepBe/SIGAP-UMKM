@@ -44,7 +44,7 @@ export default function FinancingComparePage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8 pb-12">
       {/* Header Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
+      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-5 sm:p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
         <div className="absolute top-0 right-0 w-96 h-96 bg-sigap-yellow/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -107,7 +107,7 @@ export default function FinancingComparePage() {
       {/* Comparison Matrix Table */}
       <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-sm min-w-[650px]">
             <thead className="bg-slate-50/90 text-slate-500 border-b border-slate-100">
               <tr>
                 <th className="p-6 w-1/4 text-xs font-bold uppercase tracking-wider">

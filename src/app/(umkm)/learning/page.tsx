@@ -40,24 +40,24 @@ export default function LearningPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8 pb-12">
       {/* Header Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
+      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-5 sm:p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
         <div className="absolute top-0 right-0 w-96 h-96 bg-sigap-yellow/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
-        <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+        <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 sm:gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-sigap-yellow text-xs font-semibold uppercase tracking-wider">
               <BookOpen className="w-3.5 h-3.5" /> Akademi Finansial UMKM
             </div>
-            <h1 className="text-3xl md:text-4xl font-display font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold tracking-tight">
               Literasi Finansial & Sertifikasi
             </h1>
-            <p className="text-white/70 max-w-2xl text-sm md:text-base leading-relaxed">
+            <p className="text-white/70 max-w-2xl text-xs sm:text-base leading-relaxed">
               Tingkatkan wawasan manajemen kas dan kepatuhan hukum usaha. Setiap modul yang diselesaikan akan menambah skor kelayakan kredit Anda secara otomatis.
             </p>
           </div>
 
           {/* Progress Circular Badge */}
-          <div className="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/20 flex items-center gap-5 min-w-[280px]">
+          <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-white/20 flex items-center gap-4 sm:gap-5 w-full lg:w-auto min-w-0 sm:min-w-[260px]">
             <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                 <path 

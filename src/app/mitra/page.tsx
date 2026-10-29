@@ -41,22 +41,22 @@ export default function MitraPage() {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="pt-28 pb-20 bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white relative overflow-hidden">
+        <section className="pt-24 sm:pt-28 pb-16 sm:pb-20 bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white relative overflow-hidden px-4 sm:px-6">
           <div className="absolute top-0 right-0 w-96 h-96 bg-sigap-yellow/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
           <div className="container max-w-4xl mx-auto text-center relative z-10 space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-sigap-yellow text-xs font-semibold uppercase tracking-wider">
               <Handshake className="w-4 h-4" /> Ekosistem Kemitraan Finansial
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight">
               Akselerasi Penyaluran Kredit UMKM Berkualitas Tinggi
             </h1>
-            <p className="text-lg text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-lg text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
               Bergabung bersama puluhan perbankan, fintech terdaftar OJK, dan lembaga penjaminan dalam menyalurkan pembiayaan produktif yang tepat sasaran.
             </p>
-            <div className="pt-4 flex flex-wrap justify-center gap-3">
-              <Link href="/register">
-                <Button size="lg" className="bg-sigap-yellow text-sigap-darkest hover:bg-sigap-yellow/90 font-bold px-8 py-3.5 rounded-2xl shadow-xl shadow-sigap-yellow/20">
+            <div className="pt-4 flex flex-col sm:flex-row justify-center gap-3">
+              <Link href="/register" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto bg-sigap-yellow text-sigap-darkest hover:bg-sigap-yellow/90 font-bold px-8 py-3.5 rounded-2xl shadow-xl shadow-sigap-yellow/20">
                   Ajukan Kemitraan Lender &rarr;
                 </Button>
               </Link>
@@ -65,13 +65,13 @@ export default function MitraPage() {
         </section>
 
         {/* Benefits for Partners */}
-        <section className="py-20 bg-slate-50">
+        <section className="py-16 sm:py-20 bg-slate-50 px-4 sm:px-6">
           <div className="container max-w-6xl mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-              <h2 className="text-3xl font-display font-extrabold text-sigap-darkest">
+            <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 space-y-3">
+              <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-sigap-darkest">
                 Mengapa Bermitra dengan SIGAP?
               </h2>
-              <p className="text-slate-500 text-sm">
+              <p className="text-slate-500 text-xs sm:text-sm">
                 Solusi teknologi finansial komprehensif yang menjembatani kesenjangan informasi antara perbankan dan jutaan UMKM Indonesia.
               </p>
             </div>

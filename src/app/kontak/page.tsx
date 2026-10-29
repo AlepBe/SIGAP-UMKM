@@ -37,29 +37,29 @@ export default function KontakPage() {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="pt-28 pb-20 bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white relative overflow-hidden">
+        <section className="pt-24 sm:pt-28 pb-16 sm:pb-20 bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white relative overflow-hidden px-4 sm:px-6">
           <div className="absolute top-0 right-0 w-96 h-96 bg-sigap-yellow/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
           <div className="container max-w-4xl mx-auto text-center relative z-10 space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-sigap-yellow text-xs font-semibold uppercase tracking-wider">
               <MessageSquare className="w-4 h-4" /> Tim Dukungan & Kemitraan
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-extrabold tracking-tight">
               Kami Selalu Siap Mendengar & Membantu Usaha Anda
             </h1>
-            <p className="text-lg text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-lg text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
               Ada pertanyaan seputar pembukuan, skor kelayakan kredit, atau rencana kemitraan lembaga keuangan? Kirimkan pesan Anda kepada kami.
             </p>
           </div>
         </section>
 
         {/* Contact Info & Form Grid */}
-        <section className="py-20 bg-slate-50">
+        <section className="py-16 sm:py-20 bg-slate-50 px-4 sm:px-6">
           <div className="container max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               {/* Contact Info Column (5 cols) */}
               <div className="lg:col-span-5 space-y-6">
-                <div className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm space-y-6">
+                <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
                   <div>
                     <h3 className="text-xl font-display font-bold text-sigap-darkest">Informasi Kontak Langsung</h3>
                     <p className="text-xs text-slate-500 mt-1">Layanan pelanggan beroperasi Senin - Jumat, 08:30 - 17:30 WIB.</p>

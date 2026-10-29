@@ -114,7 +114,7 @@ export default function ApplicantsPage() {
       {/* Table Card */}
       <div className="bg-white border border-slate-200/80 rounded-3xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
+          <table className="w-full text-sm text-left min-w-[700px]">
             <thead className="bg-slate-50 text-slate-500 text-[11px] font-bold uppercase tracking-wider border-b border-slate-100">
               <tr>
                 <th className="px-6 py-4">ID & Nama Usaha</th>

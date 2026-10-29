@@ -2,21 +2,21 @@
 
 import { Logo } from '@/components/ui/logo';
 import {
-CheckCircle2,
-ChevronDown,
-Copy,
-Headphones,
-Menu,
-MessageSquare,
-Phone,
-X
+  CheckCircle2,
+  ChevronDown,
+  Copy,
+  Headphones,
+  Menu,
+  MessageSquare,
+  Phone,
+  X
 } from 'lucide-react';
-import { AnimatePresence,motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import Link from 'next/link';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const navLinks = [
-  { href: '/', label: 'Home' },
+  { href: '/', label: 'Beranda' },
   { href: '/tentang', label: 'Tentang' },
   { href: '/fitur', label: 'Layanan', hasDropdown: true },
   { href: '/cara-kerja', label: 'Cara Kerja' },
@@ -48,15 +48,14 @@ export function PublicHeader() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-          scrolled
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled
             ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b-2 border-slate-600'
             : 'bg-white border-b-2 border-slate-200'
-        }`}
+          }`}
       >
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex h-18 sm:h-20 items-center justify-between gap-6">
+        <div className="max-w-[1400px] mx-auto px-3 sm:px-6 lg:px-8 flex h-18 sm:h-20 items-center justify-between gap-2 sm:gap-6">
           {/* Logo */}
-          <Logo className="transition-opacity hover:opacity-85" />
+          <Logo className="transition-opacity hover:opacity-85" height={36} />
 
           {/* Desktop Nav (Includes 'Home') */}
           <nav
@@ -78,11 +77,11 @@ export function PublicHeader() {
           </nav>
 
           {/* Right Actions (Hubungi Kami Pill Button + Round Phone Icon) */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
             {/* Hubungi Kami Button -> Opens Customer Service Modal */}
             <button
               onClick={() => setContactModalOpen(true)}
-              className="rounded-full border border-slate-300 hover:border-slate-400 bg-white px-5 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-slate-800 transition-all hover:bg-slate-50 shadow-xs cursor-pointer"
+              className="rounded-full border border-slate-300 hover:border-slate-400 bg-white px-3 sm:px-6 py-1.5 sm:py-2.5 text-xs sm:text-sm font-semibold text-slate-800 transition-all hover:bg-slate-50 shadow-xs cursor-pointer whitespace-nowrap"
             >
               Hubungi Kami
             </button>
@@ -91,16 +90,16 @@ export function PublicHeader() {
             <button
               onClick={() => setContactModalOpen(true)}
               aria-label="Hubungi Customer Service SIGAP"
-              className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 shadow-xs cursor-pointer"
+              className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 shadow-xs cursor-pointer shrink-0"
               title="Customer Service: 082165372288"
             >
-              <Phone className="h-4 w-4" />
+              <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </button>
 
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileOpen((v) => !v)}
-              className="ml-1 md:hidden flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-800 transition-colors hover:bg-slate-50"
+              className="ml-0.5 md:hidden flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-800 transition-colors hover:bg-slate-50 shrink-0 cursor-pointer"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -206,7 +205,7 @@ export function PublicHeader() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-18 z-40 md:hidden bg-white/98 backdrop-blur-xl border-b border-slate-200/80 shadow-xl"
+            className="fixed inset-x-0 top-18 sm:top-20 z-40 md:hidden bg-white/98 backdrop-blur-xl border-b border-slate-200/80 shadow-xl max-h-[calc(100vh-4.5rem)] overflow-y-auto"
           >
             <nav className="max-w-[1400px] mx-auto px-4 py-4 flex flex-col gap-1">
               {navLinks.map((link) => (

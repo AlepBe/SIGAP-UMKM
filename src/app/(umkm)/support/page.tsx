@@ -61,24 +61,24 @@ export default function SupportPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8 pb-16">
       {/* Header Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
+      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-5 sm:p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
         <div className="absolute top-0 right-0 w-96 h-96 bg-sigap-yellow/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
-        <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-sigap-yellow text-xs font-semibold uppercase tracking-wider">
               <HelpCircle className="w-3.5 h-3.5" /> Layanan Bantuan & Panduan
             </div>
-            <h1 className="text-3xl md:text-4xl font-display font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold tracking-tight">
               Pusat Bantuan UMKM
             </h1>
-            <p className="text-white/70 max-w-2xl text-sm md:text-base leading-relaxed">
+            <p className="text-white/70 max-w-2xl text-xs sm:text-base leading-relaxed">
               Tim spesialis SIGAP siap mendampingi pertumbuhan bisnis Anda. Temukan jawaban cepat di FAQ atau hubungi tim bantuan teknis kami.
             </p>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 flex items-center gap-3">
-            <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+          <div className="bg-white/10 backdrop-blur-md px-4 sm:px-5 py-3 rounded-2xl border border-white/20 flex items-center gap-3 w-full md:w-auto">
+            <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
             <div>
               <span className="text-xs font-bold text-white block">Sistem Beroperasi Normal</span>
               <span className="text-[11px] text-white/60">Respons rata-rata: &lt; 15 Menit</span>

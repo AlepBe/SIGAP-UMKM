@@ -81,25 +81,25 @@ export default function CreditScoreHistoryPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8 pb-12">
       {/* Header Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
+      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-5 sm:p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
         <div className="absolute top-0 right-0 w-96 h-96 bg-sigap-yellow/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
-        <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-sigap-yellow text-xs font-semibold uppercase tracking-wider">
               <History className="w-3.5 h-3.5" /> Rekam Jejak Kesiapan Kredit
             </div>
-            <h1 className="text-3xl md:text-4xl font-display font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold tracking-tight">
               Riwayat Skor Kredit SIGAP
             </h1>
-            <p className="text-white/70 max-w-2xl text-sm md:text-base leading-relaxed">
+            <p className="text-white/70 max-w-2xl text-xs sm:text-base leading-relaxed">
               Pantau perkembangan skor kelayakan kredit usaha Anda dari bulan ke bulan. Data ini menjadi portofolio terpercaya saat mengajukan pinjaman bank.
             </p>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/20 text-center min-w-[200px]">
+          <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-white/20 text-center w-full md:w-auto md:min-w-[200px]">
             <span className="text-xs font-bold text-white/70 uppercase tracking-wider block">Skor Saat Ini</span>
-            <div className="text-4xl font-display font-extrabold text-sigap-yellow mt-1">
+            <div className="text-3xl sm:text-4xl font-display font-extrabold text-sigap-yellow mt-1">
               {currentScore}
             </div>
             <span className="inline-block mt-2 px-3 py-0.5 rounded-full text-xs font-extrabold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
@@ -110,7 +110,7 @@ export default function CreditScoreHistoryPage() {
       </div>
 
       {/* Main Progression Chart */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-sm">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-slate-200/80 shadow-sm">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
             <h2 className="text-xl font-display font-bold text-sigap-darkest flex items-center gap-2">
