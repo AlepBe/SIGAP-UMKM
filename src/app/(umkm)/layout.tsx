@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { FloatingBottomNav } from "@/components/ui/floating-bottom-nav";
 import { Logo } from "@/components/ui/logo";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useDemo } from "@/lib/context/DemoContext";
@@ -127,25 +128,25 @@ export default function UMKMLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50/60 font-sans text-foreground">
-      {/* Mobile Sidebar Overlay */}
+      {/* Mobile & Tablet Sidebar Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-sigap-darkest/60 backdrop-blur-sm md:hidden" 
+            className="fixed inset-0 z-40 bg-sigap-darkest/60 backdrop-blur-sm lg:hidden" 
             onClick={() => setIsMobileMenuOpen(false)}
           />
         )}
       </AnimatePresence>
 
       {/* Sidebar Navigation */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-72 flex flex-col border-r border-slate-200/80 bg-white shadow-xl md:shadow-none transition-transform duration-300 ease-in-out md:static md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed inset-y-0 left-0 z-50 w-72 flex flex-col border-r border-slate-200/80 bg-white shadow-xl lg:shadow-none transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         {/* Brand header */}
         <div className="flex h-18 items-center justify-between border-b border-slate-100 px-6 py-4">
           <Logo />
-          <Button variant="ghost" size="icon" className="md:hidden text-slate-500 hover:text-sigap-darkest" onClick={() => setIsMobileMenuOpen(false)}>
+          <Button variant="ghost" size="icon" className="lg:hidden text-slate-500 hover:text-sigap-darkest" onClick={() => setIsMobileMenuOpen(false)}>
             <X className="h-5 w-5" />
           </Button>
         </div>
@@ -321,7 +322,7 @@ export default function UMKMLayout({ children }: { children: React.ReactNode }) 
         {/* Topbar */}
         <header className="flex h-16 sm:h-18 items-center justify-between border-b border-slate-200/80 bg-white/80 backdrop-blur-md px-3 sm:px-6 md:px-8">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-            <Button variant="ghost" size="icon" className="md:hidden text-slate-600 shrink-0 h-9 w-9" onClick={() => setIsMobileMenuOpen(true)}>
+            <Button variant="ghost" size="icon" className="lg:hidden text-slate-600 shrink-0 h-9 w-9" onClick={() => setIsMobileMenuOpen(true)}>
               <Menu className="h-5 w-5" />
             </Button>
             <div className="min-w-0">
@@ -397,84 +398,58 @@ export default function UMKMLayout({ children }: { children: React.ReactNode }) 
         </header>
 
         {/* Scrollable Main Workspace */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pb-24 md:pb-8">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pb-28 lg:pb-8">
           {children}
         </main>
 
-        {/* Mobile Bottom Navigation Bar (md:hidden) */}
-        <nav
-          aria-label="Navigasi Bawah Portal UMKM"
-          className="fixed bottom-0 inset-x-0 z-30 md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(15,23,42,0.08)] pb-safe"
-        >
-          <div className="max-w-md mx-auto grid grid-cols-5 h-16 items-center px-1">
-            <Link
-              href="/dashboard"
-              className={`flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-150 active:scale-90 ${
-                pathname === '/dashboard' ? 'text-sigap-primary font-bold' : 'text-slate-500 hover:text-slate-800 font-medium'
-              }`}
-            >
-              <div className="relative flex items-center justify-center">
-                <BarChart3 className={`w-5 h-5 ${pathname === '/dashboard' ? 'scale-110 text-sigap-primary' : ''}`} />
-                {pathname === '/dashboard' && <span className="absolute -bottom-1.5 w-1.5 h-1.5 bg-sigap-primary rounded-full" />}
-              </div>
-              <span className="text-[10px] mt-1 tracking-tight">Overview</span>
-            </Link>
-
-            <Link
-              href="/bookkeeping"
-              className={`flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-150 active:scale-90 ${
-                pathname.startsWith('/bookkeeping') ? 'text-sigap-primary font-bold' : 'text-slate-500 hover:text-slate-800 font-medium'
-              }`}
-            >
-              <div className="relative flex items-center justify-center">
-                <Wallet className={`w-5 h-5 ${pathname.startsWith('/bookkeeping') ? 'scale-110 text-sigap-primary' : ''}`} />
-                {pathname.startsWith('/bookkeeping') && <span className="absolute -bottom-1.5 w-1.5 h-1.5 bg-sigap-primary rounded-full" />}
-              </div>
-              <span className="text-[10px] mt-1 tracking-tight">Pembukuan</span>
-            </Link>
-
-            <Link
-              href="/credit-score"
-              className={`flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-150 active:scale-90 ${
-                pathname.startsWith('/credit-score') ? 'text-sigap-primary font-bold' : 'text-slate-500 hover:text-slate-800 font-medium'
-              }`}
-            >
-              <div className="relative flex items-center justify-center">
-                <Activity className={`w-5 h-5 ${pathname.startsWith('/credit-score') ? 'scale-110 text-sigap-primary' : ''}`} />
-                {pathname.startsWith('/credit-score') && <span className="absolute -bottom-1.5 w-1.5 h-1.5 bg-sigap-primary rounded-full" />}
-              </div>
-              <span className="text-[10px] mt-1 tracking-tight">Skor Kredit</span>
-            </Link>
-
-            <Link
-              href="/financing"
-              className={`flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-150 active:scale-90 ${
-                pathname.startsWith('/financing') ? 'text-sigap-primary font-bold' : 'text-slate-500 hover:text-slate-800 font-medium'
-              }`}
-            >
-              <div className="relative flex items-center justify-center">
-                <ArrowLeftRight className={`w-5 h-5 ${pathname.startsWith('/financing') ? 'scale-110 text-sigap-primary' : ''}`} />
-                {pathname.startsWith('/financing') && <span className="absolute -bottom-1.5 w-1.5 h-1.5 bg-sigap-primary rounded-full" />}
-              </div>
-              <span className="text-[10px] mt-1 tracking-tight">Pembiayaan</span>
-            </Link>
-
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className={`flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-150 active:scale-90 cursor-pointer ${
-                isMobileMenuOpen || (!['/dashboard', '/bookkeeping', '/credit-score', '/financing'].some(p => pathname.startsWith(p)))
-                  ? 'text-sigap-primary font-bold'
-                  : 'text-slate-500 hover:text-slate-800 font-medium'
-              }`}
-            >
-              <div className="relative flex items-center justify-center">
-                <Menu className={`w-5 h-5 ${isMobileMenuOpen ? 'scale-110 text-sigap-primary' : ''}`} />
-                {isMobileMenuOpen && <span className="absolute -bottom-1.5 w-1.5 h-1.5 bg-sigap-primary rounded-full" />}
-              </div>
-              <span className="text-[10px] mt-1 tracking-tight">Menu</span>
-            </button>
-          </div>
-        </nav>
+        {/* Floating Curved Notch Bottom Nav (Simetris 2 Kiri, Overview Tengah, 2 Kanan) */}
+        <FloatingBottomNav
+          ariaLabel="Navigasi Bawah Portal UMKM"
+          leftItems={[
+            {
+              id: 'pembukuan',
+              label: 'Pembukuan',
+              href: '/bookkeeping',
+              active: pathname.startsWith('/bookkeeping') && !isMobileMenuOpen,
+              icon: Wallet,
+            },
+            {
+              id: 'skorkredit',
+              label: 'Skor Kredit',
+              href: '/credit-score',
+              active: pathname.startsWith('/credit-score') && !isMobileMenuOpen,
+              icon: Activity,
+            },
+          ]}
+          centerItem={{
+            id: 'overview',
+            label: 'Overview',
+            href: '/dashboard',
+            active: pathname === '/dashboard' && !isMobileMenuOpen,
+            icon: BarChart3,
+          }}
+          rightItems={[
+            {
+              id: 'pembiayaan',
+              label: 'Pembiayaan',
+              href: '/financing',
+              active: pathname.startsWith('/financing') && !isMobileMenuOpen,
+              icon: ArrowLeftRight,
+            },
+            {
+              id: 'menu',
+              label: 'Lainnya',
+              onClick: () => setIsMobileMenuOpen((v) => !v),
+              active:
+                isMobileMenuOpen ||
+                !['/dashboard', '/bookkeeping', '/credit-score', '/financing'].some((p) =>
+                  pathname.startsWith(p)
+                ),
+              icon: Menu,
+              badge: unreadCount > 0 ? unreadCount : undefined,
+            },
+          ]}
+        />
       </div>
 
       {/* Bank Connection Modal */}

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { Logo } from "@/components/ui/logo";
+import { FloatingBottomNav } from "@/components/ui/floating-bottom-nav";
 import { usePathname, useRouter } from "next/navigation";
 import { 
   LayoutDashboard, Users, FileText, BarChart3, 
@@ -81,14 +82,14 @@ export default function LenderLayout({ children }: { children: React.ReactNode }
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 font-sans">
-      {/* Mobile Drawer Overlay */}
+      {/* Mobile & Tablet Drawer Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm md:hidden" 
+            className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm lg:hidden" 
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <motion.aside 
@@ -167,7 +168,7 @@ export default function LenderLayout({ children }: { children: React.ReactNode }
       </AnimatePresence>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 lg:w-72 bg-sigap-darkest text-white border-r border-white/10 shadow-2xl z-20 shrink-0">
+      <aside className="hidden lg:flex flex-col w-64 lg:w-72 bg-sigap-darkest text-white border-r border-white/10 shadow-2xl z-20 shrink-0">
         {/* Brand */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-white/10">
           <Logo variant="white" />
@@ -254,7 +255,7 @@ export default function LenderLayout({ children }: { children: React.ReactNode }
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-slate-700 hover:bg-slate-100 rounded-2xl shrink-0"
+              className="lg:hidden text-slate-700 hover:bg-slate-100 rounded-2xl shrink-0"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -356,84 +357,57 @@ export default function LenderLayout({ children }: { children: React.ReactNode }
         </header>
 
         {/* Page Content View */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-50/70 pb-24 md:pb-8">
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-50/70 pb-28 lg:pb-8">
           {children}
         </main>
 
-        {/* Mobile Bottom Navigation Bar (md:hidden) */}
-        <nav
-          aria-label="Navigasi Bawah Portal Lender"
-          className="fixed bottom-0 inset-x-0 z-30 md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(15,23,42,0.08)] pb-safe"
-        >
-          <div className="max-w-md mx-auto grid grid-cols-5 h-16 items-center px-1">
-            <Link
-              href="/lender/dashboard"
-              className={`flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-150 active:scale-90 ${
-                pathname === '/lender/dashboard' ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-800 font-medium'
-              }`}
-            >
-              <div className="relative flex items-center justify-center">
-                <LayoutDashboard className={`w-5 h-5 ${pathname === '/lender/dashboard' ? 'scale-110 text-amber-600' : ''}`} />
-                {pathname === '/lender/dashboard' && <span className="absolute -bottom-1.5 w-1.5 h-1.5 bg-amber-600 rounded-full" />}
-              </div>
-              <span className="text-[10px] mt-1 tracking-tight">Dashboard</span>
-            </Link>
-
-            <Link
-              href="/lender/applications"
-              className={`flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-150 active:scale-90 ${
-                pathname.startsWith('/lender/applications') ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-800 font-medium'
-              }`}
-            >
-              <div className="relative flex items-center justify-center">
-                <FileText className={`w-5 h-5 ${pathname.startsWith('/lender/applications') ? 'scale-110 text-amber-600' : ''}`} />
-                {pathname.startsWith('/lender/applications') && <span className="absolute -bottom-1.5 w-1.5 h-1.5 bg-amber-600 rounded-full" />}
-              </div>
-              <span className="text-[10px] mt-1 tracking-tight">Pengajuan</span>
-            </Link>
-
-            <Link
-              href="/lender/applicants"
-              className={`flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-150 active:scale-90 ${
-                pathname.startsWith('/lender/applicants') ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-800 font-medium'
-              }`}
-            >
-              <div className="relative flex items-center justify-center">
-                <Users className={`w-5 h-5 ${pathname.startsWith('/lender/applicants') ? 'scale-110 text-amber-600' : ''}`} />
-                {pathname.startsWith('/lender/applicants') && <span className="absolute -bottom-1.5 w-1.5 h-1.5 bg-amber-600 rounded-full" />}
-              </div>
-              <span className="text-[10px] mt-1 tracking-tight">Database</span>
-            </Link>
-
-            <Link
-              href="/lender/products"
-              className={`flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-150 active:scale-90 ${
-                pathname.startsWith('/lender/products') ? 'text-amber-600 font-bold' : 'text-slate-500 hover:text-slate-800 font-medium'
-              }`}
-            >
-              <div className="relative flex items-center justify-center">
-                <Building2 className={`w-5 h-5 ${pathname.startsWith('/lender/products') ? 'scale-110 text-amber-600' : ''}`} />
-                {pathname.startsWith('/lender/products') && <span className="absolute -bottom-1.5 w-1.5 h-1.5 bg-amber-600 rounded-full" />}
-              </div>
-              <span className="text-[10px] mt-1 tracking-tight">Katalog</span>
-            </Link>
-
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className={`flex flex-col items-center justify-center py-1 rounded-2xl transition-all duration-150 active:scale-90 cursor-pointer ${
-                isMobileMenuOpen || (!['/lender/dashboard', '/lender/applications', '/lender/applicants', '/lender/products'].some(p => pathname.startsWith(p)))
-                  ? 'text-amber-600 font-bold'
-                  : 'text-slate-500 hover:text-slate-800 font-medium'
-              }`}
-            >
-              <div className="relative flex items-center justify-center">
-                <Menu className={`w-5 h-5 ${isMobileMenuOpen ? 'scale-110 text-amber-600' : ''}`} />
-                {isMobileMenuOpen && <span className="absolute -bottom-1.5 w-1.5 h-1.5 bg-amber-600 rounded-full" />}
-              </div>
-              <span className="text-[10px] mt-1 tracking-tight">Menu</span>
-            </button>
-          </div>
-        </nav>
+        {/* Floating Curved Notch Bottom Nav (Simetris 2 Kiri, Dashboard Tengah, 2 Kanan) */}
+        <FloatingBottomNav
+          ariaLabel="Navigasi Bawah Portal Lender"
+          leftItems={[
+            {
+              id: 'applications',
+              label: 'Pengajuan',
+              href: '/lender/applications',
+              active: pathname.startsWith('/lender/applications') && !isMobileMenuOpen,
+              icon: FileText,
+            },
+            {
+              id: 'applicants',
+              label: 'Database',
+              href: '/lender/applicants',
+              active: pathname.startsWith('/lender/applicants') && !isMobileMenuOpen,
+              icon: Users,
+            },
+          ]}
+          centerItem={{
+            id: 'dashboard',
+            label: 'Dashboard',
+            href: '/lender/dashboard',
+            active: pathname === '/lender/dashboard' && !isMobileMenuOpen,
+            icon: LayoutDashboard,
+          }}
+          rightItems={[
+            {
+              id: 'products',
+              label: 'Katalog',
+              href: '/lender/products',
+              active: pathname.startsWith('/lender/products') && !isMobileMenuOpen,
+              icon: Building2,
+            },
+            {
+              id: 'menu',
+              label: 'Lainnya',
+              onClick: () => setIsMobileMenuOpen((v) => !v),
+              active:
+                isMobileMenuOpen ||
+                !['/lender/dashboard', '/lender/applications', '/lender/applicants', '/lender/products'].some((p) =>
+                  pathname.startsWith(p)
+                ),
+              icon: Menu,
+            },
+          ]}
+        />
       </div>
     </div>
   );
