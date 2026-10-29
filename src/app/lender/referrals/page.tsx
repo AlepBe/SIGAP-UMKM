@@ -1,23 +1,76 @@
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+"use client";
 
-export default function Page() {
+import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Users, Copy, CheckCircle2 } from "lucide-react";
+
+export default function LenderReferralsPage() {
+  const [copied, setCopied] = useState(false);
+  const referralLink = "https://sigap.id/ref/BANK-NUSANTARA-2026";
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(referralLink);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  const referralStats = [
+    { label: "Total UMKM Terundang", val: "148 Usaha", trend: "+24 Bulan Ini" },
+    { label: "Pengajuan Terverifikasi", val: "42 Aplikasi", trend: "Konversi 28.3%" },
+    { label: "Total Dana Tersalurkan", val: "Rp 1.45 Miliar", trend: "Rasio NPL 0%" }
+  ];
+
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Program Referral</h2>
-          <p className="text-muted-foreground mt-1">Mitra dan afiliasi</p>
+    <div className="max-w-7xl mx-auto space-y-8 pb-12">
+      {/* Header */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
+        <div className="relative z-10 space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-sigap-yellow text-xs font-semibold uppercase tracking-wider">
+            <Users className="w-3.5 h-3.5" /> Program Afiliasi & Referral Perbankan
+          </div>
+          <h1 className="text-3xl md:text-4xl font-display font-extrabold tracking-tight">
+            Program Referral Mitra Lembaga
+          </h1>
+          <p className="text-white/70 max-w-2xl text-sm md:text-base leading-relaxed">
+            Undang ekosistem debitur binaan Anda untuk mencatat transaksi di SIGAP dan dapatkan profil risiko kredit yang transparan serta teruji.
+          </p>
         </div>
       </div>
-      
-      <div className="bg-white border rounded-xl shadow-sm p-12 text-center flex flex-col items-center">
-        <div className="w-16 h-16 bg-sigap-soft/20 text-sigap-primary rounded-full flex items-center justify-center mb-4">
-          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+
+      {/* Referral Link Box */}
+      <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+        <h3 className="font-display font-bold text-lg text-sigap-darkest">Tautan Referral Mitra Khusus Anda</h3>
+        <p className="text-xs text-slate-500">Bagikan tautan ini kepada nasabah binaan untuk langsung mendapatkan scoring otomatis terhubung.</p>
+
+        <div className="flex flex-col sm:flex-row gap-3">
+          <input 
+            type="text" 
+            readOnly 
+            value={referralLink} 
+            className="flex-1 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-mono font-semibold text-sigap-darkest select-all"
+          />
+          <Button 
+            onClick={handleCopy}
+            className="bg-sigap-primary text-white hover:bg-sigap-primary/90 font-bold rounded-2xl px-6 py-3.5 text-xs shadow-md"
+          >
+            {copied ? (
+              <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Tersalin!</span>
+            ) : (
+              <span className="flex items-center gap-1.5"><Copy className="w-4 h-4" /> Salin Tautan</span>
+            )}
+          </Button>
         </div>
-        <h3 className="text-xl font-bold text-gray-900 mb-2">Data Belum Tersedia</h3>
-        <p className="text-gray-500 max-w-md mx-auto mb-8">Modul Program Referral saat ini menggunakan mock data service yang terisolasi. Data real akan mengalir setelah integrasi API.</p>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        {referralStats.map((st, i) => (
+          <div key={i} className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">{st.label}</span>
+            <div className="text-2xl font-display font-extrabold text-sigap-darkest mt-1">{st.val}</div>
+            <span className="text-xs font-bold text-emerald-600 mt-1 block">{st.trend}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

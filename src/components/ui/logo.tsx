@@ -13,7 +13,7 @@ interface LogoProps {
 export function Logo({ 
   className = "", 
   variant = 'default',
-  width = 140,
+  width: _width = 140,
   height = 40,
   href = "/" 
 }: LogoProps) {

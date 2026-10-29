@@ -1,9 +1,8 @@
-import React from 'react';
-import Link from 'next/link';
-import { PublicHeader } from '@/components/landing/PublicHeader';
 import { PublicFooter } from '@/components/landing/PublicFooter';
+import { PublicHeader } from '@/components/landing/PublicHeader';
 import { Button } from '@/components/ui/button';
-import { BarChart3, ShieldCheck, PieChart, Activity, BookOpen, Layers, ArrowRight } from 'lucide-react';
+import { Activity,BarChart3,BookOpen,Layers,PieChart,ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
 
 export default function FiturPage() {
   return (

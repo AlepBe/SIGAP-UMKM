@@ -1,28 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "motion/react";
-import { 
-  TrendingUp, 
-  ArrowRight, 
-  ShieldCheck, 
-  Layers, 
-  CheckCircle2,
-  Building2,
-  ExternalLink,
-  Award
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { publicDemoData } from "@/lib/public-demo-data";
 import { formatIDR } from "@/lib/format";
+import { publicDemoData } from "@/lib/public-demo-data";
+import {
+ArrowRight,
+Award,
+Building2,
+CheckCircle2,
+ExternalLink,
+Layers,
+ShieldCheck
+} from "lucide-react";
+import { motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
 export function BentoShowcase() {
   const [selectedPeriod, setSelectedPeriod] = useState<"7 Hari" | "30 Hari" | "3 Bulan">("30 Hari");
   const [selectedAmount, setSelectedAmount] = useState<number>(200000000);
 
-  const { cashflow, financingProducts, business } = publicDemoData;
+  const { cashflow, financingProducts } = publicDemoData;
 
   const matchedProduct = financingProducts.find(p => {
     if (selectedAmount > 500000000) return p.id === "FIN2";

@@ -1,23 +1,48 @@
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+"use client";
 
-export default function Page() {
+
+export default function AdminContentPage() {
+  const modules = [
+    { id: 'LIT-001', title: 'Pemisahan Rekening Pribadi & Usaha', category: 'Dasar Keuangan', readers: '1,420 UMKM', status: 'Published' },
+    { id: 'LIT-002', title: 'Mengenali Pinjaman Legal dan Ilegal', category: 'Keamanan OJK', readers: '2,150 UMKM', status: 'Published' },
+    { id: 'LIT-003', title: 'Memahami Bunga & Tenor', category: 'Pembiayaan', readers: '980 UMKM', status: 'Published' },
+    { id: 'LIT-004', title: 'Strategi Harga & Margin', category: 'Operasional', readers: '840 UMKM', status: 'Published' }
+  ];
+
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Manajemen Konten</h2>
-          <p className="text-muted-foreground mt-1">Artikel dan materi literasi</p>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Manajemen Konten Akademi Literasi</h2>
+          <p className="text-muted-foreground mt-1">Daftar kurikulum modul edukasi finansial untuk para pelaku UMKM.</p>
         </div>
       </div>
-      
-      <div className="bg-white border rounded-xl shadow-sm p-12 text-center flex flex-col items-center">
-        <div className="w-16 h-16 bg-sigap-soft/20 text-sigap-primary rounded-full flex items-center justify-center mb-4">
-          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-        </div>
-        <h3 className="text-xl font-bold text-gray-900 mb-2">Data Belum Tersedia</h3>
-        <p className="text-gray-500 max-w-md mx-auto mb-8">Modul Manajemen Konten saat ini menggunakan mock data service yang terisolasi. Data real akan mengalir setelah integrasi API.</p>
+
+      <div className="bg-white border rounded-2xl shadow-sm overflow-hidden">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-gray-50 text-gray-500 text-xs uppercase font-bold border-b">
+            <tr>
+              <th className="px-6 py-4">Judul Modul</th>
+              <th className="px-6 py-4">Kategori Kurikulum</th>
+              <th className="px-6 py-4">Jumlah Pembaca</th>
+              <th className="px-6 py-4">Status</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {modules.map(m => (
+              <tr key={m.id} className="hover:bg-gray-50/70">
+                <td className="px-6 py-4 font-bold text-gray-900">{m.title}</td>
+                <td className="px-6 py-4 text-gray-600">{m.category}</td>
+                <td className="px-6 py-4 font-semibold text-sigap-primary">{m.readers}</td>
+                <td className="px-6 py-4">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
+                    {m.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { useDemo } from "./DemoContext"; // we might need to add notifications
+import React,{ createContext,useContext,useEffect,useState } from "react";
 
 export type Plan = "free" | "premium";
 export type Status = "active" | "paused" | "cancelled";

@@ -24,7 +24,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <SidebarItem href="/admin/lenders" icon={<Building />} label="Mitra Lender" />
             <SidebarItem href="/admin/applications" icon={<FileCheck />} label="Monitoring Transaksi" />
             <div className="pt-4 pb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">Compliance</div>
-            <SidebarItem href="/admin/legal" icon={<ShieldAlert />} label="Moderasi Legalitas" />
+            <SidebarItem href="/admin/legal-verification" icon={<ShieldAlert />} label="Moderasi Legalitas" />
             <SidebarItem href="/admin/scoring" icon={<BarChart4 />} label="ML Model Monitoring" />
           </nav>
         </div>

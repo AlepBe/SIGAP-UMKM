@@ -1,8 +1,17 @@
 "use client";
 
-import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { ShieldCheck, Search, ShieldAlert, AlertTriangle, FileWarning, ExternalLink, Loader2, XCircle } from "lucide-react";
+import {
+AlertTriangle,
+FileWarning,
+Loader2,
+Search,
+ShieldCheck,
+XCircle
+} from "lucide-react";
+import { motion } from 'motion/react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function LegalProtectionPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,143 +25,190 @@ export default function LegalProtectionPage() {
     setVerificationResult('idle');
 
     setTimeout(() => {
-      // Mock logic: if it contains "bank" or "mandiri" or "investree" it's verified. Otherwise fake unverified.
       const query = searchQuery.toLowerCase();
-      if (query.includes('bank') || query.includes('mandiri') || query.includes('investree') || query.includes('amartha')) {
+      if (query.includes('bank') || query.includes('mandiri') || query.includes('investree') || query.includes('amartha') || query.includes('bca') || query.includes('pegadaian')) {
         setVerificationResult('verified');
       } else {
         setVerificationResult('unverified');
       }
       setIsVerifying(false);
-    }, 1500);
+    }, 1000);
   };
 
+  const verifiedPartners = [
+    { name: "Bank Mandiri (Persero) Tbk", type: "Bank BUMN", license: "POJK Bank Umum", status: "Terdaftar & Diawasi OJK" },
+    { name: "PT Amartha Mikro Fintek", type: "P2P Lending Finansial Mikro", license: "KEP-46/D.05/2019", status: "Berizin OJK" },
+    { name: "PT Pegadaian (Persero)", type: "Lembaga Gadai Resmi", license: "POJK Lembaga Keuangan Khusus", status: "Terdaftar OJK" },
+    { name: "PT Bank Central Asia Tbk", type: "Bank Swasta Nasional", license: "POJK Bank Umum", status: "Terdaftar & Diawasi OJK" }
+  ];
+
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold tracking-tight text-sigap-darkest">Legalitas & Proteksi</h2>
-        <p className="text-muted-foreground">Verifikasi penawaran pinjaman dan lindungi usaha Anda dari entitas ilegal.</p>
+    <div className="max-w-7xl mx-auto space-y-8 pb-12">
+      {/* Header Banner */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-sigap-yellow/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+
+        <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-sigap-yellow text-xs font-semibold uppercase tracking-wider">
+              <ShieldCheck className="w-3.5 h-3.5" /> Pusat Perlindungan Konsumen UMKM
+            </div>
+            <h1 className="text-3xl md:text-4xl font-display font-extrabold tracking-tight">
+              Legalitas & Proteksi Keuangan
+            </h1>
+            <p className="text-white/70 max-w-2xl text-sm md:text-base leading-relaxed">
+              Lindungi data pribadi dan keuangan usaha Anda dari jeratan pinjol ilegal, penipuan transfer biaya admin, dan entitas investasi bodong.
+            </p>
+          </div>
+
+          <Link href="/legal-protection/check">
+            <Button className="bg-sigap-yellow text-sigap-darkest hover:bg-sigap-yellow/90 font-bold px-6 py-2.5 rounded-2xl shadow-lg shadow-sigap-yellow/20">
+              Buka Scanner OJK Lengkap &rarr;
+            </Button>
+          </Link>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Verification Check Tool */}
-        <div className="bg-white border rounded-2xl p-8 shadow-sm">
-          <div className="w-12 h-12 bg-sigap-primary/10 text-sigap-primary rounded-xl flex items-center justify-center mb-6 relative">
-            <Search className="w-6 h-6" />
-            <div className="absolute -top-1 -right-1 bg-amber-100 text-amber-800 text-[8px] font-bold px-1 rounded">DEMO</div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Verification Check Tool (7 cols) */}
+        <div className="lg:col-span-7 bg-white border border-slate-200/80 rounded-3xl p-6 md:p-8 shadow-sm space-y-6">
+          <div>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Cek Cepat Instan</span>
+            <h3 className="text-xl font-display font-bold text-sigap-darkest mt-1">
+              Verifikasi Penawaran Pinjaman (Simulasi)
+            </h3>
+            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+              Masukkan nama aplikasi atau lembaga yang menghubungi Anda untuk mengecek status legalitasnya di basis data simulasi OJK.
+            </p>
           </div>
-          <h3 className="text-xl font-bold text-sigap-darkest mb-2">Cek Penawaran Pinjaman (Simulasi)</h3>
-          <p className="text-sm text-muted-foreground mb-6">
-            Pernah dihubungi melalui WhatsApp atau SMS oleh pihak yang menawarkan dana? Masukkan nama aplikasi atau nomor kontak mereka di sini sebelum merespons.
-          </p>
           
           <div className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-sigap-darkest block mb-1.5">Nama Aplikasi / Perusahaan</label>
+              <label className="text-xs font-bold uppercase text-slate-600 block mb-1.5">
+                Nama Aplikasi / Lembaga
+              </label>
               <input 
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sigap-primary outline-none" 
-                placeholder="Contoh: KSP Dana Cepat (Ketik 'Bank' untuk hasil valid)" 
+                className="w-full px-4 py-3 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-sigap-primary outline-none text-sm font-semibold" 
+                placeholder="Ketik: 'Bank', 'Mandiri', 'Amartha' untuk valid, atau 'KSP Cepat' untuk simulasi ilegal" 
               />
             </div>
-            <div>
-              <label className="text-sm font-medium text-sigap-darkest block mb-1.5">Nomor Telepon Pengirim (Opsional)</label>
-              <input type="text" className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sigap-primary outline-none" placeholder="0812-XXXX-XXXX" />
-            </div>
-            <Button onClick={handleVerify} disabled={isVerifying || !searchQuery.trim()} className="w-full bg-sigap-dark text-white hover:bg-sigap-dark/90 h-11">
-              {isVerifying ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : null}
-              Verifikasi Sekarang
+
+            <Button 
+              onClick={handleVerify} 
+              disabled={isVerifying || !searchQuery.trim()} 
+              className="w-full bg-sigap-darkest text-white hover:bg-sigap-darkest/90 h-12 font-bold rounded-2xl text-xs shadow-md"
+            >
+              {isVerifying ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Search className="w-4 h-4 mr-2" />}
+              Periksa Status OJK Sekarang
             </Button>
           </div>
 
+          {/* Results */}
           {verificationResult === 'verified' && (
-            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg flex gap-3 text-sm text-green-800 animate-in fade-in">
-              <ShieldCheck className="w-5 h-5 shrink-0 mt-0.5" />
+            <motion.div 
+              initial={{ opacity: 0, y: 5 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              className="p-5 bg-emerald-50 border border-emerald-200 rounded-2xl flex gap-3.5 text-xs text-emerald-800"
+            >
+              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="block mb-1">Terverifikasi (Demo)</strong>
-                <p>Entitas ini terdaftar dalam database simulasi kami yang merepresentasikan OJK.</p>
+                <strong className="block text-sm font-display font-bold text-emerald-950 mb-0.5">
+                  Terdaftar & Terverifikasi (Simulasi OJK)
+                </strong>
+                <p>
+                  Entitas ini terdaftar dalam database resmi dan memiliki izin operasional yang sah.
+                </p>
               </div>
-            </div>
+            </motion.div>
           )}
 
           {verificationResult === 'unverified' && (
-            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg flex gap-3 text-sm text-red-800 animate-in fade-in">
-              <XCircle className="w-5 h-5 shrink-0 mt-0.5" />
+            <motion.div 
+              initial={{ opacity: 0, y: 5 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              className="p-5 bg-rose-50 border border-rose-200 rounded-2xl flex gap-3.5 text-xs text-rose-800"
+            >
+              <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="block mb-1">Tidak Ditemukan (Demo)</strong>
-                <p>Hati-hati! Entitas ini tidak terdaftar dalam database simulasi kami. Abaikan penawaran mereka.</p>
+                <strong className="block text-sm font-display font-bold text-rose-950 mb-0.5">
+                  Peringatan: Tidak Ditemukan / Berisiko Ilegal
+                </strong>
+                <p>
+                  Entitas ini tidak terdaftar di OJK. Jangan transfer biaya administrasi di awal dan jangan bagikan data kontak.
+                </p>
               </div>
-            </div>
+            </motion.div>
           )}
 
-          <div className="mt-6 p-4 bg-amber-50 border border-amber-100 rounded-lg flex gap-3 text-sm text-amber-800">
-            <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
-            <p>
-              Jangan pernah memberikan foto KTP memegang wajah atau transfer biaya &quot;administrasi&quot; di awal kepada pihak yang tidak terverifikasi OJK.
+          <div className="p-4 bg-amber-50 border border-amber-200/70 rounded-2xl flex gap-3 text-xs text-amber-900">
+            <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <p className="leading-relaxed">
+              <strong>Peringatan Keamanan:</strong> Lembaga keuangan berizin OJK tidak pernah meminta biaya &quot;pencairan dana&quot; atau &quot;jaminan provisi&quot; yang harus ditransfer ke rekening pribadi di awal.
             </p>
           </div>
         </div>
 
-        {/* Legal Partners Directory */}
-        <div className="space-y-6">
-          <h3 className="font-semibold text-lg text-sigap-darkest">Direktori Mitra Terverifikasi (Data Demo)</h3>
-          
-          <div className="bg-white border rounded-xl overflow-hidden shadow-sm">
-            <div className="p-4 border-b bg-muted/30 flex justify-between items-center">
-              <span className="text-sm font-medium">Status API Koneksi (Mock)</span>
-              <span className="flex items-center text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5"></div>
-                Connected
+        {/* Legal Partners Directory (5 cols) */}
+        <div className="lg:col-span-5 space-y-6">
+          <div className="bg-white border border-slate-200/80 rounded-3xl p-6 md:p-8 shadow-sm space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-4">
+              <div>
+                <h3 className="font-display font-bold text-lg text-sigap-darkest">Direktori Lembaga Resmi</h3>
+                <p className="text-xs text-slate-500">Koneksi API Simulasi OJK</p>
+              </div>
+              <span className="flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse" /> Terhubung
               </span>
             </div>
-            <div className="p-0">
-              <VerifiedPartner name="Bank Mandiri" type="Bank Umum" license="OJK" />
-              <VerifiedPartner name="PT Amartha Mikro Fintek" type="P2P Lending" license="KEP-46/D.05/2019" />
-              <VerifiedPartner name="PT Investree Radhika Jaya" type="P2P Lending" license="KEP-45/D.05/2019" />
-              <VerifiedPartner name="PT Pegadaian (Persero)" type="Gadai Dasar" license="OJK" />
+
+            <div className="divide-y divide-slate-100">
+              {verifiedPartners.map((item, i) => (
+                <div key={i} className="py-3 flex justify-between items-center text-xs">
+                  <div>
+                    <h4 className="font-bold text-sigap-darkest flex items-center gap-1.5">
+                      {item.name}
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                    </h4>
+                    <span className="text-[11px] text-slate-400">{item.type}</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="font-mono text-[10px] text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md font-semibold block">
+                      {item.license}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="p-3 border-t bg-muted/10 text-center">
-              <Button variant="ghost" className="text-xs text-sigap-primary h-auto py-1">Lihat Semua Data (Simulasi) <ExternalLink className="w-3 h-3 ml-1"/></Button>
-            </div>
+
+            <Link href="/legal-protection/check" className="block pt-2">
+              <Button variant="outline" className="w-full text-xs font-bold rounded-2xl border-slate-200">
+                Buka Direktori Lengkap & Cek Nomor &rarr;
+              </Button>
+            </Link>
           </div>
 
-          {/* Report Feature */}
-          <div className="bg-sigap-dark text-white rounded-xl p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex gap-4 items-center w-full">
-              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+          {/* Quick Fraud Report Box */}
+          <div className="bg-sigap-darkest text-white rounded-3xl p-6 shadow-xl border border-white/10 space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 bg-rose-500/20 text-rose-400 rounded-2xl">
                 <FileWarning className="w-5 h-5" />
               </div>
-              <div className="flex-1">
-                <h4 className="font-semibold mb-0.5">Laporkan Pinjol Ilegal</h4>
-                <p className="text-xs text-sigap-light/80">Laporkan temuan untuk membantu ekosistem UMKM.</p>
+              <div>
+                <h4 className="font-bold text-sm">Menemukan Pinjaman Ilegal?</h4>
+                <p className="text-xs text-white/60">Bantu lindungi sesama pengusaha UMKM.</p>
               </div>
             </div>
-            <Button variant="outline" className="bg-transparent border-white/30 text-white hover:bg-white/10 shrink-0 text-sm w-full sm:w-auto mt-4 sm:mt-0">
-              Buat Laporan
-            </Button>
+            <Link href="/legal-protection/check" className="block">
+              <Button className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-2xl text-xs py-2.5">
+                Kirim Laporan Pengaduan
+              </Button>
+            </Link>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function VerifiedPartner({ name, type, license }: { name: string, type: string, license: string }) {
-  return (
-    <div className="p-4 border-b last:border-b-0 flex justify-between items-center hover:bg-muted/10 transition-colors">
-      <div>
-        <div className="font-semibold text-sm text-sigap-darkest flex items-center gap-1.5">
-          {name}
-          <ShieldCheck className="w-3.5 h-3.5 text-green-500" />
-        </div>
-        <div className="text-xs text-muted-foreground mt-0.5">{type}</div>
-      </div>
-      <div className="text-[10px] text-right">
-        <div className="text-muted-foreground">Lisensi/Izin</div>
-        <div className="font-mono mt-0.5 font-medium">{license}</div>
       </div>
     </div>
   );

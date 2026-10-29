@@ -1,32 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "motion/react";
-import { 
-  Activity, 
-  ArrowRight, 
-  BarChart3, 
-  BookOpen, 
-  Crown, 
-  Layers, 
-  PieChart, 
-  Plus, 
-  ShieldCheck, 
-  TrendingUp, 
-  CheckCircle2, 
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { InteractiveDemo } from "@/components/landing/InteractiveDemo";
-import { HeroInteractive } from "@/components/landing/HeroInteractive";
-import { EcosystemMarquee } from "@/components/landing/EcosystemMarquee";
 import { BentoShowcase } from "@/components/landing/BentoShowcase";
-import { WelcomeScreen } from "@/components/landing/WelcomeScreen";
-import { publicDemoData } from "@/lib/public-demo-data";
-import { PublicHeader } from "@/components/landing/PublicHeader";
+import { EcosystemMarquee } from "@/components/landing/EcosystemMarquee";
+import { HeroInteractive } from "@/components/landing/HeroInteractive";
+import { InteractiveDemo } from "@/components/landing/InteractiveDemo";
 import { PublicFooter } from "@/components/landing/PublicFooter";
+import { PublicHeader } from "@/components/landing/PublicHeader";
+import { WelcomeScreen } from "@/components/landing/WelcomeScreen";
+import { Button } from "@/components/ui/button";
+import { publicDemoData } from "@/lib/public-demo-data";
+import { cn } from "@/lib/utils";
+import {
+Activity,
+ArrowRight,
+BarChart3,
+BookOpen,
+CheckCircle2,
+Crown,
+Layers,
+PieChart,
+Plus,
+ShieldCheck
+} from "lucide-react";
+import { motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
 
 const { trustMetrics } = publicDemoData;
 

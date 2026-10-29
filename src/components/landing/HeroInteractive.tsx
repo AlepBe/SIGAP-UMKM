@@ -1,17 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { motion, AnimatePresence } from "motion/react";
-import { 
-  ArrowRight, 
-  ChevronRight, 
-  ChevronLeft,
-  Sparkles,
-  Layers,
-  Image as ImageIcon
+import {
+ArrowRight,
+ChevronRight
 } from "lucide-react";
+import { AnimatePresence,motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect,useState } from "react";
 
 const avatars = [
   { src: "/images/avatar-1.jpg", alt: "Mitra UMKM 1", name: "Siti Rahma - Kuliner" },

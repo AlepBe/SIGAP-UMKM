@@ -1,13 +1,22 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
-import { Button } from '@/components/ui/button';
-import { Menu, X, Phone, ChevronDown } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import {
+CheckCircle2,
+ChevronDown,
+Copy,
+Headphones,
+Menu,
+MessageSquare,
+Phone,
+X
+} from 'lucide-react';
+import { AnimatePresence,motion } from 'motion/react';
+import Link from 'next/link';
+import { useEffect,useState } from 'react';
 
 const navLinks = [
+  { href: '/', label: 'Home' },
   { href: '/tentang', label: 'Tentang' },
   { href: '/fitur', label: 'Layanan', hasDropdown: true },
   { href: '/cara-kerja', label: 'Cara Kerja' },
@@ -18,6 +27,11 @@ const navLinks = [
 export function PublicHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const csPhoneRaw = "082165372288";
+  const csPhoneDisplay = "0821-6537-2288";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -25,19 +39,26 @@ export function PublicHeader() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleCopyNumber = () => {
+    navigator.clipboard.writeText(csPhoneRaw);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled
-          ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b-2 border-slate-600'
-          : 'bg-white border-b-2 border-slate-200'
-          }`}
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+          scrolled
+            ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b-2 border-slate-600'
+            : 'bg-white border-b-2 border-slate-200'
+        }`}
       >
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex h-18 sm:h-20 items-center justify-between gap-6">
           {/* Logo */}
           <Logo className="transition-opacity hover:opacity-85" />
 
-          {/* Desktop Nav (Execora Centered Style) */}
+          {/* Desktop Nav (Includes 'Home') */}
           <nav
             aria-label="Navigasi utama"
             className="hidden md:flex items-center gap-1.5 text-sm font-medium text-slate-700"
@@ -56,24 +77,25 @@ export function PublicHeader() {
             ))}
           </nav>
 
-          {/* Right Actions (Execora Pill Button + Round Phone Icon) */}
+          {/* Right Actions (Hubungi Kami Pill Button + Round Phone Icon) */}
           <div className="flex items-center gap-2.5">
-            {/* Contact Us / Daftar Pill Button */}
-            <Link href="/register">
-              <button className="rounded-full border border-slate-300 hover:border-slate-400 bg-white px-5 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-slate-800 transition-all hover:bg-slate-50 shadow-xs">
-                Hubungi Kami
-              </button>
-            </Link>
+            {/* Hubungi Kami Button -> Opens Customer Service Modal */}
+            <button
+              onClick={() => setContactModalOpen(true)}
+              className="rounded-full border border-slate-300 hover:border-slate-400 bg-white px-5 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-slate-800 transition-all hover:bg-slate-50 shadow-xs cursor-pointer"
+            >
+              Hubungi Kami
+            </button>
 
-            {/* Circular Phone Button */}
-            <a
-              href="tel:08001234567"
-              aria-label="Hubungi Layanan SIGAP"
-              className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 shadow-xs"
-              title="Konsultasi via Telepon"
+            {/* Circular Phone Button -> Opens Customer Service Modal */}
+            <button
+              onClick={() => setContactModalOpen(true)}
+              aria-label="Hubungi Customer Service SIGAP"
+              className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 shadow-xs cursor-pointer"
+              title="Customer Service: 082165372288"
             >
               <Phone className="h-4 w-4" />
-            </a>
+            </button>
 
             {/* Mobile Menu Toggle */}
             <button
@@ -86,6 +108,95 @@ export function PublicHeader() {
           </div>
         </div>
       </header>
+
+      {/* Customer Service Contact Modal */}
+      <AnimatePresence>
+        {contactModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-100 p-6 md:p-8 space-y-6 relative"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setContactModalOpen(false)}
+                className="absolute top-5 right-5 p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors"
+                aria-label="Tutup modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="text-center space-y-2">
+                <div className="w-16 h-16 rounded-3xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
+                  <Headphones className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-display font-extrabold text-sigap-darkest">
+                  Customer Service SIGAP
+                </h3>
+                <p className="text-xs text-slate-500 max-w-xs mx-auto leading-relaxed">
+                  Layanan bantuan dan konsultasi resmi bagi para pelaku UMKM Indonesia.
+                </p>
+              </div>
+
+              {/* Number Card */}
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 text-center space-y-2">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                  Nomor Layanan / WhatsApp
+                </span>
+                <div className="text-3xl font-display font-extrabold text-sigap-darkest tracking-tight">
+                  {csPhoneDisplay}
+                </div>
+                <div className="flex items-center justify-center gap-1.5 text-xs text-emerald-600 font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Online Setiap Hari Kerja (08:00 - 18:00 WIB)
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="space-y-2.5">
+                {/* WhatsApp Button */}
+                <a
+                  href={`https://wa.me/6282165372288?text=${encodeURIComponent('Halo Customer Service SIGAP UMKM, saya ingin konsultasi.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md shadow-emerald-600/20 transition-all"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Hubungi via WhatsApp
+                </a>
+
+                {/* Direct Call Button */}
+                <a
+                  href={`tel:${csPhoneRaw}`}
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-2xl bg-sigap-darkest hover:bg-sigap-darkest/90 text-white font-bold text-sm shadow-md transition-all"
+                >
+                  <Phone className="w-4 h-4" />
+                  Panggil Langsung
+                </a>
+
+                {/* Copy Number Button */}
+                <button
+                  type="button"
+                  onClick={handleCopyNumber}
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-all"
+                >
+                  {copied ? (
+                    <span className="text-emerald-600 flex items-center gap-1 font-bold">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Nomor Berhasil Disalin!
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1">
+                      <Copy className="w-3.5 h-3.5" /> Salin Nomor Telepon
+                    </span>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Drawer */}
       <AnimatePresence>
@@ -110,6 +221,16 @@ export function PublicHeader() {
                 </Link>
               ))}
               <div className="mt-3 flex flex-col gap-2 pt-3 border-t border-slate-100">
+                <button
+                  onClick={() => {
+                    setMobileOpen(false);
+                    setContactModalOpen(true);
+                  }}
+                  className="w-full text-center py-3 rounded-full border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-slate-50 shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Phone className="w-4 h-4 text-emerald-600" />
+                  Hubungi CS: {csPhoneDisplay}
+                </button>
                 <Link
                   href="/login"
                   onClick={() => setMobileOpen(false)}

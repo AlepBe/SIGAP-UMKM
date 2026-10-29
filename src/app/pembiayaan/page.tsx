@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
-import { PublicHeader } from '@/components/landing/PublicHeader';
 import { PublicFooter } from '@/components/landing/PublicFooter';
+import { PublicHeader } from '@/components/landing/PublicHeader';
 import { Button } from '@/components/ui/button';
-import { Search, SlidersHorizontal, ChevronDown, Building2, ShieldCheck, X } from 'lucide-react';
+import { Building2,Search,ShieldCheck,SlidersHorizontal,X } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
 
 const financingDemoData = [
   { id: 1, provider: "Bank Nusantara Demo", product: "Kredit Modal Usaha Demo", segment: "Pemerintah", plafonMin: 10, plafonMax: 100, tenorMin: 12, tenorMax: 24, cost: "0,5% / bulan", collateral: "Sesuai kebijakan", match: 95, requirements: ["KTP", "NPWP", "SKU", "Rekening Koran 6 Bulan"] },

@@ -4,28 +4,31 @@ import { Logo } from '@/components/ui/logo';
 
 const linkGroups = [
   {
-    title: 'Produk',
+    title: 'Perusahaan',
     links: [
-      { href: '/fitur', label: 'Fitur' },
+      { href: '/', label: 'Home' },
+      { href: '/tentang', label: 'Tentang SIGAP' },
       { href: '/cara-kerja', label: 'Cara Kerja' },
-      { href: '/pembiayaan', label: 'Pembiayaan' },
-      { href: '/literasi', label: 'Literasi' },
-      { href: '/premium', label: 'Premium' },
+      { href: '/mitra', label: 'Mitra Finansial' },
+      { href: '/kontak', label: 'Kontak CS' },
     ],
   },
   {
-    title: 'Legal',
+    title: 'Produk & Layanan',
     links: [
-      { href: '/privasi', label: 'Privasi' },
-      { href: '/keamanan', label: 'Keamanan' },
-      { href: '/syarat-ketentuan', label: 'Syarat Ketentuan' },
+      { href: '/fitur', label: 'Layanan Fitur' },
+      { href: '/pembiayaan', label: 'Marketplace' },
+      { href: '/literasi', label: 'Akademi Literasi' },
+      { href: '/premium', label: 'Paket Premium' },
     ],
   },
   {
-    title: 'Akses',
+    title: 'Keamanan & Akun',
     links: [
-      { href: '/login', label: 'Sign In' },
-      { href: '/register', label: 'Sign Up' },
+      { href: '/keamanan', label: 'Keamanan & OJK' },
+      { href: '/faq', label: 'Pusat Bantuan FAQ' },
+      { href: '/login', label: 'Masuk Akun' },
+      { href: '/register', label: 'Daftar Akun Baru' },
     ],
   },
 ];

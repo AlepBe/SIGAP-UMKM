@@ -1,18 +1,24 @@
 "use client";
 
-import React, { useState } from 'react';
-import { PlayCircle, Award, CheckCircle2, Lock, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDemo } from "@/lib/context/DemoContext";
+import {
+Award,
+BookOpen,
+CheckCircle2,
+ChevronRight,
+PlayCircle,
+Sparkles
+} from "lucide-react";
+import { motion } from 'motion/react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function LearningPage() {
-  const { data, updateData } = useDemo();
+  const { data } = useDemo();
   const modules = data.literacy_modules;
   const achievements = data.achievements;
-  
-  const [selectedModule, setSelectedModule] = useState<any>(null);
-  const [isReading, setIsReading] = useState(false);
-  const [isCompleting, setIsCompleting] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>('Semua');
 
   // Stats
   const totalModules = modules.length;
@@ -23,223 +29,214 @@ export default function LearningPage() {
   if (progressPercent >= 80) level = "Advanced";
   else if (progressPercent >= 40) level = "Intermediate";
 
+  const categories = ['Semua', 'Dasar Keuangan', 'Keamanan', 'Pembiayaan', 'Operasional', 'Kepatuhan'];
+
+  const filteredModules = selectedCategory === 'Semua' 
+    ? modules 
+    : modules.filter(m => m.category.toLowerCase() === selectedCategory.toLowerCase());
+
   const mainModule = modules.find(m => m.status === 'in_progress' || m.status === 'not_started') || modules[0];
-  const otherModules = modules.filter(m => m.id !== mainModule.id);
-
-  const handleStartModule = (mod: any) => {
-    setSelectedModule(mod);
-    setIsReading(true);
-  };
-
-  const handleCompleteModule = () => {
-    if (!selectedModule) return;
-    setIsCompleting(true);
-    
-    setTimeout(() => {
-      updateData(prev => ({
-        ...prev,
-        literacy_modules: prev.literacy_modules.map(m => 
-          m.id === selectedModule.id ? { ...m, status: 'completed' as const } : m
-        )
-      }));
-      setIsCompleting(false);
-      setIsReading(false);
-      setSelectedModule(null);
-    }, 1500);
-  };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 relative">
-      <div className="flex flex-col md:flex-row justify-between items-start gap-6">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight text-sigap-darkest">Literasi Finansial</h2>
-          <p className="text-muted-foreground">Tingkatkan wawasan keuangan dan dapatkan poin untuk memperkuat profil pembiayaan Anda.</p>
-        </div>
-        
-        {/* User Progress Summary */}
-        <div className="bg-white p-4 rounded-xl shadow-sm border flex items-center gap-6 min-w-[300px]">
-          <div className="relative w-16 h-16 flex items-center justify-center">
-            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-              <path className="text-muted/30" stroke="currentColor" strokeWidth="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              <path className="text-sigap-primary" strokeDasharray={`${progressPercent}, 100`} stroke="currentColor" strokeWidth="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-lg font-bold text-sigap-darkest leading-none">{progressPercent}%</span>
+    <div className="max-w-7xl mx-auto space-y-8 pb-12">
+      {/* Header Banner */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-sigap-darkest via-slate-900 to-sigap-darkest text-white p-8 md:p-10 rounded-3xl shadow-xl border border-white/10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-sigap-yellow/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-sigap-yellow text-xs font-semibold uppercase tracking-wider">
+              <BookOpen className="w-3.5 h-3.5" /> Akademi Finansial UMKM
             </div>
+            <h1 className="text-3xl md:text-4xl font-display font-extrabold tracking-tight">
+              Literasi Finansial & Sertifikasi
+            </h1>
+            <p className="text-white/70 max-w-2xl text-sm md:text-base leading-relaxed">
+              Tingkatkan wawasan manajemen kas dan kepatuhan hukum usaha. Setiap modul yang diselesaikan akan menambah skor kelayakan kredit Anda secara otomatis.
+            </p>
           </div>
-          <div>
-            <div className="text-sm font-semibold text-sigap-darkest">Tingkat Literasi: {level}</div>
-            <div className="text-xs text-muted-foreground mt-1">{totalModules - completedModules} Modul tersisa</div>
+
+          {/* Progress Circular Badge */}
+          <div className="bg-white/10 backdrop-blur-md p-5 rounded-3xl border border-white/20 flex items-center gap-5 min-w-[280px]">
+            <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path 
+                  className="text-white/20" 
+                  stroke="currentColor" 
+                  strokeWidth="3.5" 
+                  fill="none" 
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                />
+                <path 
+                  className="text-sigap-yellow" 
+                  strokeDasharray={`${progressPercent}, 100`} 
+                  stroke="currentColor" 
+                  strokeWidth="3.5" 
+                  strokeLinecap="round" 
+                  fill="none" 
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                />
+              </svg>
+              <span className="absolute text-base font-display font-extrabold text-white">
+                {progressPercent}%
+              </span>
+            </div>
+            <div>
+              <div className="text-xs font-bold text-white/60 uppercase tracking-wider">Status Pemahaman</div>
+              <div className="text-base font-display font-extrabold text-white mt-0.5">Tingkat {level}</div>
+              <div className="text-[11px] text-sigap-yellow font-medium mt-0.5">
+                {completedModules} dari {totalModules} modul tuntas
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* Main Learning Modules - 2 Cols */}
-        <div className="lg:col-span-2 space-y-6">
-          <h3 className="font-semibold text-lg text-sigap-darkest">Modul Sorotan</h3>
-          
-          <div className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-            <div className="flex flex-col sm:flex-row">
-              <div 
-                className="w-full sm:w-48 h-32 sm:h-auto bg-sigap-darkest relative flex items-center justify-center group cursor-pointer"
-                onClick={() => handleStartModule(mainModule)}
-              >
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
-                <PlayCircle className="w-12 h-12 text-white opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+      {/* Main Grid: Modules & Achievements */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Modules Section (8 cols) */}
+        <div className="lg:col-span-8 space-y-6">
+          {/* Featured Module Hero */}
+          <div className="bg-white border border-slate-200/80 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start">
+              <div className="w-full md:w-44 h-36 rounded-2xl bg-sigap-darkest relative flex items-center justify-center shrink-0 overflow-hidden group">
+                <div className="absolute inset-0 bg-sigap-primary/20 group-hover:bg-sigap-primary/10 transition-colors"></div>
+                <PlayCircle className="w-12 h-12 text-white/90 group-hover:scale-110 group-hover:text-sigap-yellow transition-all" />
               </div>
-              <div className="p-6 flex-1 flex flex-col justify-center">
-                <div className="text-xs font-semibold text-sigap-primary mb-1 uppercase">{mainModule.category} • {mainModule.duration_min} MENIT</div>
-                <h4 className="text-lg font-bold text-sigap-darkest mb-2">{mainModule.title}</h4>
-                <p className="text-sm text-muted-foreground mb-4">Materi utama yang direkomendasikan berdasarkan aktivitas finansial Anda.</p>
-                <div className="flex items-center justify-between mt-auto">
-                  <div className="flex gap-1">
-                    {mainModule.status === 'completed' ? (
-                      <span className="text-xs font-medium text-green-600 flex items-center"><CheckCircle2 className="w-4 h-4 mr-1"/> Selesai</span>
-                    ) : (
-                      <span className="text-xs text-amber-600 font-medium">10 Poin Reward (Demo)</span>
-                    )}
-                  </div>
-                  <Button 
-                    size="sm" 
-                    variant={mainModule.status === 'completed' ? 'ghost' : 'outline'} 
-                    className="text-sigap-primary border-sigap-primary"
-                    onClick={() => handleStartModule(mainModule)}
-                  >
-                    {mainModule.status === 'completed' ? 'Ulas Kembali' : 'Mulai Belajar'}
-                  </Button>
+
+              <div className="flex-1 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 uppercase tracking-wider">
+                    {mainModule.category}
+                  </span>
+                  <span className="text-xs text-slate-400 font-medium">
+                    {mainModule.duration_min} Menit
+                  </span>
+                </div>
+
+                <h3 className="text-xl font-display font-bold text-sigap-darkest">
+                  {mainModule.title}
+                </h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Modul esensial yang direkomendasikan berdasarkan audit pembukuan Kedai Kopi Senja untuk meningkatkan efisiensi kas.
+                </p>
+
+                <div className="pt-3 flex items-center justify-between">
+                  <span className="text-xs font-extrabold text-emerald-600 flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5" /> +10 Poin Skor SIGAP
+                  </span>
+                  <Link href={`/learning/${mainModule.id}`}>
+                    <Button className="bg-sigap-primary text-white hover:bg-sigap-primary/90 font-bold rounded-2xl text-xs px-5 shadow-sm">
+                      {mainModule.status === 'completed' ? 'Ulas Materi' : 'Mulai Belajar'} &rarr;
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
 
-          <h3 className="font-semibold text-lg text-sigap-darkest pt-4">Modul Lainnya</h3>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {otherModules.map(mod => (
-              <CourseCard 
-                key={mod.id}
-                title={mod.title} 
-                category={mod.category.toUpperCase()} 
-                time={`${mod.duration_min} Menit`} 
-                status={mod.status} 
-                onClick={() => handleStartModule(mod)}
-              />
+          {/* Category Filter Chips */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-3.5 py-2 rounded-2xl font-bold shrink-0 transition-all ${
+                  selectedCategory === cat 
+                    ? 'bg-sigap-darkest text-white shadow-sm' 
+                    : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                {cat}
+              </button>
             ))}
           </div>
+
+          {/* Modules List Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {filteredModules.map((mod) => {
+              const isCompleted = mod.status === 'completed';
+              return (
+                <Link key={mod.id} href={`/learning/${mod.id}`}>
+                  <motion.div
+                    whileHover={{ y: -3 }}
+                    className="p-5 rounded-3xl border border-slate-200/80 bg-white hover:border-sigap-primary/40 hover:shadow-md transition-all flex flex-col justify-between h-full"
+                  >
+                    <div>
+                      <div className="flex justify-between items-start mb-3">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                          {mod.category} • {mod.duration_min} Menit
+                        </span>
+                        {isCompleted ? (
+                          <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                            <CheckCircle2 className="w-4 h-4" />
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                            +10 Poin
+                          </span>
+                        )}
+                      </div>
+
+                      <h4 className="font-display font-bold text-sigap-darkest text-base mb-2 leading-snug">
+                        {mod.title}
+                      </h4>
+                    </div>
+
+                    <div className="pt-4 border-t border-slate-100 flex justify-between items-center text-xs">
+                      <span className={`font-semibold ${isCompleted ? 'text-emerald-600' : 'text-sigap-primary'}`}>
+                        {isCompleted ? 'Sudah Selesai' : 'Mulai Belajar'}
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-slate-400" />
+                    </div>
+                  </motion.div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Right Sidebar - Badges & Achievements */}
-        <div className="space-y-6">
-          <div className="bg-sigap-dark text-white rounded-xl p-6 shadow-md">
-            <div className="flex items-center gap-3 mb-6">
-              <Award className="w-6 h-6 text-sigap-light" />
-              <h3 className="font-bold text-lg">Pencapaian Anda</h3>
+        {/* Sidebar: Badges & Achievements (4 cols) */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="bg-gradient-to-br from-sigap-darkest to-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl border border-white/10 space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-2xl bg-sigap-yellow/20 text-sigap-yellow">
+                <Award className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-lg">Pencapaian Belajar</h3>
+                <p className="text-xs text-white/60">Lencana kredibilitas bisnis</p>
+              </div>
             </div>
-            
-            <div className="space-y-4">
-              {achievements.map(ach => (
-                <BadgeItem 
-                  key={ach.id}
-                  name={ach.name} 
-                  desc={ach.description} 
-                  earned={ach.earned} 
-                />
+
+            <div className="space-y-3">
+              {achievements.map((ach) => (
+                <div 
+                  key={ach.id} 
+                  className={`p-4 rounded-2xl border transition-all flex items-center gap-3 ${
+                    ach.earned 
+                      ? 'bg-white/10 border-white/20' 
+                      : 'bg-white/5 border-white/5 opacity-40 grayscale'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 ${
+                    ach.earned ? 'bg-sigap-yellow text-sigap-darkest font-bold' : 'bg-white/10 text-white/40'
+                  }`}>
+                    <Award className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white text-sm">{ach.name}</h4>
+                    <p className="text-xs text-white/60">{ach.description}</p>
+                  </div>
+                </div>
               ))}
             </div>
-            
-            <div className="mt-6 pt-6 border-t border-white/20">
-              <p className="text-xs text-sigap-light mb-3">Setiap pencapaian (Demo) meningkatkan nilai profil Anda dalam algoritma skor kredit.</p>
+
+            <div className="pt-4 border-t border-white/10 text-xs text-white/70 leading-relaxed">
+              Setiap lencana pencapaian memperkuat reputasi profil Anda saat dievaluasi oleh sistem scoring perbankan.
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Reading Modal */}
-      {isReading && selectedModule && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-xl shadow-lg w-full max-w-3xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div className="px-6 py-4 border-b flex justify-between items-center bg-gray-50">
-              <div>
-                <h3 className="font-semibold text-xl text-sigap-darkest">{selectedModule.title}</h3>
-                <p className="text-sm text-muted-foreground">{selectedModule.category}</p>
-              </div>
-              <button onClick={() => setIsReading(false)} className="text-gray-400 hover:text-gray-600">
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            
-            <div className="p-8 overflow-y-auto flex-1 bg-white">
-              <div className="prose max-w-none text-gray-700">
-                <div className="w-full h-48 bg-gray-100 rounded-lg flex items-center justify-center mb-8 border-2 border-dashed border-gray-300">
-                  <PlayCircle className="w-12 h-12 text-gray-300" />
-                  <span className="ml-3 text-gray-400 font-medium">Video Materi (Simulasi)</span>
-                </div>
-                
-                <h4 className="text-lg font-bold text-sigap-darkest mb-4">Rangkuman Materi</h4>
-                <p className="mb-4">
-                  Dalam modul ini, Anda mempelajari pentingnya aspek <strong>{selectedModule.category.toLowerCase()}</strong> untuk keberlanjutan bisnis. 
-                  Memahami topik <em>{selectedModule.title.toLowerCase()}</em> akan membantu Anda dalam mengambil keputusan strategis sehari-hari.
-                </p>
-                <p className="mb-4">
-                  Praktik terbaik yang disarankan:
-                </p>
-                <ul className="list-disc pl-5 mb-8 space-y-2">
-                  <li>Selalu dokumentasikan setiap transaksi.</li>
-                  <li>Pisahkan kas operasional dan pribadi.</li>
-                  <li>Tinjau ulang secara berkala.</li>
-                </ul>
-                
-                <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 text-blue-800 text-sm">
-                  <strong>Simulasi:</strong> Menyelesaikan modul ini akan menambahkan 10 poin ke profil demo Anda.
-                </div>
-              </div>
-            </div>
-            
-            <div className="p-4 border-t flex justify-end gap-3 bg-gray-50">
-              <Button variant="outline" onClick={() => setIsReading(false)}>Tutup</Button>
-              {selectedModule.status !== 'completed' && (
-                <Button onClick={handleCompleteModule} disabled={isCompleting} className="bg-green-600 text-white hover:bg-green-700">
-                  {isCompleting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <CheckCircle2 className="w-4 h-4 mr-2" />}
-                  Tandai Selesai & Klaim Poin
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function CourseCard({ title, category, time, status, onClick }: { title: string, category: string, time: string, status: string, onClick: () => void }) {
-  return (
-    <div onClick={onClick} className={`border rounded-xl p-5 bg-white hover:border-sigap-primary/50 hover:shadow-sm transition-all cursor-pointer`}>
-      <div className="flex justify-between items-start mb-3">
-        <span className="text-[10px] font-bold tracking-wider text-muted-foreground">{category} • {time}</span>
-        {status === 'completed' && <CheckCircle2 className="w-4 h-4 text-green-500" />}
-      </div>
-      <h4 className="font-semibold text-sigap-darkest leading-snug mb-4">{title}</h4>
-      <div className="flex justify-between items-center mt-auto">
-        {status === 'completed' ? (
-          <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded">Selesai</span>
-        ) : (
-          <span className="text-xs font-medium text-sigap-primary">Mulai Belajar →</span>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function BadgeItem({ name, desc, earned }: { name: string, desc: string, earned: boolean }) {
-  return (
-    <div className={`flex gap-3 items-center p-3 rounded-lg ${earned ? 'bg-white/10' : 'opacity-40 grayscale'}`}>
-      <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${earned ? 'bg-sigap-primary' : 'bg-muted/50 border border-muted'}`}>
-        <Award className={`w-5 h-5 ${earned ? 'text-white' : 'text-muted-foreground'}`} />
-      </div>
-      <div>
-        <h4 className="text-sm font-semibold text-white">{name}</h4>
-        <p className="text-[10px] text-sigap-light/80 leading-tight mt-0.5">{desc}</p>
       </div>
     </div>
   );

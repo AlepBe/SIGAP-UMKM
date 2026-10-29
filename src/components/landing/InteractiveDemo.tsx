@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { publicDemoData } from '@/lib/public-demo-data';
-import { ShieldCheck, BarChart3, TrendingUp, TrendingDown, DollarSign, Search, Filter, ChevronDown, Activity, Info, X } from 'lucide-react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Button } from '@/components/ui/button';
+import { publicDemoData } from '@/lib/public-demo-data';
+import { Activity,ChevronDown,DollarSign,Info,Search,ShieldCheck,TrendingDown,TrendingUp,X } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect,useState } from 'react';
+import { Area,AreaChart,CartesianGrid,ResponsiveContainer,Tooltip,XAxis,YAxis } from 'recharts';
 
 export function InteractiveDemo() {
   const [mounted, setMounted] = useState(false);

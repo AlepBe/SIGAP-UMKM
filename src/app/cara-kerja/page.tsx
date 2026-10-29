@@ -1,9 +1,8 @@
-import React from 'react';
-import Link from 'next/link';
-import { PublicHeader } from '@/components/landing/PublicHeader';
 import { PublicFooter } from '@/components/landing/PublicFooter';
+import { PublicHeader } from '@/components/landing/PublicHeader';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, Target, TrendingUp, Zap, ArrowRight, ShieldCheck, DollarSign } from 'lucide-react';
+import { ArrowRight,CheckCircle2,DollarSign,ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
 
 export default function CaraKerjaPage() {
   return (
@@ -151,13 +150,24 @@ export default function CaraKerjaPage() {
               </div>
             </div>
           </div>
-          
-          <div className="container mt-24 text-center">
-            <Link href="/register">
-              <Button size="lg" className="h-14 px-10 text-lg font-bold shadow-xl">
-                Mulai Gunakan SIGAP <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
+        </section>
+
+        {/* Dedicated CTA Section */}
+        <section className="py-20 bg-white border-t border-slate-100 text-center relative z-10">
+          <div className="container max-w-2xl mx-auto space-y-6">
+            <h2 className="text-3xl font-display font-extrabold text-sigap-darkest">
+              Siap Memulai Transformasi Finansial Usaha Anda?
+            </h2>
+            <p className="text-slate-500 text-sm">
+              Tingkatkan kelayakan kredit dan kelola pembukuan usaha Anda tanpa ribet mulai hari ini.
+            </p>
+            <div className="pt-2">
+              <Link href="/register">
+                <Button size="lg" className="h-14 px-10 text-base font-bold shadow-xl bg-sigap-primary text-white hover:bg-sigap-primary/90 rounded-2xl">
+                  Mulai Gunakan SIGAP <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
       </main>

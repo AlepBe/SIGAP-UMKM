@@ -1,30 +1,58 @@
 "use client";
 
-import React, { useState } from 'react';
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { 
-  BarChart3, Wallet, Activity, ArrowLeftRight, 
-  BookOpen, ShieldCheck, PieChart, FileText, 
-  User, Bell, HelpCircle, Settings, Menu, X, CheckCircle2
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
-import { useDemo } from "@/lib/context/DemoContext";
 import { useAuth } from "@/lib/context/AuthContext";
+import { useDemo } from "@/lib/context/DemoContext";
 import { useSubscription } from "@/lib/context/SubscriptionContext";
+import {
+Activity,ArrowLeftRight,
+BarChart3,
+Bell,
+BookOpen,
+Building2,
+CheckCircle2,
+ChevronRight,
+CreditCard,
+FileText,
+HelpCircle,
+LogOut,
+Menu,
+PieChart,
+Settings,
+ShieldCheck,
+Sparkles,
+User,
+Wallet,
+X
+} from "lucide-react";
+import { AnimatePresence,motion } from "motion/react";
+import Link from "next/link";
+import { usePathname,useRouter } from "next/navigation";
+import React,{ useEffect,useState } from 'react';
 
 export default function UMKMLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { data, updateData } = useDemo();
+  const { data } = useDemo();
   const [isBankModalOpen, setIsBankModalOpen] = useState(false);
   const [bankConnectionStatus, setBankConnectionStatus] = useState<'Belum Terhubung' | 'Menghubungkan' | 'Terhubung'>('Belum Terhubung');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { session, isLoading, logout } = useAuth();
+  const { session, isLoading, logout, login } = useAuth();
   const { subscription } = useSubscription();
   const router = useRouter();
 
-  React.useEffect(() => {
+  const handleSwitchToLender = () => {
+    login({
+      id: 'LND-001',
+      name: 'Bank Nusantara Demo',
+      email: 'lender@sigap.test',
+      role: 'lender',
+      authenticated: true,
+    });
+    router.push('/lender/dashboard');
+  };
+
+  useEffect(() => {
     if (!isLoading) {
       if (!session?.authenticated) {
         router.replace('/login');
@@ -36,13 +64,21 @@ export default function UMKMLayout({ children }: { children: React.ReactNode }) 
 
   if (isLoading || session?.role !== 'umkm') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sigap-primary"></div>
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-4 border-sigap-primary border-t-transparent rounded-full animate-spin" />
+          <span className="text-sm font-medium text-slate-500 font-display">Memuat Portal SIGAP UMKM...</span>
+        </div>
       </div>
     );
   }
   
-  const business = data.businesses[0];
+  const business = data.businesses[0] || {
+    id: 'UMKM-001',
+    name: 'Kedai Kopi Senja',
+    business_type: 'F&B',
+    established_date: '2021',
+  };
   const unreadCount = data.notifications.filter(n => !n.read).length;
 
   const handleConnectBank = () => {
@@ -54,254 +90,386 @@ export default function UMKMLayout({ children }: { children: React.ReactNode }) 
   };
 
   const navItems = [
-    { href: "/dashboard", icon: <BarChart3 />, label: "Overview" },
-    { href: "/bookkeeping", icon: <Wallet />, label: "Pembukuan" },
-    { href: "/credit-score", icon: <Activity />, label: "Skor Kredit" },
-    { href: "/financing", icon: <ArrowLeftRight />, label: "Pembiayaan" },
-    { href: "/learning", icon: <BookOpen />, label: "Literasi" },
-    { href: "/legal-protection", icon: <ShieldCheck />, label: "Legalitas & Proteksi" },
-    { href: "/resilience", icon: <PieChart />, label: "Ketahanan Usaha", isPremium: true },
+    { href: "/dashboard", icon: BarChart3, label: "Overview" },
+    { href: "/bookkeeping", icon: Wallet, label: "Pembukuan" },
+    { href: "/credit-score", icon: Activity, label: "Skor Kredit" },
+    { href: "/financing", icon: ArrowLeftRight, label: "Pembiayaan" },
+    { href: "/learning", icon: BookOpen, label: "Literasi Finansial" },
+    { href: "/legal-protection", icon: ShieldCheck, label: "Legalitas & Proteksi" },
+    { href: "/resilience", icon: PieChart, label: "Ketahanan Usaha", isPremium: true },
   ];
 
   const subNavItems = [
-    { href: "/documents", icon: <FileText />, label: "Dokumen Usaha" },
-    { href: "/profile", icon: <User />, label: "Profil Usaha" },
-    { href: "/notifications", icon: <Bell />, label: "Notifikasi" },
-    { href: "/support", icon: <HelpCircle />, label: "Bantuan" },
+    { href: "/documents", icon: FileText, label: "Dokumen Usaha" },
+    { href: "/profile", icon: User, label: "Profil Usaha" },
+    { href: "/notifications", icon: Bell, label: "Notifikasi", badge: unreadCount > 0 ? unreadCount : undefined },
+    { href: "/support", icon: HelpCircle, label: "Pusat Bantuan" },
   ];
 
+  const pageTitle = () => {
+    const segment = pathname.split('/')[1] || '';
+    switch(segment) {
+      case 'dashboard': return 'Ringkasan Usaha';
+      case 'bookkeeping': return 'Pembukuan Digital';
+      case 'credit-score': return 'Skor Kredit Alternatif';
+      case 'financing': return 'Marketplace Pembiayaan';
+      case 'learning': return 'Literasi Finansial';
+      case 'legal-protection': return 'Legalitas & Proteksi';
+      case 'resilience': return 'Ketahanan Usaha (Runway)';
+      case 'documents': return 'Dokumen Usaha';
+      case 'profile': return 'Profil Usaha';
+      case 'notifications': return 'Pusat Notifikasi';
+      case 'support': return 'Pusat Bantuan';
+      case 'settings': return 'Pengaturan';
+      default: return 'Portal UMKM';
+    }
+  };
+
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex h-screen overflow-hidden bg-slate-50/60 font-sans text-foreground">
       {/* Mobile Sidebar Overlay */}
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 z-40 bg-black/50 md:hidden" 
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-sigap-darkest/60 backdrop-blur-sm md:hidden" 
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Sidebar Navigation */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-64 transform flex-col border-r bg-card transition-transform duration-200 ease-in-out md:static md:flex md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0 flex' : '-translate-x-full'}`}>
-        <div className="flex h-16 items-center justify-between border-b px-6">
+      <aside className={`fixed inset-y-0 left-0 z-50 w-72 flex flex-col border-r border-slate-200/80 bg-white shadow-xl md:shadow-none transition-transform duration-300 ease-in-out md:static md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        {/* Brand header */}
+        <div className="flex h-18 items-center justify-between border-b border-slate-100 px-6 py-4">
           <Logo />
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMobileMenuOpen(false)}>
+          <Button variant="ghost" size="icon" className="md:hidden text-slate-500 hover:text-sigap-darkest" onClick={() => setIsMobileMenuOpen(false)}>
             <X className="h-5 w-5" />
           </Button>
         </div>
         
-        <div className="flex-1 overflow-y-auto py-4">
-          <nav className="space-y-1 px-4">
-            {navItems.map((item) => (
-              <SidebarItem 
-                key={item.href} 
-                href={item.href} 
-                icon={item.icon} 
-                label={item.label} 
-                active={pathname === item.href}
-                isPremium={item.isPremium}
-                onClick={() => setIsMobileMenuOpen(false)}
-              />
-            ))}
-            
-            <div className="my-4 border-t border-border"></div>
-            
-            {subNavItems.map((item) => (
-              <SidebarItem 
-                key={item.href} 
-                href={item.href} 
-                icon={item.icon} 
-                label={item.label} 
-                active={pathname === item.href}
-                badge={item.href === '/notifications' && unreadCount > 0 ? unreadCount : undefined}
-                onClick={() => setIsMobileMenuOpen(false)}
-              />
-            ))}
-          </nav>
+        {/* Navigation Links */}
+        <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
+          <div>
+            <div className="px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              Menu Utama
+            </div>
+            <nav className="space-y-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`group relative flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                      isActive 
+                        ? "bg-sigap-darkest text-white shadow-md shadow-sigap-darkest/10" 
+                        : "text-slate-600 hover:bg-slate-100/80 hover:text-sigap-darkest"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${
+                        isActive 
+                          ? "bg-white/15 text-sigap-light" 
+                          : "bg-slate-100 text-slate-500 group-hover:bg-white group-hover:text-sigap-primary"
+                      }`}>
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span>{item.label}</span>
+                    </div>
+
+                    <div className="flex items-center gap-1.5">
+                      {item.isPremium && (
+                        <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                          isActive 
+                            ? "bg-sigap-yellow text-sigap-darkest" 
+                            : "bg-amber-100 text-amber-800"
+                        }`}>
+                          PRO
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div>
+            <div className="px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              Operasional &amp; Profil
+            </div>
+            <nav className="space-y-1">
+              {subNavItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`group relative flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                      isActive 
+                        ? "bg-sigap-darkest text-white shadow-md shadow-sigap-darkest/10" 
+                        : "text-slate-600 hover:bg-slate-100/80 hover:text-sigap-darkest"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${
+                        isActive 
+                          ? "bg-white/15 text-sigap-light" 
+                          : "bg-slate-100 text-slate-500 group-hover:bg-white group-hover:text-sigap-primary"
+                      }`}>
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span>{item.label}</span>
+                    </div>
+
+                    {item.badge !== undefined && (
+                      <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-rose-500 text-white text-[10px] font-bold px-1.5 shadow-sm">
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
         </div>
         
-        <div className="border-t p-4">
-          <SidebarItem href="/settings" icon={<Settings />} label="Pengaturan" active={pathname === '/settings'} />
-          <div className="mt-4 flex items-center justify-between px-2">
-            <div className="flex items-center gap-3">
-              <div className="h-9 w-9 rounded-full bg-sigap-soft/20 flex items-center justify-center text-sigap-primary font-bold uppercase">
-                {business?.name.charAt(0) || 'U'}
+        {/* Footer info & Profile card */}
+        <div className="border-t border-slate-100 p-4 space-y-3 bg-slate-50/50">
+          <Link 
+            href="/settings"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold transition-colors ${
+              pathname === '/settings' 
+                ? 'bg-sigap-darkest text-white' 
+                : 'text-slate-600 hover:bg-slate-100 hover:text-sigap-darkest'
+            }`}
+          >
+            <Settings className="h-4 w-4" />
+            <span>Pengaturan</span>
+          </Link>
+
+          {/* Business identity badge */}
+          <div className="rounded-2xl border border-slate-200/80 bg-white p-3 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sigap-darkest font-display text-base font-extrabold text-white">
+                  {business?.name?.charAt(0) || 'U'}
+                </div>
+                <div className="overflow-hidden">
+                  <p className="truncate text-sm font-bold text-sigap-darkest">{business?.name || 'UMKM Indonesia'}</p>
+                  <p className="flex items-center gap-1 text-[11px] font-medium text-emerald-600">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    Terverifikasi
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-medium leading-none truncate max-w-[140px]">{business?.name || 'UMKM'}</span>
-                <span className="text-xs text-muted-foreground mt-1">UMKM Terverifikasi</span>
-              </div>
+
+              <Link href="/profile" className="text-slate-400 hover:text-sigap-darkest p-1">
+                <ChevronRight className="h-4 w-4" />
+              </Link>
             </div>
-          </div>
-          
-          <div className="mt-3 px-2">
-            <div className={`rounded-lg p-3 ${subscription.plan === 'premium' ? 'bg-gradient-to-r from-sigap-primary/10 to-indigo-500/10 border border-sigap-primary/20' : 'bg-muted border border-border'}`}>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium text-muted-foreground">Status Plan</span>
+
+            {/* Subscription Mini Pill */}
+            <div className="mt-2.5 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span className="text-[11px] font-medium text-slate-500">Paket:</span>
+              <Link href="/premium" className="font-display font-bold text-[11px] text-sigap-primary hover:underline">
                 {subscription.plan === 'premium' ? (
-                  subscription.status === 'paused' ? (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-700">PREMIUM DIJEDA</span>
-                  ) : (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sigap-primary text-white">SIGAP PREMIUM</span>
-                  )
+                  <span className="text-amber-600 flex items-center gap-1 font-extrabold">
+                    <Sparkles className="h-3 w-3" /> SIGAP PRO
+                  </span>
                 ) : (
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-200 text-gray-700">FREE PLAN</span>
+                  <span className="text-slate-600">Gratis (Upgrade →)</span>
                 )}
-              </div>
-              
-              <Link href="/premium">
-                <Button variant={subscription.plan === 'premium' ? "outline" : "default"} size="sm" className={`w-full h-7 text-xs ${subscription.plan === 'premium' ? 'border-sigap-primary text-sigap-primary hover:bg-sigap-primary hover:text-white' : ''}`}>
-                  {subscription.plan === 'premium' ? 'Kelola Premium' : 'Upgrade ke Premium'}
-                </Button>
               </Link>
             </div>
           </div>
 
-          <div className="mt-3 px-2">
-            <button 
-              onClick={() => {
-                logout();
-                router.push('/login');
-              }}
-              className="w-full flex items-center justify-center py-2 text-sm text-red-600 font-medium bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
-            >
-              Keluar
-            </button>
-          </div>
+          <button 
+            onClick={handleSwitchToLender}
+            className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold text-sigap-primary bg-blue-50/80 hover:bg-blue-100/80 transition-colors border border-blue-200/60 mb-2"
+          >
+            <span className="flex items-center gap-1.5">
+              <Building2 className="h-3.5 w-3.5" />
+              Ke Portal Lender
+            </span>
+            <ChevronRight className="h-3.5 w-3.5 text-blue-400" />
+          </button>
+
+          <button 
+            onClick={() => {
+              logout();
+              router.push('/login');
+            }}
+            className="flex w-full items-center justify-center gap-2 rounded-xl py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors"
+          >
+            <LogOut className="h-3.5 w-3.5" />
+            Keluar dari Sesi
+          </button>
         </div>
       </aside>
 
       {/* Main Content Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Mobile header & Topbar */}
-        <header className="flex h-16 items-center justify-between border-b bg-card px-4 md:px-6">
-          <div className="flex items-center md:hidden">
-            <Button variant="ghost" size="icon" className="-ml-2 mr-2" onClick={() => setIsMobileMenuOpen(true)}>
+        {/* Topbar */}
+        <header className="flex h-18 items-center justify-between border-b border-slate-200/80 bg-white/80 backdrop-blur-md px-4 md:px-8">
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" className="md:hidden text-slate-600" onClick={() => setIsMobileMenuOpen(true)}>
               <Menu className="h-5 w-5" />
             </Button>
-            <span className="font-bold text-sigap-darkest">SIGAP</span>
+            <div>
+              <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 font-medium">
+                <Link href="/" className="hover:text-sigap-darkest transition-colors">SIGAP</Link>
+                <span>/</span>
+                <span className="text-slate-600">UMKM Portal</span>
+              </div>
+              <h1 className="font-display text-lg md:text-xl font-extrabold text-sigap-darkest">
+                {pageTitle()}
+              </h1>
+            </div>
           </div>
-          <div className="hidden md:flex flex-1">
-            <h1 className="text-lg font-semibold text-sigap-darkest capitalize">
-              {pathname.split('/')[1]?.replace('-', ' ') || 'Dashboard'}
-            </h1>
-          </div>
-          <div className="flex items-center gap-2 md:gap-4">
-            {subscription.plan === 'premium' && subscription.status === 'active' && (
-               <span className="hidden sm:flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sigap-primary/10 text-sigap-primary border border-sigap-primary/20">
-                 PREMIUM
-               </span>
-            )}
-            {subscription.plan === 'free' && (
-               <span className="hidden sm:flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-muted text-muted-foreground border border-border">
-                 FREE
-               </span>
-            )}
+
+          <div className="flex items-center gap-2.5 sm:gap-4">
+            {/* Subscription Plan Badge */}
+            <Link href="/premium" className="hidden sm:inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold transition-all hover:scale-105 border shadow-xs bg-slate-50 border-slate-200 text-slate-700">
+              {subscription.plan === 'premium' ? (
+                <>
+                  <Sparkles className="h-3 w-3 text-amber-500" />
+                  <span className="text-amber-700">PREMIUM</span>
+                </>
+              ) : (
+                <>
+                  <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+                  <span>FREE TIER</span>
+                </>
+              )}
+            </Link>
+
+            {/* Bank status pill */}
             {bankConnectionStatus === 'Terhubung' ? (
-              <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                Bank Terhubung (Demo)
+              <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 px-3 py-1 text-xs font-bold">
+                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                Bank Terhubung
               </span>
             ) : (
-              <Button onClick={() => setIsBankModalOpen(true)} variant="outline" size="sm" className="hidden sm:flex border-sigap-primary text-sigap-primary hover:bg-sigap-primary hover:text-white">
+              <Button 
+                onClick={() => setIsBankModalOpen(true)} 
+                variant="outline" 
+                size="sm" 
+                className="hidden sm:flex rounded-full border-slate-200 text-sigap-darkest hover:border-sigap-primary hover:bg-sigap-light/20 text-xs font-semibold gap-1.5"
+              >
+                <CreditCard className="h-3.5 w-3.5 text-sigap-primary" />
                 Hubungkan Bank
               </Button>
             )}
+
+            {/* Switch to Lender Portal */}
+            <Button
+              onClick={handleSwitchToLender}
+              variant="outline"
+              size="sm"
+              className="hidden lg:flex items-center gap-1.5 rounded-full border-blue-200 bg-blue-50/60 hover:bg-blue-100/80 text-sigap-primary text-xs font-bold"
+            >
+              <Building2 className="h-3.5 w-3.5" />
+              Portal Lender
+            </Button>
+
+            {/* Notifications Button */}
             <Link href="/notifications">
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5 text-muted-foreground" />
+              <Button variant="ghost" size="icon" className="relative rounded-full text-slate-600 hover:bg-slate-100 hover:text-sigap-darkest">
+                <Bell className="h-5 w-5" />
                 {unreadCount > 0 && (
-                  <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-destructive border-2 border-card"></span>
+                  <span className="absolute top-2 right-2 flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-500" />
+                  </span>
                 )}
               </Button>
             </Link>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-muted/20 p-4 md:p-6 lg:p-8 relative">
+        {/* Scrollable Main Workspace */}
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
           {children}
         </main>
       </div>
 
       {/* Bank Connection Modal */}
       {isBankModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-xl shadow-lg w-full max-w-md overflow-hidden">
-            <div className="px-6 py-4 border-b flex justify-between items-center">
-              <h3 className="font-semibold text-lg">Hubungkan Rekening Bank</h3>
-              <button onClick={() => setIsBankModalOpen(false)} className="text-gray-400 hover:text-gray-600">
-                <X className="w-5 h-5" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-sigap-darkest/60 backdrop-blur-sm p-4">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl border border-slate-100"
+          >
+            <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-slate-50/50">
+              <div className="flex items-center gap-2">
+                <Building2 className="h-5 w-5 text-sigap-primary" />
+                <h3 className="font-display font-bold text-base text-sigap-darkest">Integrasi Rekening Bank</h3>
+              </div>
+              <button onClick={() => setIsBankModalOpen(false)} className="rounded-full p-1 text-slate-400 hover:bg-slate-100 hover:text-sigap-darkest transition-colors">
+                <X className="h-5 w-5" />
               </button>
             </div>
+
             <div className="p-6">
               {bankConnectionStatus === 'Belum Terhubung' && (
-                <>
-                  <p className="text-sm text-gray-500 mb-4">Pilih bank demo untuk dihubungkan. Data transaksi akan disimulasikan.</p>
-                  <div className="space-y-3">
-                    {['Bank Demo A', 'Bank Demo B', 'Bank Demo C'].map(bank => (
-                      <button key={bank} onClick={handleConnectBank} className="w-full text-left px-4 py-3 border rounded-lg hover:border-sigap-primary hover:bg-sigap-primary/5 transition-colors flex justify-between items-center">
-                        <span className="font-medium">{bank}</span>
-                        <ArrowLeftRight className="w-4 h-4 text-gray-400" />
+                <div className="space-y-4">
+                  <p className="text-sm text-slate-500 leading-relaxed">
+                    Pilih bank mitra simulasi untuk mengimpor mutasi dan riwayat kas usaha ke sistem pembukuan SIGAP secara otomatis.
+                  </p>
+                  <div className="space-y-2.5">
+                    {[
+                      { name: 'Bank Mandiri (Demo)', code: 'BMRI', desc: 'Giro Usaha & QRIS Mandiri' },
+                      { name: 'Bank Central Asia (Demo)', code: 'BCA', desc: 'BCA Bisnis & Merchant' },
+                      { name: 'Bank Rakyat Indonesia (Demo)', code: 'BRI', desc: 'BRI Simpedes Usaha' }
+                    ].map(bank => (
+                      <button 
+                        key={bank.code} 
+                        onClick={handleConnectBank} 
+                        className="group flex w-full items-center justify-between rounded-2xl border border-slate-200/80 p-4 text-left hover:border-sigap-primary hover:bg-sigap-light/10 hover:shadow-sm transition-all"
+                      >
+                        <div>
+                          <p className="font-display font-bold text-sm text-sigap-darkest group-hover:text-sigap-primary transition-colors">{bank.name}</p>
+                          <p className="text-xs text-slate-400 mt-0.5">{bank.desc}</p>
+                        </div>
+                        <ArrowLeftRight className="h-4 w-4 text-slate-400 group-hover:text-sigap-primary transition-transform group-hover:scale-110" />
                       </button>
                     ))}
                   </div>
-                </>
-              )}
-              {bankConnectionStatus === 'Menghubungkan' && (
-                <div className="py-8 text-center flex flex-col items-center">
-                  <div className="w-12 h-12 border-4 border-sigap-primary border-t-transparent rounded-full animate-spin mb-4"></div>
-                  <h4 className="font-medium mb-1">Menghubungkan ke Bank...</h4>
-                  <p className="text-sm text-gray-500">Membangun koneksi aman (Demo)</p>
                 </div>
               )}
+
+              {bankConnectionStatus === 'Menghubungkan' && (
+                <div className="flex flex-col items-center py-8 text-center">
+                  <div className="h-12 w-12 rounded-full border-4 border-sigap-primary border-t-transparent animate-spin mb-4" />
+                  <h4 className="font-display font-bold text-base text-sigap-darkest mb-1">Membangun Koneksi Enkripsi...</h4>
+                  <p className="text-xs text-slate-500 max-w-xs">Mengotentikasi izin sandbox Open Banking API (Simulasi Terproteksi).</p>
+                </div>
+              )}
+
               {bankConnectionStatus === 'Terhubung' && (
-                <div className="py-8 text-center flex flex-col items-center">
-                  <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4">
-                    <CheckCircle2 className="w-6 h-6" />
+                <div className="flex flex-col items-center py-8 text-center">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 mb-4 shadow-sm">
+                    <CheckCircle2 className="h-8 w-8" />
                   </div>
-                  <h4 className="font-medium mb-1">Berhasil Terhubung</h4>
-                  <p className="text-sm text-gray-500">Rekening bank Anda telah terhubung (Demo)</p>
+                  <h4 className="font-display font-bold text-lg text-sigap-darkest mb-1">Rekening Berhasil Terhubung</h4>
+                  <p className="text-xs text-slate-500 max-w-xs">Sinkronisasi mutasi kas harian kini aktif untuk memperkuat skor kredit usaha Anda.</p>
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
     </div>
   );
 }
 
-function SidebarItem({ 
-  href, icon, label, active, badge, isPremium, onClick 
-}: { 
-  href: string, icon: React.ReactNode, label: string, active?: boolean, badge?: number, isPremium?: boolean, onClick?: () => void 
-}) {
-  return (
-    <Link 
-      href={href}
-      onClick={onClick}
-      className={`flex items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-        active 
-          ? "bg-sigap-primary/10 text-sigap-primary" 
-          : "text-muted-foreground hover:bg-muted hover:text-foreground"
-      }`}
-    >
-      <div className="flex items-center gap-3">
-        <div className={`h-5 w-5 ${active ? "text-sigap-primary" : "text-muted-foreground"}`}>
-          {icon}
-        </div>
-        {label}
-      </div>
-      <div className="flex items-center gap-2">
-        {isPremium && (
-          <span className="bg-gradient-to-r from-sigap-primary to-indigo-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">
-            Premium
-          </span>
-        )}
-        {badge !== undefined && (
-          <span className="bg-destructive text-destructive-foreground text-[10px] font-bold px-2 py-0.5 rounded-full">
-            {badge}
-          </span>
-        )}
-      </div>
-    </Link>
-  );
-}

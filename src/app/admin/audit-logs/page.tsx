@@ -1,23 +1,52 @@
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+"use client";
 
-export default function Page() {
+
+export default function AdminAuditLogsPage() {
+  const logs = [
+    { id: 'LOG-8812', timestamp: '2026-09-24 14:32:00', actor: 'Super Admin (OP)', action: 'Verifikasi Dokumen NIB UMKM-001 Disetujui', ip: '103.145.22.10', status: 'SUCCESS' },
+    { id: 'LOG-8811', timestamp: '2026-09-24 13:15:00', actor: 'Bank Nusantara Demo', action: 'Penarikan Lead Skor Kategori A (40 UMKM)', ip: '180.252.90.15', status: 'SUCCESS' },
+    { id: 'LOG-8810', timestamp: '2026-09-24 11:45:00', actor: 'System ML Engine', action: 'Kalkulasi Ulang Batch Scoring 1,062 Usaha', ip: 'internal-cluster', status: 'SUCCESS' },
+    { id: 'LOG-8809', timestamp: '2026-09-24 09:20:00', actor: 'Anonymous IP', action: 'Percobaan Akses Tidak Sah ke Endpoint /api/v1/keys', ip: '45.133.1.20', status: 'BLOCKED' }
+  ];
+
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Audit Log</h2>
-          <p className="text-muted-foreground mt-1">Catatan aktivitas sistem</p>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Platform Audit Logs</h2>
+          <p className="text-muted-foreground mt-1">Catatan jejak aktivitas administratif, perubahan konfigurasi, dan keamanan sistem.</p>
         </div>
       </div>
-      
-      <div className="bg-white border rounded-xl shadow-sm p-12 text-center flex flex-col items-center">
-        <div className="w-16 h-16 bg-sigap-soft/20 text-sigap-primary rounded-full flex items-center justify-center mb-4">
-          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-        </div>
-        <h3 className="text-xl font-bold text-gray-900 mb-2">Data Belum Tersedia</h3>
-        <p className="text-gray-500 max-w-md mx-auto mb-8">Modul Audit Log saat ini menggunakan mock data service yang terisolasi. Data real akan mengalir setelah integrasi API.</p>
+
+      <div className="bg-white border rounded-2xl shadow-sm overflow-hidden">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-gray-50 text-gray-500 text-xs uppercase font-bold border-b">
+            <tr>
+              <th className="px-6 py-4">Waktu (WIB)</th>
+              <th className="px-6 py-4">Aktor / Pengguna</th>
+              <th className="px-6 py-4">Aktivitas Terlacak</th>
+              <th className="px-6 py-4">Alamat IP</th>
+              <th className="px-6 py-4 text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {logs.map(log => (
+              <tr key={log.id} className="hover:bg-gray-50/70 font-mono text-xs">
+                <td className="px-6 py-4 text-gray-500 whitespace-nowrap">{log.timestamp}</td>
+                <td className="px-6 py-4 font-bold text-gray-800">{log.actor}</td>
+                <td className="px-6 py-4 font-sans text-xs text-gray-700">{log.action}</td>
+                <td className="px-6 py-4 text-gray-400">{log.ip}</td>
+                <td className="px-6 py-4 text-center">
+                  <span className={`px-2.5 py-0.5 rounded-full font-bold ${
+                    log.status === 'SUCCESS' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                  }`}>
+                    {log.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

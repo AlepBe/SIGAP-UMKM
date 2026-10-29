@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
-import { PublicHeader } from '@/components/landing/PublicHeader';
 import { PublicFooter } from '@/components/landing/PublicFooter';
+import { PublicHeader } from '@/components/landing/PublicHeader';
 import { Button } from '@/components/ui/button';
-import { BookOpen, CheckCircle2, PlayCircle, Lock, Trophy, Target, X, Clock } from 'lucide-react';
-import Link from 'next/link';
+import { BookOpen,CheckCircle2,Clock,Lock,PlayCircle,Target,Trophy,X } from 'lucide-react';
+import { useState } from 'react';
 
 const initialModules = [
   { id: 1, title: "Pemisahan Rekening Pribadi & Usaha", category: "Dasar Keuangan", duration: "5 menit", status: "completed", desc: "Pelajari pentingnya memisahkan uang pribadi dan usaha untuk memudahkan pembukuan." },
