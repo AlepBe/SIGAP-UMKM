@@ -319,24 +319,24 @@ export default function UMKMLayout({ children }: { children: React.ReactNode }) 
       {/* Main Content Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Topbar */}
-        <header className="flex h-18 items-center justify-between border-b border-slate-200/80 bg-white/80 backdrop-blur-md px-4 md:px-8">
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="md:hidden text-slate-600" onClick={() => setIsMobileMenuOpen(true)}>
+        <header className="flex h-16 sm:h-18 items-center justify-between border-b border-slate-200/80 bg-white/80 backdrop-blur-md px-3 sm:px-6 md:px-8">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <Button variant="ghost" size="icon" className="md:hidden text-slate-600 shrink-0 h-9 w-9" onClick={() => setIsMobileMenuOpen(true)}>
               <Menu className="h-5 w-5" />
             </Button>
-            <div>
+            <div className="min-w-0">
               <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 font-medium">
                 <Link href="/" className="hover:text-sigap-darkest transition-colors">SIGAP</Link>
                 <span>/</span>
                 <span className="text-slate-600">UMKM Portal</span>
               </div>
-              <h1 className="font-display text-lg md:text-xl font-extrabold text-sigap-darkest">
+              <h1 className="font-display text-base sm:text-lg md:text-xl font-extrabold text-sigap-darkest truncate max-w-[180px] sm:max-w-xs md:max-w-none">
                 {pageTitle()}
               </h1>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 sm:gap-4">
+          <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
             {/* Subscription Plan Badge */}
             <Link href="/premium" className="hidden sm:inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold transition-all hover:scale-105 border shadow-xs bg-slate-50 border-slate-200 text-slate-700">
               {subscription.plan === 'premium' ? (
