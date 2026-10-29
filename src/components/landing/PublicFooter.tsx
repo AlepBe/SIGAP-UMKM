@@ -60,7 +60,7 @@ export function PublicFooter() {
           ))}
         </nav>
       </div>
-      <div className="container mt-16 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 pb-12 text-sm sm:flex-row">
+      <div className="container mt-16 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 pb-24 lg:pb-12 text-sm sm:flex-row">
         <span>&copy; {new Date().getFullYear()} SIGAP UMKM. Hak Cipta Dilindungi.</span>
         <span>Demo hanya-baca tersedia</span>
       </div>
